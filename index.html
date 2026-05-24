@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Josue Kenge — AI Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: {
+            950: '#03060f',
+            900: '#070b1a',
+            800: '#0c1226',
+            700: '#141a35',
+          },
+          cobalt: {
+            300: '#9bb4ff',
+            400: '#6e8dff',
+            500: '#3b6dff',
+            600: '#2952e8',
+            700: '#1d3dc4',
+          },
+          paper: '#e6ecff',
+        },
+        fontFamily: {
+          display: ['"Instrument Serif"', 'serif'],
+          sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+      }
+    }
+  };
+</script>
+
+<style>
+  html, body { background: #03060f; color: #e6ecff; }
+  body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #03060f; }
+  ::-webkit-scrollbar-thumb { background: #1d3dc4; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3b6dff; }
+
+  /* Selection */
+  ::selection { background: #3b6dff; color: #03060f; }
+
+  /* The animated cobalt orb -- our "3D" hero asset */
+  .orb {
+    position: relative;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 25%, #c8d6ff 0%, #6e8dff 12%, #3b6dff 28%, #1d3dc4 50%, #0a1750 75%, #03060f 100%);
+    box-shadow:
+      inset -30px -50px 80px rgba(3,6,15,0.55),
+      inset 30px 40px 80px rgba(155,180,255,0.25),
+      0 0 80px rgba(59,109,255,0.55),
+      0 0 160px rgba(59,109,255,0.35),
+      0 0 240px rgba(59,109,255,0.2);
+    animation: orb-float 9s ease-in-out infinite;
+  }
+  .orb::before {
+    content: '';
+    position: absolute; inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 70% 75%, rgba(59,109,255,0.6), transparent 55%);
+    filter: blur(20px);
+    animation: orb-glow 7s ease-in-out infinite alternate;
+  }
+  .orb::after {
+    content: '';
+    position: absolute; left: 18%; top: 12%; width: 28%; height: 22%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 70%);
+    filter: blur(2px);
+  }
+  @keyframes orb-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(3deg); }
+  }
+  @keyframes orb-glow {
+    from { opacity: 0.6; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.08); }
+  }
+
+  /* Slow rotating ring */
+  .ring {
+    position: absolute;
+    border: 1px solid rgba(110,141,255,0.18);
+    border-radius: 50%;
+    animation: spin 30s linear infinite;
+  }
+  .ring.fast { animation-duration: 14s; border-color: rgba(110,141,255,0.28); }
+  .ring.reverse { animation-direction: reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Grain noise overlay */
+  .grain::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Marquee */
+  .marquee { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-slow { animation-duration: 65s; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1s cubic-bezier(.22,.61,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+  .reveal-delay-4 { transition-delay: 0.32s; }
+
+  /* Glass card */
+  .glass {
+    background: linear-gradient(145deg, rgba(20,26,53,0.55), rgba(7,11,26,0.7));
+    border: 1px solid rgba(110,141,255,0.14);
+    backdrop-filter: blur(14px);
+  }
+  .glass:hover { border-color: rgba(110,141,255,0.35); }
+
+  /* Number glow */
+  .num-glow { text-shadow: 0 0 40px rgba(59,109,255,0.45); }
+
+  /* Italic display accent */
+  .acc { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+  /* Hero gradient backdrop */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(59,109,255,0.22), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 15% 80%, rgba(110,141,255,0.14), transparent 60%),
+      #03060f;
+  }
+
+  /* Marquee text gradient */
+  .marquee-text { background: linear-gradient(90deg, #6e8dff, #e6ecff, #6e8dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Magnetic project card */
+  .magnet { transition: transform .35s cubic-bezier(.22,.61,.36,1), border-color .35s; }
+  .magnet:hover { transform: translateY(-6px); }
+
+  /* Decorative grid */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(110,141,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(110,141,255,0.06) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* 3D-style mini cube placeholder */
+  .cube {
+    width: 100%; aspect-ratio: 1; position: relative;
+    background: radial-gradient(circle at 35% 30%, #6e8dff 0%, #3b6dff 30%, #1d3dc4 60%, #050a1f 100%);
+    border-radius: 24px;
+    box-shadow: inset -10px -20px 40px rgba(3,6,15,0.55), inset 10px 15px 30px rgba(155,180,255,0.15), 0 20px 60px rgba(59,109,255,0.25);
+    overflow: hidden;
+  }
+  .cube::after { content: ''; position: absolute; left: 18%; top: 14%; width: 28%; height: 20%; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.85), rgba(255,255,255,0) 70%); filter: blur(2px); }
+
+  /* image-slot styling override */
+  image-slot { background: linear-gradient(135deg, rgba(20,26,53,0.6), rgba(7,11,26,0.8)); }
+  image-slot::part(placeholder), image-slot .placeholder { color: rgba(155,180,255,0.55); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* Cursor blob */
+  .cursor-blob {
+    position: fixed; top: 0; left: 0; width: 480px; height: 480px;
+    border-radius: 50%; pointer-events: none; z-index: 1;
+    background: radial-gradient(circle, rgba(59,109,255,0.18), transparent 70%);
+    transform: translate(-50%, -50%); transition: transform 0.18s ease-out;
+    mix-blend-mode: screen;
+  }
+
+  /* Connector line */
+  .conn { background: linear-gradient(180deg, rgba(110,141,255,0.6), rgba(110,141,255,0)); }
+</style>
+</head>
+<body class="grain">
+<div class="cursor-blob" id="cursorBlob"></div>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="image-slot.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="terminal.jsx"></script>
+<script type="text/babel" src="case-studies.jsx"></script>
+<script type="text/babel" src="portfolio.jsx"></script>
+
+<script>
+  // Cursor blob follow
+  const blob = document.getElementById('cursorBlob');
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  function raf() {
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    blob.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+    requestAnimationFrame(raf);
+  }
+  raf();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  // Wait for React to render
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }, 200);
+  // Re-observe newly added (React might mount after timeout)
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  });
+  mo.observe(document.body, { childList: true, subtree: true });
+</script>
+</body>
+</html>
