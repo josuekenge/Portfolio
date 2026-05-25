@@ -1,41 +1,65 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <radialGradient id="bg" cx="28%" cy="22%" r="100%">
-      <stop offset="0%" stop-color="#2952e8"/>
-      <stop offset="45%" stop-color="#0a1750"/>
+    <radialGradient id="bg" cx="50%" cy="42%" r="78%">
+      <stop offset="0%" stop-color="#0a1750"/>
+      <stop offset="55%" stop-color="#050a1f"/>
       <stop offset="100%" stop-color="#03060f"/>
     </radialGradient>
-    <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#9bb4ff" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#3b6dff" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="bolt" x1="0.25" y1="0" x2="0.75" y2="1">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="55%" stop-color="#c8d6ff"/>
-      <stop offset="100%" stop-color="#6e8dff"/>
+      <stop offset="30%" stop-color="#c8d6ff"/>
+      <stop offset="65%" stop-color="#3b6dff"/>
+      <stop offset="100%" stop-color="#1d3dc4"/>
     </linearGradient>
+    <filter id="electric" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.6"/>
+    </filter>
   </defs>
 
-  <!-- rounded ink square -->
+  <!-- ink rounded square -->
   <rect width="64" height="64" rx="14" fill="url(#bg)"/>
 
-  <!-- faint grid texture -->
-  <g stroke="#6e8dff" stroke-opacity="0.08" stroke-width="0.5">
-    <line x1="0" y1="16" x2="64" y2="16"/>
-    <line x1="0" y1="32" x2="64" y2="32"/>
-    <line x1="0" y1="48" x2="64" y2="48"/>
-    <line x1="16" y1="0" x2="16" y2="64"/>
-    <line x1="32" y1="0" x2="32" y2="64"/>
-    <line x1="48" y1="0" x2="48" y2="64"/>
+  <!-- electrical sparks scattered around the bolt -->
+  <g fill="#c8d6ff">
+    <circle cx="10" cy="14" r="0.6" opacity="0.85"/>
+    <circle cx="54" cy="50" r="0.7" opacity="0.9"/>
+    <circle cx="50" cy="10" r="0.4" opacity="0.7"/>
+    <circle cx="14" cy="52" r="0.5" opacity="0.75"/>
+    <circle cx="7"  cy="32" r="0.35" opacity="0.6"/>
+    <circle cx="57" cy="30" r="0.35" opacity="0.6"/>
+    <circle cx="46" cy="60" r="0.4" opacity="0.7"/>
+    <circle cx="18" cy="6"  r="0.4" opacity="0.7"/>
   </g>
 
-  <!-- cobalt orb (the brand dot from the nav) -->
-  <circle cx="51" cy="13" r="9" fill="url(#dotGlow)"/>
-  <circle cx="51" cy="13" r="2.8" fill="#3b6dff"/>
+  <!-- spark streaks -->
+  <g stroke="#6e8dff" stroke-width="0.6" stroke-linecap="round" opacity="0.55" fill="none">
+    <line x1="5"  y1="20" x2="9"  y2="22"/>
+    <line x1="58" y1="42" x2="54" y2="44"/>
+    <line x1="48" y1="58" x2="52" y2="56"/>
+  </g>
 
-  <!-- JK monogram -->
-  <text x="32" y="48" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
-        font-weight="800" font-size="38" letter-spacing="-3"
-        fill="url(#ink)" textLength="40" lengthAdjust="spacingAndGlyphs">JK</text>
+  <!-- outer glow halo of the bolt -->
+  <path
+    d="M 38 6 L 14 34 L 26 34 L 22 58 L 50 28 L 36 28 L 44 6 Z"
+    fill="#3b6dff" opacity="0.85" filter="url(#electric)"/>
+
+  <!-- main bolt body — sharp miter corners for electric edge -->
+  <path
+    d="M 38 6 L 14 34 L 26 34 L 22 58 L 50 28 L 36 28 L 44 6 Z"
+    fill="url(#bolt)"
+    stroke="#ffffff" stroke-width="0.6" stroke-linejoin="miter"/>
+
+  <!-- inner white-hot streaks -->
+  <path
+    d="M 40 9 L 22 31"
+    stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity="0.9" fill="none"/>
+  <path
+    d="M 32 33 L 25 52"
+    stroke="#ffffff" stroke-width="1.1" stroke-linecap="round" opacity="0.75" fill="none"/>
+
+  <!-- subtle JK callsign — visible at 32px+, invisible at 16px (clean tab icon) -->
+  <text x="58" y="61" text-anchor="end"
+        font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace"
+        font-weight="700" font-size="6"
+        fill="#9bb4ff" opacity="0.75" letter-spacing="0.6">JK</text>
 </svg>
