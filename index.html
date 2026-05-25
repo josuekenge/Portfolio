@@ -42,13 +42,25 @@
 
 <style>
   html, body { background: #03060f; color: #e6ecff; }
-  body { font-family: 'Space Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    /* Prevent overscroll bounce-induced jank on iOS */
+    overscroll-behavior-y: none;
+  }
+  /* Use dynamic viewport units where supported so iOS Safari's collapsing
+     address bar doesn't cause layout reflow (the "glitching up and down"). */
+  .min-h-screen-d { min-height: 100vh; min-height: 100svh; }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: #03060f; }
-  ::-webkit-scrollbar-thumb { background: #1d3dc4; border-radius: 999px; }
-  ::-webkit-scrollbar-thumb:hover { background: #3b6dff; }
+  /* Custom scrollbar (desktop only — mobile uses native) */
+  @media (hover: hover) and (pointer: fine) {
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #03060f; }
+    ::-webkit-scrollbar-thumb { background: #1d3dc4; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3b6dff; }
+  }
 
   /* Selection */
   ::selection { background: #3b6dff; color: #03060f; }
@@ -185,6 +197,51 @@
 
   /* Connector line */
   .conn { background: linear-gradient(180deg, rgba(110,141,255,0.6), rgba(110,141,255,0)); }
+
+  /* ──────────── Mobile / touch optimizations ──────────── */
+  /* Hide the cursor blob on touch devices — it serves no purpose and the
+     fixed-position + mix-blend-mode + giant radial-gradient is a major
+     compositing cost on phone GPUs. */
+  @media (hover: none), (pointer: coarse) {
+    .cursor-blob { display: none !important; }
+    /* Lighter backdrop blur on mobile (cheaper to composite) */
+    .glass { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    /* Disable orb / ring float animations on mobile to avoid jank */
+    .orb { animation: none; }
+    .orb::before { animation: none; }
+    .ring { animation: none; }
+    /* Reduce the grain overlay opacity (cheaper repaint) */
+    .grain::before { opacity: 0.02; }
+  }
+
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .orb, .orb::before, .ring, .marquee { animation: none !important; }
+    .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* Sub-640px tweaks — tighten layout and font scale on phones */
+  @media (max-width: 640px) {
+    /* Smaller hero headline floor — 64px was too big at 360px viewport */
+    .hero-headline { font-size: clamp(40px, 12vw, 72px) !important; line-height: 0.95 !important; }
+    /* Display headings — drop max */
+    .section-title { font-size: clamp(36px, 9vw, 56px) !important; }
+    /* About headline */
+    .about-headline { font-size: clamp(34px, 9vw, 52px) !important; line-height: 1 !important; }
+    /* Contact mega title */
+    .contact-headline { font-size: clamp(40px, 11vw, 80px) !important; }
+    /* Project titles */
+    .project-title { font-size: clamp(26px, 6.5vw, 36px) !important; }
+    /* Marquee — much smaller */
+    .marquee-mobile { font-size: clamp(22px, 6vw, 38px) !important; }
+    /* Numbers (metrics, education year) */
+    .num-big { font-size: clamp(48px, 14vw, 72px) !important; }
+    .num-mid { font-size: clamp(24px, 6vw, 32px) !important; }
+    /* Drop heavy decorative shadows on mobile to reduce paint cost */
+    .num-glow { text-shadow: 0 0 16px rgba(59,109,255,0.35); }
+    /* Allow long mono text in the terminal to scroll horizontally */
+    .terminal-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
 </style>
 </head>
 <body class="grain">
@@ -201,17 +258,24 @@
 <script type="text/babel" src="portfolio.jsx"></script>
 
 <script>
-  // Cursor blob follow
+  // Cursor blob follow — only on devices with a real pointer.
+  // On phones/tablets the rAF loop + mix-blend-mode + giant radial-gradient
+  // burns GPU for nothing (no mousemove ever fires).
   const blob = document.getElementById('cursorBlob');
-  let tx = 0, ty = 0, cx = 0, cy = 0;
-  window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-  function raf() {
-    cx += (tx - cx) * 0.12;
-    cy += (ty - cy) * 0.12;
-    blob.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-    requestAnimationFrame(raf);
+  const hasFinePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (hasFinePointer && blob) {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+    function raf() {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      blob.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(raf);
+    }
+    raf();
+  } else if (blob) {
+    blob.style.display = 'none';
   }
-  raf();
 
   // Reveal on scroll
   const io = new IntersectionObserver(entries => {

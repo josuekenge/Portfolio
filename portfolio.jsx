@@ -472,10 +472,10 @@ const Eyebrow = ({ children, n }) => (
 );
 
 const SectionLabel = ({ n, title }) => (
-  <div className="flex items-baseline justify-between gap-6 mb-16 reveal">
-    <div className="flex items-center gap-5">
-      <span className="font-mono text-xs text-cobalt-400/70">{n}</span>
-      <h2 className="font-display text-5xl md:text-7xl tracking-tight">{title}</h2>
+  <div className="flex items-baseline justify-between gap-4 sm:gap-6 mb-10 sm:mb-16 reveal">
+    <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+      <span className="font-mono text-[10px] sm:text-xs text-cobalt-400/70 flex-shrink-0">{n}</span>
+      <h2 className="section-title font-display text-4xl sm:text-5xl md:text-7xl tracking-tight truncate">{title}</h2>
     </div>
     <div className="hidden md:block flex-1 h-px bg-gradient-to-r from-cobalt-500/40 via-cobalt-500/10 to-transparent" />
   </div>
@@ -486,11 +486,11 @@ const SectionLabel = ({ n, title }) => (
 // ────────────────────────────────────────────────────────────────
 
 const Nav = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex items-center justify-between backdrop-blur-md bg-ink-950/50 border-b border-cobalt-500/10">
-    <a href="#top" className="flex items-center gap-3 font-mono text-xs tracking-widest">
-      <span className="inline-block w-2 h-2 rounded-full bg-cobalt-500 shadow-[0_0_12px_#3b6dff]" />
-      <span className="text-paper">JOSUE KENGE</span>
-      <span className="text-cobalt-400/60">/ AI ENGINEER</span>
+  <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 py-4 md:py-6 flex items-center justify-between gap-3 backdrop-blur-md bg-ink-950/70 sm:bg-ink-950/50 border-b border-cobalt-500/10">
+    <a href="#top" className="flex items-center gap-2 sm:gap-3 font-mono text-[10px] sm:text-xs tracking-widest min-w-0">
+      <span className="inline-block w-2 h-2 rounded-full bg-cobalt-500 shadow-[0_0_12px_#3b6dff] flex-shrink-0" />
+      <span className="text-paper truncate">JOSUE KENGE</span>
+      <span className="text-cobalt-400/60 hidden sm:inline">/ AI ENGINEER</span>
     </a>
     <div className="hidden md:flex items-center gap-8 font-mono text-xs tracking-widest text-paper/70">
       <a href="#work" className="hover:text-paper transition">WORK</a>
@@ -498,8 +498,10 @@ const Nav = () => (
       <a href="#skills" className="hover:text-paper transition">STACK</a>
       <a href="#contact" className="hover:text-paper transition">CONTACT</a>
     </div>
-    <a href="mailto:josuekenge4@gmail.com" className="font-mono text-xs tracking-widest px-4 py-2 rounded-full border border-cobalt-500/40 hover:bg-cobalt-500 hover:text-ink-950 transition-all">
-      LET'S TALK →
+    <a href="mailto:josuekenge4@gmail.com" className="font-mono text-[10px] sm:text-xs tracking-widest px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-cobalt-500/40 hover:bg-cobalt-500 hover:text-ink-950 transition-all flex-shrink-0">
+      <span className="hidden sm:inline">LET'S TALK </span>
+      <span className="sm:hidden">EMAIL </span>
+      →
     </a>
   </nav>
 );
@@ -522,41 +524,41 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="top" className="relative min-h-screen hero-bg pt-32 pb-20 overflow-hidden">
+    <section id="top" className="relative min-h-screen-d hero-bg pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-40" />
 
-      <div className="relative max-w-[1480px] mx-auto px-8 grid lg:grid-cols-[1.05fr_1fr] gap-16 items-center">
+      <div className="relative max-w-[1480px] mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-[1.05fr_1fr] gap-10 md:gap-12 lg:gap-16 items-center">
         {/* Left: text */}
         <div className="relative z-10 max-w-[820px]">
           <div className="reveal">
             <Eyebrow n="◆">AI Engineer · Markham / Toronto</Eyebrow>
           </div>
 
-          <h1 className="reveal reveal-delay-1 mt-8 font-display text-[clamp(64px,9vw,156px)] leading-[0.92] tracking-[-0.02em]">
+          <h1 className="hero-headline reveal reveal-delay-1 mt-6 sm:mt-8 font-display text-[clamp(48px,9vw,156px)] leading-[0.92] tracking-[-0.02em]">
             Building AI<br/>
             <span className="acc text-cobalt-400">products </span>
             that<br/>
             actually <span className="acc">ship.</span>
           </h1>
 
-          <p className="reveal reveal-delay-2 mt-10 max-w-[620px] text-lg md:text-xl text-paper/70 leading-relaxed">
+          <p className="reveal reveal-delay-2 mt-6 sm:mt-10 max-w-[620px] text-base sm:text-lg md:text-xl text-paper/70 leading-relaxed">
             I'm Josue — an AI Engineer shipping production GenAI systems for enterprise and healthcare clients.
             Agentic workflows, RAG pipelines, and full-stack platforms serving <span className="text-paper">25,000+ users</span>.
             From architecture to deployment.
           </p>
 
-          <div className="reveal reveal-delay-3 mt-12 flex flex-wrap items-center gap-4">
-            <a href="#work" className="group inline-flex items-center gap-3 px-7 py-4 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all">
+          <div className="reveal reveal-delay-3 mt-8 sm:mt-12 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+            <a href="#work" className="group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all">
               View selected work
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
-            <a href="mailto:josuekenge4@gmail.com" className="inline-flex items-center gap-3 px-7 py-4 rounded-full border border-paper/15 hover:border-paper/40 transition">
+            <a href="mailto:josuekenge4@gmail.com" className="inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full border border-paper/15 hover:border-paper/40 transition">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-sm tracking-wider">AVAILABLE FOR WORK</span>
+              <span className="font-mono text-xs sm:text-sm tracking-wider">AVAILABLE FOR WORK</span>
             </a>
           </div>
 
-          <div className="reveal reveal-delay-4 mt-16 flex flex-wrap gap-x-10 gap-y-4 font-mono text-xs tracking-widest text-paper/45 uppercase">
+          <div className="reveal reveal-delay-4 mt-10 sm:mt-16 flex flex-wrap gap-x-6 sm:gap-x-10 gap-y-3 sm:gap-y-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/45 uppercase">
             <div><span className="text-cobalt-400">▸</span> {time || 'Loading…'}</div>
             <div><span className="text-cobalt-400">▸</span> Carleton · Computer Science</div>
             <div><span className="text-cobalt-400">▸</span> Currently @ IBM watsonx</div>
@@ -569,8 +571,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.35em] text-paper/40 flex flex-col items-center gap-2">
+      {/* Scroll indicator — hidden on mobile (saves space + avoids overlap) */}
+      <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.35em] text-paper/40 flex-col items-center gap-2">
         <span>SCROLL</span>
         <span className="w-px h-10 bg-gradient-to-b from-paper/40 to-transparent" />
       </div>
@@ -586,10 +588,10 @@ const Hero = () => {
 const Marquee = () => {
   const items = [...STACK_TICKER, ...STACK_TICKER];
   return (
-    <section className="border-y border-cobalt-500/10 py-8 overflow-hidden bg-ink-900/40">
-      <div className="marquee gap-12 font-display text-4xl md:text-6xl tracking-tight whitespace-nowrap">
+    <section className="border-y border-cobalt-500/10 py-5 sm:py-8 overflow-hidden bg-ink-900/40">
+      <div className="marquee marquee-mobile gap-6 sm:gap-12 font-display text-2xl sm:text-4xl md:text-6xl tracking-tight whitespace-nowrap">
         {items.map((t, i) => (
-          <span key={i} className="flex items-center gap-12 marquee-text">
+          <span key={i} className="flex items-center gap-6 sm:gap-12 marquee-text">
             {t}
             <span className="text-cobalt-500 acc">◆</span>
           </span>
@@ -604,17 +606,17 @@ const Marquee = () => {
 // ────────────────────────────────────────────────────────────────
 
 const Metrics = () => (
-  <section className="py-28 px-8 max-w-[1480px] mx-auto">
-    <div className="reveal mb-12">
+  <section className="py-16 sm:py-24 lg:py-28 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
+    <div className="reveal mb-8 sm:mb-12">
       <Eyebrow n="001">Impact at a glance</Eyebrow>
     </div>
-    <div className="grid md:grid-cols-4 gap-8">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
       {HEADLINE_METRICS.map((m, i) => (
         <div key={i} className={`reveal reveal-delay-${i+1} group`}>
-          <div className="font-display text-7xl md:text-8xl text-cobalt-300 num-glow leading-none tracking-tight">
+          <div className="num-big font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-cobalt-300 num-glow leading-none tracking-tight">
             {m.v}
           </div>
-          <div className="mt-4 font-mono text-xs tracking-widest text-paper/55 uppercase">
+          <div className="mt-2 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
             {m.l}
           </div>
         </div>
@@ -628,16 +630,16 @@ const Metrics = () => (
 // ────────────────────────────────────────────────────────────────
 
 const About = () => (
-  <section id="about" className="relative py-32 px-8">
-    <div className="max-w-[1480px] mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-16 items-start">
+  <section id="about" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8">
+    <div className="max-w-[1480px] mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-10 md:gap-12 lg:gap-16 items-start">
       <div>
         <div className="reveal"><Eyebrow n="002">About</Eyebrow></div>
-        <h2 className="reveal reveal-delay-1 mt-6 font-display text-5xl md:text-7xl leading-[0.95] tracking-tight">
+        <h2 className="about-headline reveal reveal-delay-1 mt-5 sm:mt-6 font-display text-4xl sm:text-5xl md:text-7xl leading-[0.95] tracking-tight">
           I ship GenAI<br/>
           <span className="acc text-cobalt-400">end-to-end</span> — from<br/>
           architecture to <span className="acc">production.</span>
         </h2>
-        <div className="reveal reveal-delay-2 mt-10 space-y-6 text-lg text-paper/70 leading-relaxed max-w-[640px]">
+        <div className="reveal reveal-delay-2 mt-6 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg text-paper/70 leading-relaxed max-w-[640px]">
           <p>
             I'm a Computer Science student at Carleton, currently engineering AI features
             on <span className="text-paper">IBM watsonx Workshop</span> for 25,000+ sellers globally. Before that I shipped 7 production AI systems
@@ -651,21 +653,21 @@ const About = () => (
         </div>
 
         {/* Fun stuff terminal */}
-        <div className="reveal reveal-delay-3 mt-12 max-w-[640px]">
+        <div className="reveal reveal-delay-3 mt-8 sm:mt-12 max-w-[640px]">
           {window.Terminal && (
             <window.Terminal
               trace={window.FUN_TRACE}
               label="josue.fun · live"
               maxWidth="100%"
-              minHeight="380px"
-              fontSize="13px"
+              minHeight="320px"
+              fontSize="clamp(11px, 2.8vw, 13px)"
             />
           )}
         </div>
       </div>
 
       {/* Right: designed identity card + meta */}
-      <div className="reveal reveal-delay-3 space-y-6">
+      <div className="reveal reveal-delay-3 space-y-6 max-w-md mx-auto lg:max-w-none">
         <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
           <div className="absolute inset-0 rounded-3xl overflow-hidden"
             style={{
@@ -732,57 +734,57 @@ const About = () => (
 const ProjectCard = ({ p, onOpen }) => {
   return (
     <article
-      className="reveal magnet glass rounded-3xl p-8 lg:p-10 grid lg:grid-cols-[1fr_280px] gap-8 items-center group cursor-pointer"
+      className="reveal magnet glass rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_280px] gap-6 sm:gap-8 items-center group cursor-pointer"
       data-comment-anchor={`project-${p.n}`}
       onClick={onOpen}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } }}
     >
-      <div>
-        <div className="flex items-center gap-4 font-mono text-[11px] tracking-widest text-cobalt-400/80">
+      <div className="min-w-0">
+        <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest text-cobalt-400/80">
           <span>PROJECT {p.n}</span>
           <span className="h-px w-6 bg-cobalt-500/30" />
           <span className="text-paper/50">{p.year}</span>
         </div>
 
-        <h3 className="mt-4 font-display text-4xl md:text-5xl tracking-tight">
+        <h3 className="project-title mt-3 sm:mt-4 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">
           {p.title} <span className="acc text-cobalt-400">— {p.sub}</span>
         </h3>
 
-        <p className="mt-3 font-mono text-[11px] tracking-widest text-paper/45 uppercase">
+        <p className="mt-2 sm:mt-3 font-mono text-[10px] sm:text-[11px] tracking-widest text-paper/45 uppercase">
           {p.role}
         </p>
 
-        <p className="mt-5 text-paper/70 text-base lg:text-lg leading-relaxed max-w-[680px]">
+        <p className="mt-4 sm:mt-5 text-paper/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-[680px]">
           {p.blurb}
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-5 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2">
           {p.tech.map(t => (
-            <span key={t} className="px-3 py-1 rounded-full border border-cobalt-500/25 text-xs font-mono text-paper/75">
+            <span key={t} className="px-2.5 sm:px-3 py-1 rounded-full border border-cobalt-500/25 text-[10px] sm:text-xs font-mono text-paper/75">
               {t}
             </span>
           ))}
         </div>
 
-        <div className="mt-8 grid grid-cols-3 gap-6 max-w-[480px]">
+        <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-3 sm:gap-6 max-w-[480px]">
           {p.metrics.map((m, j) => (
-            <div key={j}>
-              <div className="font-display text-3xl text-cobalt-300 num-glow">{m.v}</div>
-              <div className="mt-1 font-mono text-[10px] tracking-widest text-paper/45 uppercase">{m.l}</div>
+            <div key={j} className="min-w-0">
+              <div className="num-mid font-display text-2xl sm:text-3xl text-cobalt-300 num-glow truncate">{m.v}</div>
+              <div className="mt-1 font-mono text-[9px] sm:text-[10px] tracking-widest text-paper/45 uppercase leading-tight">{m.l}</div>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] text-cobalt-300/90 uppercase group-hover:text-cobalt-300 transition">
+        <div className="mt-5 sm:mt-6 flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-cobalt-300/90 uppercase group-hover:text-cobalt-300 transition">
           <span>View case study</span>
           <span className="transition-transform group-hover:translate-x-1">→</span>
         </div>
       </div>
 
       {/* Right: designed 3D-feel mockup */}
-      <div className="relative">
+      <div className="relative w-full max-w-[280px] mx-auto lg:mx-0 lg:max-w-none">
         <ProjectVisual n={p.n} />
       </div>
     </article>
@@ -790,9 +792,9 @@ const ProjectCard = ({ p, onOpen }) => {
 };
 
 const Work = ({ onOpenProject }) => (
-  <section id="work" className="relative py-32 px-8 max-w-[1480px] mx-auto">
+  <section id="work" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
     <SectionLabel n="003" title="Selected work" />
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {PROJECTS.map((p) => <ProjectCard p={p} key={p.n} onOpen={() => onOpenProject(p)} />)}
     </div>
   </section>
@@ -803,27 +805,28 @@ const Work = ({ onOpenProject }) => (
 // ────────────────────────────────────────────────────────────────
 
 const Experience = () => (
-  <section id="experience" className="relative py-32 px-8 max-w-[1480px] mx-auto">
+  <section id="experience" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
     <SectionLabel n="004" title="Experience" />
-    <div className="relative grid lg:grid-cols-[180px_1fr] gap-8">
+    <div className="relative grid lg:grid-cols-[180px_1fr] gap-4 sm:gap-6 lg:gap-8">
       <div className="hidden lg:block absolute left-[226px] top-0 bottom-0 w-px conn" />
 
       {EXPERIENCE.map((e, i) => (
         <React.Fragment key={i}>
-          <div className="reveal font-mono text-xs tracking-widest text-paper/55 pt-2">
-            {e.when}
-            <div className="text-paper/35 mt-1">{e.loc}</div>
+          <div className="reveal font-mono text-[11px] sm:text-xs tracking-widest text-paper/55 pt-0 lg:pt-2 flex items-center lg:items-start gap-3 lg:gap-0 lg:flex-col">
+            <span className="lg:block">{e.when}</span>
+            <span className="lg:hidden text-cobalt-400/40">·</span>
+            <span className="text-paper/35 lg:mt-1">{e.loc}</span>
           </div>
-          <div className="reveal reveal-delay-1 relative pl-0 lg:pl-16 pb-16 border-b border-cobalt-500/10">
+          <div className="reveal reveal-delay-1 relative pl-0 lg:pl-16 pb-10 sm:pb-14 lg:pb-16 border-b border-cobalt-500/10">
             <div className="hidden lg:block absolute left-[6px] top-4 w-4 h-4 rounded-full border-2 border-ink-950" style={{ background: e.color, boxShadow: `0 0 20px ${e.color}` }} />
-            <div className="flex items-baseline gap-4 flex-wrap">
-              <h3 className="font-display text-4xl md:text-5xl tracking-tight">{e.co}</h3>
-              <span className="acc text-cobalt-400 text-2xl">— {e.role}</span>
+            <div className="flex items-baseline gap-2 sm:gap-4 flex-wrap">
+              <h3 className="font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">{e.co}</h3>
+              <span className="acc text-cobalt-400 text-lg sm:text-2xl">— {e.role}</span>
             </div>
-            <ul className="mt-6 space-y-3 max-w-[920px]">
+            <ul className="mt-4 sm:mt-6 space-y-3 max-w-[920px]">
               {e.bullets.map((b, j) => (
-                <li key={j} className="flex gap-4 text-paper/75 text-base lg:text-lg leading-relaxed">
-                  <span className="text-cobalt-400 flex-shrink-0 pt-2">◆</span>
+                <li key={j} className="flex gap-3 sm:gap-4 text-paper/75 text-sm sm:text-base lg:text-lg leading-relaxed">
+                  <span className="text-cobalt-400 flex-shrink-0 pt-1.5 sm:pt-2">◆</span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -840,14 +843,14 @@ const Experience = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Skills = () => (
-  <section id="skills" className="relative py-32 px-8 max-w-[1480px] mx-auto">
+  <section id="skills" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
     <SectionLabel n="005" title="Stack" />
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       {SKILLS.map((s, i) => (
-        <div key={i} className={`reveal reveal-delay-${i+1} glass rounded-3xl p-7`}>
-          <div className="flex items-center gap-3 mb-6">
+        <div key={i} className={`reveal reveal-delay-${i+1} glass rounded-2xl sm:rounded-3xl p-5 sm:p-7`}>
+          <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <span className="font-mono text-cobalt-400 text-xs">0{i+1}</span>
-            <h3 className="font-display text-2xl tracking-tight">{s.group}</h3>
+            <h3 className="font-display text-xl sm:text-2xl tracking-tight">{s.group}</h3>
           </div>
           <ul className="space-y-2">
             {s.items.map(item => (
@@ -868,21 +871,21 @@ const Skills = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Education = () => (
-  <section className="relative py-24 px-8 max-w-[1480px] mx-auto">
-    <div className="reveal glass rounded-3xl p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-8 items-end">
+  <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
+    <div className="reveal glass rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-end">
       <div>
         <Eyebrow n="006">Education</Eyebrow>
-        <h3 className="mt-6 font-display text-5xl md:text-6xl tracking-tight">
+        <h3 className="mt-4 sm:mt-6 font-display text-3xl sm:text-5xl md:text-6xl tracking-tight">
           Carleton University
         </h3>
-        <p className="mt-3 acc text-cobalt-400 text-3xl">
+        <p className="mt-2 sm:mt-3 acc text-cobalt-400 text-xl sm:text-3xl">
           B.Sc. Computer Science
         </p>
-        <p className="mt-4 font-mono text-xs tracking-widest text-paper/55 uppercase">
+        <p className="mt-3 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
           Ottawa, ON · Expected May 2027
         </p>
       </div>
-      <div className="font-display text-7xl md:text-8xl text-cobalt-300 num-glow tracking-tight leading-none">
+      <div className="num-big font-display text-6xl sm:text-7xl md:text-8xl text-cobalt-300 num-glow tracking-tight leading-none">
         '27
       </div>
     </div>
@@ -894,9 +897,9 @@ const Education = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Contact = () => (
-  <section id="contact" className="relative py-28 px-8 overflow-hidden">
+  <section id="contact" className="relative py-20 sm:py-28 px-5 sm:px-6 md:px-8 overflow-hidden">
     <div className="absolute inset-0 hero-bg opacity-80" />
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-40">
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] sm:w-[480px] sm:h-[480px] lg:w-[600px] lg:h-[600px] opacity-40 pointer-events-none">
       <div className="orb w-full h-full" />
     </div>
 
@@ -904,20 +907,20 @@ const Contact = () => (
       <div className="reveal">
         <Eyebrow n="007">Contact</Eyebrow>
       </div>
-      <h2 className="reveal reveal-delay-1 mt-8 font-display text-[clamp(56px,8vw,140px)] leading-[0.92] tracking-tight">
+      <h2 className="contact-headline reveal reveal-delay-1 mt-6 sm:mt-8 font-display text-[clamp(40px,8vw,140px)] leading-[0.92] tracking-tight">
         Let's build<br/>
         something <span className="acc text-cobalt-400">that ships.</span>
       </h2>
 
-      <div className="reveal reveal-delay-2 mt-12">
-        <a href="mailto:josuekenge4@gmail.com" className="group inline-flex items-center gap-3 px-8 py-5 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all text-lg">
-          josuekenge4@gmail.com
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
+      <div className="reveal reveal-delay-2 mt-8 sm:mt-12">
+        <a href="mailto:josuekenge4@gmail.com" className="group inline-flex items-center gap-3 px-5 sm:px-8 py-4 sm:py-5 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all text-sm sm:text-lg break-all sm:break-normal max-w-full">
+          <span className="truncate">josuekenge4@gmail.com</span>
+          <span className="group-hover:translate-x-1 transition-transform flex-shrink-0">→</span>
         </a>
       </div>
 
       {/* Compact social text links */}
-      <div className="reveal reveal-delay-3 mt-10 flex flex-wrap justify-center items-center gap-x-5 gap-y-3 font-mono text-[11px] tracking-[0.2em] uppercase">
+      <div className="reveal reveal-delay-3 mt-8 sm:mt-10 flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-5 gap-y-3 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase">
         <a href="https://www.linkedin.com/in/josuekenge/" target="_blank" rel="noopener"
            className="text-paper/60 hover:text-paper transition">
           LinkedIn / @josuekenge
@@ -934,7 +937,7 @@ const Contact = () => (
         </a>
       </div>
 
-      <div className="reveal reveal-delay-4 mt-10 font-mono text-xs tracking-widest text-paper/45 uppercase">
+      <div className="reveal reveal-delay-4 mt-8 sm:mt-10 font-mono text-[10px] sm:text-xs tracking-widest text-paper/45 uppercase">
         <span className="text-cobalt-400">◆</span> 613.415.6829 · Markham, ON · Open to remote
       </div>
     </div>
@@ -946,9 +949,9 @@ const Contact = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Footer = () => (
-  <footer className="border-t border-cobalt-500/10 py-12 px-8">
-    <div className="max-w-[1480px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-      <div className="font-mono text-xs tracking-widest text-paper/40 uppercase">
+  <footer className="border-t border-cobalt-500/10 py-8 sm:py-12 px-5 sm:px-6 md:px-8">
+    <div className="max-w-[1480px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 text-center md:text-left">
+      <div className="font-mono text-[10px] sm:text-xs tracking-widest text-paper/40 uppercase">
         © 2026 Josue Kenge · Designed & built end-to-end
       </div>
 

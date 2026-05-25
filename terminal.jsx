@@ -64,7 +64,7 @@ const Terminal = ({
   label = 'session · live',
   minHeight = '420px',
   maxWidth = '720px',
-  fontSize = 'clamp(13px, 1.2vw, 17px)',
+  fontSize = 'clamp(11px, 2.6vw, 17px)',
 }) => {
   const [lines, setLines] = React.useState([]);
   const [cursor, setCursor] = React.useState(true);
@@ -125,7 +125,7 @@ const Terminal = ({
   }, [reducedMotion]);
 
   return (
-    <div className="relative w-full" style={{ maxWidth }}>
+    <div className="relative w-full mx-auto" style={{ maxWidth }}>
       {/* outer cobalt glow */}
       <div
         className="absolute inset-0 -z-10 rounded-3xl"
@@ -165,14 +165,16 @@ const Terminal = ({
           </div>
         </div>
 
-        {/* body */}
+        {/* body — horizontal scroll on small screens so long pre lines don't blow out layout */}
         <div
-          className="px-7 py-7 font-mono whitespace-pre"
+          className="terminal-body px-4 sm:px-7 py-5 sm:py-7 font-mono whitespace-pre"
           style={{
             color: 'rgba(255,255,255,0.85)',
             fontSize,
             lineHeight: 1.65,
             minHeight,
+            overflowX: 'auto',
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           {lines.map((line, i) => {

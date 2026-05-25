@@ -8,12 +8,13 @@
 
 const DNode = ({ tier, name, sub, accent = '#3b6dff', wide }) => (
   <div
-    className="rounded-2xl px-5 py-4 text-center relative"
+    className="rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center relative w-full sm:w-auto"
     style={{
       background: 'linear-gradient(160deg, rgba(28,58,143,0.4), rgba(10,26,74,0.6) 70%, rgba(5,10,31,0.85))',
       border: `1px solid ${accent}55`,
       boxShadow: `0 12px 30px rgba(3,6,15,0.4), inset 0 1px 0 rgba(155,180,255,0.08)`,
-      minWidth: wide ? '260px' : '180px',
+      minWidth: 0,
+      maxWidth: '100%',
     }}
   >
     <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-1.5" style={{ color: accent }}>
@@ -59,17 +60,17 @@ const DArrow = ({ dir = 'down', label }) => {
 };
 
 const DRow = ({ children }) => (
-  <div className="flex items-stretch justify-center gap-6 flex-wrap">{children}</div>
+  <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 flex-wrap">{children}</div>
 );
 
 const DFrame = ({ children, label }) => (
-  <div className="relative rounded-3xl p-8 lg:p-10"
+  <div className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10"
     style={{
       background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,109,255,0.08), transparent 60%), rgba(6,8,15,0.6)',
       border: '1px solid rgba(96,165,250,0.15)',
     }}
   >
-    <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-6">
+    <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-4 sm:mb-6">
       ◆ {label || 'Architecture'}
     </div>
     {children}
@@ -498,8 +499,8 @@ const CaseStudyModal = ({ project, onClose }) => {
       style={{ background: 'rgba(3,6,15,0.88)', backdropFilter: 'blur(20px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="min-h-screen flex items-start justify-center py-12 px-4 md:px-8">
-        <div className="relative w-full max-w-[1200px] rounded-3xl overflow-hidden"
+      <div className="min-h-screen-d flex items-start justify-center py-6 sm:py-12 px-3 sm:px-4 md:px-8">
+        <div className="relative w-full max-w-[1200px] rounded-2xl sm:rounded-3xl overflow-hidden"
           style={{
             background: 'linear-gradient(180deg, rgba(12,18,38,0.95), rgba(7,11,26,0.95))',
             border: '1px solid rgba(110,141,255,0.2)',
@@ -510,36 +511,36 @@ const CaseStudyModal = ({ project, onClose }) => {
           <button
             onClick={onClose}
             aria-label="Close"
-            className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-ink-950/80 border border-cobalt-500/30 text-paper/70 hover:text-paper hover:border-cobalt-500 transition"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-ink-950/80 border border-cobalt-500/30 text-paper/70 hover:text-paper hover:border-cobalt-500 transition"
           >
             ✕
           </button>
 
           {/* Header */}
-          <div className="p-8 md:p-12 border-b" style={{ borderColor: 'rgba(110,141,255,0.12)' }}>
-            <div className="flex items-center gap-4 font-mono text-[11px] tracking-widest text-cobalt-400/80 uppercase">
+          <div className="p-5 sm:p-8 md:p-12 border-b" style={{ borderColor: 'rgba(110,141,255,0.12)' }}>
+            <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest text-cobalt-400/80 uppercase">
               <span>CASE STUDY · {project.n}</span>
               <span className="h-px w-6 bg-cobalt-500/30" />
               <span className="text-paper/50">{project.year}</span>
             </div>
-            <h2 className="mt-5 font-display text-5xl md:text-7xl tracking-tight leading-[0.95]">
+            <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl md:text-7xl tracking-tight leading-[0.95]">
               {project.title} <span className="acc text-cobalt-400">— {project.sub}</span>
             </h2>
-            <div className="mt-4 font-mono text-xs tracking-widest text-paper/55 uppercase">
+            <div className="mt-3 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
               {project.role}
             </div>
-            <p className="mt-8 max-w-[820px] text-paper/80 text-lg leading-relaxed">
+            <p className="mt-5 sm:mt-8 max-w-[820px] text-paper/80 text-sm sm:text-lg leading-relaxed">
               {cs.summary}
             </p>
           </div>
 
-          {/* Diagram */}
-          <div className="p-8 md:p-12">
+          {/* Diagram — horizontal scroll if it overflows on mobile */}
+          <div className="p-5 sm:p-8 md:p-12 overflow-x-auto">
             {Diagram && <Diagram />}
           </div>
 
           {/* Stack + Approach */}
-          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-10 px-8 md:px-12 pb-12">
+          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-10 px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
             {/* Stack */}
             <div>
               <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-5">
@@ -572,13 +573,13 @@ const CaseStudyModal = ({ project, onClose }) => {
           </div>
 
           {/* Outcomes */}
-          <div className="px-8 md:px-12 pb-12">
+          <div className="px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
             <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-5">
               ◆ Outcomes
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {cs.outcomes.map((o, i) => (
-                <div key={i} className="rounded-2xl p-5"
+                <div key={i} className="rounded-xl sm:rounded-2xl p-4 sm:p-5"
                   style={{
                     background: 'rgba(6,8,15,0.6)',
                     border: '1px solid rgba(110,141,255,0.15)',
@@ -594,17 +595,17 @@ const CaseStudyModal = ({ project, onClose }) => {
 
           {/* Quote */}
           {cs.quote && (
-            <div className="px-8 md:px-12 pb-12">
-              <div className="rounded-3xl p-8 md:p-10"
+            <div className="px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
+              <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10"
                 style={{
                   background: 'linear-gradient(135deg, rgba(59,109,255,0.1), rgba(110,141,255,0.04))',
                   border: '1px solid rgba(110,141,255,0.25)',
                 }}>
-                <div className="font-display text-2xl md:text-3xl text-paper/95 leading-snug">
-                  <span className="acc text-cobalt-400 text-4xl mr-2">"</span>
+                <div className="font-display text-lg sm:text-2xl md:text-3xl text-paper/95 leading-snug">
+                  <span className="acc text-cobalt-400 text-3xl sm:text-4xl mr-2">"</span>
                   {cs.quote.text}
                 </div>
-                <div className="mt-5 font-mono text-[10px] tracking-widest text-cobalt-300/80 uppercase">
+                <div className="mt-4 sm:mt-5 font-mono text-[10px] tracking-widest text-cobalt-300/80 uppercase">
                   — {cs.quote.attr}
                 </div>
               </div>
@@ -612,14 +613,14 @@ const CaseStudyModal = ({ project, onClose }) => {
           )}
 
           {/* Footer */}
-          <div className="px-8 md:px-12 py-8 border-t flex items-center justify-between"
+          <div className="px-5 sm:px-8 md:px-12 py-6 sm:py-8 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
             style={{ borderColor: 'rgba(110,141,255,0.12)' }}>
             <div className="font-mono text-[10px] tracking-widest text-paper/45 uppercase">
               ◆ {project.title} · {project.year}
             </div>
             <button
               onClick={onClose}
-              className="font-mono text-[11px] tracking-widest uppercase text-paper/70 hover:text-paper transition"
+              className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-paper/70 hover:text-paper transition"
             >
               ← back to portfolio
             </button>
