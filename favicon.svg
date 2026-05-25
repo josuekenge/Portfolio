@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="28%" cy="22%" r="100%">
+      <stop offset="0%" stop-color="#2952e8"/>
+      <stop offset="45%" stop-color="#0a1750"/>
+      <stop offset="100%" stop-color="#03060f"/>
+    </radialGradient>
+    <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9bb4ff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#3b6dff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#c8d6ff"/>
+      <stop offset="100%" stop-color="#6e8dff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- rounded ink square -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+
+  <!-- faint grid texture -->
+  <g stroke="#6e8dff" stroke-opacity="0.08" stroke-width="0.5">
+    <line x1="0" y1="16" x2="64" y2="16"/>
+    <line x1="0" y1="32" x2="64" y2="32"/>
+    <line x1="0" y1="48" x2="64" y2="48"/>
+    <line x1="16" y1="0" x2="16" y2="64"/>
+    <line x1="32" y1="0" x2="32" y2="64"/>
+    <line x1="48" y1="0" x2="48" y2="64"/>
+  </g>
+
+  <!-- cobalt orb (the brand dot from the nav) -->
+  <circle cx="51" cy="13" r="9" fill="url(#dotGlow)"/>
+  <circle cx="51" cy="13" r="2.8" fill="#3b6dff"/>
+
+  <!-- JK monogram -->
+  <text x="32" y="48" text-anchor="middle"
+        font-family="ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
+        font-weight="800" font-size="38" letter-spacing="-3"
+        fill="url(#ink)" textLength="40" lengthAdjust="spacingAndGlyphs">JK</text>
+</svg>
