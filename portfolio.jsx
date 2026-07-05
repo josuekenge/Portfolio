@@ -476,11 +476,11 @@ const Hero = () => {
             <span className="text-ink font-normal"> 25,000+ users</span>. From architecture to deployment.
           </p>
 
-          <div className="reveal reveal-delay-3 mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <a href="#work" className="pill pill-solid justify-center">
+          <div className="reveal reveal-delay-3 mt-8 sm:mt-10 flex flex-wrap items-center gap-2 sm:gap-3">
+            <a href="#work" className="pill pill-solid justify-center text-[13px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
               View selected work <span className="arw">→</span>
             </a>
-            <a href="mailto:josuekenge4@gmail.com" className="pill pill-ghost justify-center">
+            <a href="mailto:josuekenge4@gmail.com" className="pill pill-ghost justify-center text-[13px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
               Get in touch <span className="arw">→</span>
             </a>
           </div>
