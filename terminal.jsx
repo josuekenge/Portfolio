@@ -6,7 +6,7 @@ const AGENT_TRACE = [
   '> $ josue --whoami',
   '',
   '  loading profile................. ✓',
-  '  ├─ role:    AI Engineer @ Markham',
+  '  ├─ role:    AI Engineer · Ottawa',
   '  ├─ shipped: 7 production systems',
   '  ├─ reach:   25,000+ users',
   '  └─ saved:   $303K+ in client value',

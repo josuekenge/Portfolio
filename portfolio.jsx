@@ -373,7 +373,7 @@ const Nav = () => {
   const links = [
     ['Experience', '#experience'],
     ['MobiSoins', '#mobisoins'],
-    ['Work', '#work'],
+    ['Projects', '#work'],
     ['Stack', '#skills'],
     ['About', '#about'],
     ['Contact', '#contact'],
@@ -461,7 +461,7 @@ const Hero = () => {
         {/* Left — copy */}
         <div className="min-w-0">
           <div className="reveal">
-            <Eyebrow>AI Engineer · Markham / Toronto</Eyebrow>
+            <Eyebrow>AI Engineer · Ottawa, ON</Eyebrow>
           </div>
 
           <h1 className="hero-headline reveal reveal-delay-1 mt-7 font-display font-normal text-ink text-[clamp(33px,6vw,96px)] leading-[0.94] tracking-[-0.02em]">
@@ -644,7 +644,7 @@ const ProjectCard = ({ p, onOpen }) => (
 );
 
 const Work = ({ onOpenProject }) => (
-  <section id="work" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+  <section id="work" className="max-w-[1360px] mx-auto px-5 sm:px-8 pt-20 sm:pt-28 pb-8 sm:pb-10">
     <div className="reveal flex items-end justify-between gap-6 mb-12">
       <div>
         <Eyebrow>Selected work</Eyebrow>
@@ -670,19 +670,19 @@ const ContinuationCard = () => (
   <div className="reveal flex sm:col-span-1 lg:col-span-2 flex-col justify-center sm:justify-between gap-5 sm:gap-0 py-2 sm:py-0">
     <div className="agentflow-eyebrow">the roadmap continues</div>
 
-    <svg viewBox="0 0 720 360" style={{ width: '100%', height: 'auto', maxWidth: 700, margin: '8px auto' }} aria-hidden="true">
+    <svg viewBox="0 0 720 360" style={{ width: '100%', height: 'auto', maxWidth: 760, margin: '6px auto' }} aria-hidden="true">
       <path className="roadmap-path"
         d="M50 70 C 190 70 190 250 330 250 C 470 250 470 90 610 90 C 660 90 680 140 680 200 C 680 270 560 300 470 300" />
       {RM_NODES.map((n, i) => (
         <g key={n.label}>
-          <rect className="roadmap-node" x={n.x - 5} y={n.y - 5} width="10" height="10" rx="1.5"
+          <rect className="roadmap-node" x={n.x - 6.5} y={n.y - 6.5} width="13" height="13" rx="2"
             transform={`rotate(45 ${n.x} ${n.y})`} style={{ animationDelay: `${n.d}s` }} />
           <text className="roadmap-label" x={n.lx} y={n.ly} textAnchor="middle">{n.label}</text>
         </g>
       ))}
       {/* terminal — points down into the Stack section */}
-      <rect className="roadmap-end" x="463" y="293" width="14" height="14" rx="1.5" transform="rotate(45 470 300)" />
-      <path className="roadmap-arrow" d="M461 316 l9 10 l9 -10" fill="none" stroke="#8C8878" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <rect className="roadmap-end" x="461" y="291" width="18" height="18" rx="2.5" transform="rotate(45 470 300)" />
+      <path className="roadmap-arrow" d="M459 318 l11 12 l11 -12" fill="none" stroke="#726E63" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 
     <div>
@@ -690,8 +690,8 @@ const ContinuationCard = () => (
         Seven shipped. <span className="italic-accent text-ink-500">The next one's a conversation.</span>
       </h3>
       <a href="#skills"
-        className="mt-5 inline-flex items-center gap-2 text-[12px] tracking-widest uppercase text-ink-700 hover:text-ink transition-colors">
-        See the stack <span className="arw">↓</span>
+        className="group mt-5 inline-flex items-center gap-2 text-[13px] tracking-widest uppercase font-medium text-ink hover:text-accent transition-colors">
+        See the stack <span className="transition-transform group-hover:translate-y-0.5">↓</span>
       </a>
     </div>
   </div>
@@ -1138,7 +1138,7 @@ const Experience = () => {
 // ────────────────────────────────────────────────────────────────
 
 const Skills = () => (
-  <section id="skills" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-14 sm:py-28">
+  <section id="skills" className="max-w-[1360px] mx-auto px-5 sm:px-8 pt-6 sm:pt-10 pb-14 sm:pb-28">
     <div className="reveal mb-7 sm:mb-12">
       <Eyebrow>Toolkit</Eyebrow>
       <h2 className="section-title mt-4 sm:mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl tracking-tight">Stack</h2>
@@ -1205,25 +1205,22 @@ const About = () => (
 
       {/* Identity: avatar on top, meta box under it */}
       <div className="reveal reveal-delay-2 flex flex-col gap-2.5 sm:gap-4 lg:gap-5" style={{ gridArea: 'idty' }}>
-        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden card w-full" style={{ aspectRatio: '4/5' }}>
-          <div className="absolute inset-0 grid-lines-sm opacity-60" />
-          <img src="avatars/josue.png" alt="Josue Kenge"
-            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[92%] object-contain"
-            style={{
-              filter: 'drop-shadow(0 20px 30px rgba(27,26,22,0.18))',
-              WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
-              maskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
-            }} />
+        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden card w-full" style={{ aspectRatio: '4/5', background: '#E8E8EE' }}>
+          <img src="assets/josue-headshot.png" alt="Josue Kenge"
+            className="absolute inset-0 w-full h-full object-contain" style={{ objectPosition: '50% 100%' }} />
+          {/* bottom scrim so the tags stay legible over the photo */}
+          <div className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, rgba(14,13,11,0.86), rgba(14,13,11,0.32) 45%, transparent)' }} />
           <div className="hidden lg:flex absolute top-5 left-5 right-5 justify-between items-start">
             <PixelMark size={22} color="#1B1A16" />
-            <span className="text-[11px] tracking-widest text-ink-400">'26</span>
+            <span className="text-[11px] tracking-widest text-ink-700">'26</span>
           </div>
-          <div className="hidden lg:flex absolute bottom-5 left-5 right-5 justify-between items-end text-[11px] tracking-widest uppercase">
+          <div className="hidden lg:flex absolute bottom-5 left-5 right-5 justify-between items-end text-[11px] tracking-widest uppercase text-white/90">
             <div>
-              <div className="text-ink font-medium">AI Engineer</div>
-              <div className="text-ink-400 mt-1">Markham · ON</div>
+              <div className="font-medium">AI Engineer</div>
+              <div className="text-white/55 mt-1">Ottawa · ON</div>
             </div>
-            <div className="text-right text-ink-400">
+            <div className="text-right text-white/55">
               <div>Est.</div>
               <div>2024</div>
             </div>
@@ -1232,7 +1229,7 @@ const About = () => (
         <div className="card rounded-xl lg:rounded-2xl p-3 sm:p-5 lg:p-6 space-y-2 sm:space-y-3 lg:space-y-3.5">
           {[
             ['Education', 'Carleton · B.Sc. CS'],
-            ['Based in', 'Markham, ON'],
+            ['Based in', 'Ottawa, ON'],
             ['Languages', 'English, French'],
             ['Email', 'josuekenge4@gmail.com'],
           ].map(([k, v]) => (
@@ -1270,7 +1267,7 @@ const Contact = () => (
       </div>
 
       <div className="reveal reveal-delay-3 mt-7 sm:mt-8 text-[12px] tracking-widest uppercase text-ink-400">
-        613.415.6829 · Markham, ON · Open to remote
+        613.415.6829 · Ottawa, ON · Open to remote
       </div>
     </div>
   </section>
@@ -1282,12 +1279,12 @@ const Contact = () => (
 
 const Footer = () => (
   <footer className="border-t border-line py-10 px-5 sm:px-8">
-    <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-      <div className="flex items-center gap-2.5">
+    <div className="max-w-[1360px] mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-6 text-center">
+      <div className="flex items-center justify-center md:justify-start gap-2.5">
         <PixelMark size={20} color="#1B1A16" />
         <span className="text-[12px] tracking-wide text-ink-400">© 2026 Josue Kenge · Designed & built end-to-end</span>
       </div>
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center justify-center gap-2.5">
         {[
           { label: 'LinkedIn', href: 'https://www.linkedin.com/in/josuekenge/', d: 'M4.98 3.5a2.5 2.5 0 11-.02 5.01A2.5 2.5 0 014.98 3.5zM3 9h4v12H3V9zm6 0h3.8v1.64h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9z' },
           { label: 'X', href: 'https://x.com/kengejosue', d: 'M18.24 2.25h3.3l-7.2 8.23L23 21.75h-6.63l-5.2-6.8-5.94 6.8H1.92l7.7-8.8L1.5 2.25h6.8l4.7 6.2 5.24-6.2zm-1.16 17.52h1.83L7.02 4.13H5.06l12.02 15.64z' },
@@ -1299,7 +1296,7 @@ const Footer = () => (
           </a>
         ))}
       </div>
-      <div className="flex items-center gap-2.5 text-[12px] tracking-widest uppercase text-ink-400">
+      <div className="flex items-center justify-center md:justify-end gap-2.5 text-[12px] tracking-widest uppercase text-ink-400">
         <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />Open to AI engineering roles
       </div>
     </div>

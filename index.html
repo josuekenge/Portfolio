@@ -125,30 +125,30 @@
 
   /* ─────────── Continuation roadmap (work → stack) ─────────── */
   .roadmap-path {
-    fill: none; stroke: #D3CEC0; stroke-width: 1.5; stroke-linecap: round;
-    stroke-dasharray: 1 9; animation: roadFlow 5.5s linear infinite;
+    fill: none; stroke: #9E9A8D; stroke-width: 1.8; stroke-linecap: round;
+    stroke-dasharray: 2 6; animation: roadFlow 5s linear infinite;
   }
-  @keyframes roadFlow { to { stroke-dashoffset: -100; } }
+  @keyframes roadFlow { to { stroke-dashoffset: -80; } }
   .roadmap-node {
-    fill: #F4F1E9; stroke: #C4C0B3; stroke-width: 1.5;
-    animation: roadNode 5.5s ease-in-out infinite;
+    fill: #F4F1E9; stroke: #8C8878; stroke-width: 2;
+    animation: roadNode 5s ease-in-out infinite;
   }
   @keyframes roadNode {
-    0%, 100% { stroke: #C4C0B3; fill: #F4F1E9; }
-    10%      { stroke: #3C3A33; fill: #3C3A33; }
-    26%      { stroke: #C4C0B3; fill: #F4F1E9; }
+    0%, 100% { stroke: #8C8878; fill: #F4F1E9; }
+    10%      { stroke: #2A2822; fill: #2A2822; }
+    26%      { stroke: #8C8878; fill: #F4F1E9; }
   }
-  .roadmap-end { fill: #F4F1E9; stroke: #B4B0A3; stroke-width: 1.5; animation: roadEnd 5.5s ease-in-out infinite; }
+  .roadmap-end { fill: #F4F1E9; stroke: #726E63; stroke-width: 2.2; animation: roadEnd 5s ease-in-out infinite; }
   @keyframes roadEnd {
-    0%, 100% { stroke: #B4B0A3; }
-    66%      { stroke: #3A43D6; }
+    0%, 100% { stroke: #726E63; }
+    60%      { stroke: #3A43D6; fill: rgba(58,67,214,0.08); }
   }
-  .roadmap-arrow { animation: roadArrow 5.5s ease-in-out infinite; }
+  .roadmap-arrow { animation: roadArrow 5s ease-in-out infinite; }
   @keyframes roadArrow {
-    0%, 58%, 100% { opacity: .45; }
-    74%           { opacity: 1; }
+    0%, 55%, 100% { opacity: .55; }
+    72%           { opacity: 1; }
   }
-  .roadmap-label { fill: #A9A597; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: 1.6px; }
+  .roadmap-label { fill: #726E63; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; letter-spacing: 1.8px; }
 
   /* ─────────── Pill buttons ─────────── */
   .pill {
