@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MobiSoins · The Story</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE9DF; --sheet:#FCFBF8; --ink:#1B1A16; --ink2:#4A473E; --ink3:#726E63;
+    --ink4:#9A9587; --line:#E5E1D6; --lined:#D8D3C6; --navy:#253E7D; --green:#45B39D; --accent:#3A43D6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Poppins',system-ui,sans-serif; font-weight:400;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  ::selection{background:var(--ink); color:var(--paper);}
+  .font-display{font-family:'Fraunces',Georgia,serif; font-optical-sizing:auto;}
+  .ital{font-family:'Fraunces',Georgia,serif; font-style:italic;}
+
+  /* Top bar + progress */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:20; height:58px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 clamp(16px,4vw,40px); background:rgba(237,233,223,0.85);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .topbar a{color:var(--ink3); text-decoration:none; font-size:14px; transition:color .2s;}
+  .topbar a:hover{color:var(--ink);}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand img{height:20px; width:auto;}
+  .progress{position:fixed; top:58px; left:0; height:2px; background:var(--navy); width:0%; z-index:21; transition:width .1s linear;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:8px 15px; border-radius:999px;
+    border:1px solid var(--lined); background:var(--sheet); color:var(--ink); font-size:13px; font-weight:500;
+    cursor:pointer; text-decoration:none; transition:all .25s;
+  }
+  .btn:hover{border-color:var(--ink); transform:translateY(-1px);}
+
+  /* Document sheet */
+  .desk{padding:92px clamp(12px,4vw,48px) 80px;}
+  .sheet{
+    max-width:820px; margin:0 auto; background:var(--sheet);
+    border:1px solid var(--line); border-radius:6px;
+    box-shadow:0 40px 90px rgba(27,26,22,0.12), 0 8px 24px rgba(27,26,22,0.05);
+    padding:clamp(36px,7vw,88px) clamp(24px,7vw,104px);
+  }
+
+  /* Cover */
+  .eyebrow{display:inline-flex; align-items:center; gap:9px; font-size:12px; font-weight:500;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--ink4);}
+  .eyebrow .sq{width:7px; height:7px; background:var(--navy);}
+  .cover-logo{height:34px; margin-bottom:34px;}
+  h1.title{font-family:'Fraunces',serif; font-weight:400; font-size:clamp(40px,7vw,68px);
+    line-height:1.02; letter-spacing:-0.02em; margin:22px 0 0;}
+  h1.title .ital{color:var(--ink3);}
+  .subtitle{margin-top:22px; font-size:clamp(17px,2.4vw,21px); font-weight:300; color:var(--ink3); max-width:52ch; line-height:1.55;}
+  .meta{margin-top:34px; padding-top:22px; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:10px 30px;
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink4);}
+  .meta b{color:var(--ink2); font-weight:500;}
+
+  /* TOC */
+  .toc{margin-top:52px; padding:28px 32px; background:#F6F3EB; border:1px solid var(--line); border-radius:10px;}
+  .toc h4{margin:0 0 16px; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink4); font-weight:600;}
+  .toc ol{margin:0; padding:0; list-style:none; counter-reset:t;}
+  .toc li{counter-increment:t; margin:0;}
+  .toc a{display:flex; align-items:baseline; gap:14px; padding:8px 0; border-top:1px solid var(--line);
+    color:var(--ink2); text-decoration:none; font-size:15px; transition:color .2s;}
+  .toc li:first-child a{border-top:none;}
+  .toc a:hover{color:var(--navy);}
+  .toc a::before{content:counter(t,decimal-leading-zero); font-family:'Fraunces',serif; font-size:13px; color:var(--ink4); min-width:24px;}
+
+  /* Sections */
+  section{margin-top:72px; scroll-margin-top:80px;}
+  .kicker{font-family:'Fraunces',serif; font-size:13px; color:var(--ink4); letter-spacing:.04em;}
+  h2{font-family:'Fraunces',serif; font-weight:400; font-size:clamp(28px,4.4vw,42px); line-height:1.08;
+    letter-spacing:-0.015em; margin:12px 0 0;}
+  h3{font-family:'Fraunces',serif; font-weight:500; font-size:clamp(19px,2.6vw,24px); margin:40px 0 0; letter-spacing:-0.01em;}
+  p{margin:20px 0 0; font-size:16.5px; font-weight:300; line-height:1.72; color:var(--ink2); max-width:66ch;}
+  p.lead{font-size:19px; color:var(--ink); font-weight:300; line-height:1.66;}
+  strong{font-weight:500; color:var(--ink);}
+  sup a{color:var(--navy); text-decoration:none; font-size:11px; font-weight:600;}
+  sup a:hover{text-decoration:underline;}
+
+  /* Stat band */
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0; margin:36px 0 0;
+    border-top:1px solid var(--lined); border-left:1px solid var(--lined);}
+  .stat{padding:22px 20px; border-bottom:1px solid var(--lined); border-right:1px solid var(--lined);}
+  .stat .n{font-family:'Fraunces',serif; font-size:34px; line-height:1; color:var(--ink); letter-spacing:-0.01em;}
+  .stat .l{margin-top:10px; font-size:12.5px; color:var(--ink3); line-height:1.4; font-weight:300;}
+
+  /* Pull quote */
+  blockquote{margin:44px 0 0; padding:6px 0 6px 26px; border-left:3px solid var(--green);}
+  blockquote p{font-family:'Fraunces',serif; font-style:italic; font-weight:400; font-size:clamp(21px,3vw,27px);
+    line-height:1.4; color:var(--ink); max-width:60ch; margin:0;}
+
+  /* Callout card */
+  .note{margin:36px 0 0; padding:24px 28px; background:#F6F3EB; border:1px solid var(--line); border-radius:12px;}
+  .note .t{font-family:'Fraunces',serif; font-size:18px; color:var(--ink);}
+  .note p{margin-top:10px; font-size:15px;}
+  .note a{color:var(--navy); text-decoration:none; font-weight:500;}
+  .note a:hover{text-decoration:underline;}
+
+  hr.div{margin:76px 0 0; border:none; border-top:1px solid var(--line);}
+
+  /* References */
+  .refs{margin-top:24px;}
+  .refs ol{margin:0; padding-left:22px;}
+  .refs li{margin:12px 0; font-size:13.5px; color:var(--ink3); line-height:1.5; font-weight:300;}
+  .refs a{color:var(--navy); text-decoration:none; word-break:break-word;}
+  .refs a:hover{text-decoration:underline;}
+
+  .endmark{margin-top:64px; padding-top:26px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .endmark .sig{font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:var(--ink2);}
+
+  @media (max-width:640px){
+    .topbar .hideSm{display:none;}
+    p{font-size:16px;}
+  }
+  @media print{
+    .topbar,.progress,.btn{display:none!important;}
+    body{background:#fff;}
+    .desk{padding:0;}
+    .sheet{box-shadow:none; border:none; max-width:100%; padding:0;}
+    section{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html#mobisoins">← Back to portfolio</a>
+  <div class="brand"><img src="assets/mobisoins-logo.png" alt="MobiSoins" /></div>
+  <a href="#" onclick="window.print();return false;" class="btn hideSm">Print / PDF</a>
+</div>
+<div class="progress" id="prog"></div>
+
+<div class="desk">
+<article class="sheet">
+
+  <!-- COVER -->
+  <img src="assets/mobisoins-logo.png" alt="MobiSoins" class="cover-logo" />
+  <div class="eyebrow"><span class="sq"></span>The MobiSoins Story · Field Notes</div>
+  <h1 class="title">Bringing the nurse<br/><span class="ital">back to the door.</span></h1>
+  <p class="subtitle">Why we built an on-demand home-nursing marketplace for Montréal: the problem in the market, the people we help, and where we go next.</p>
+  <div class="meta">
+    <span><b>Montréal, QC</b></span>
+    <span>Launched <b>July 2025</b></span>
+    <span><b>4</b> founding nurses</span>
+    <span>Home nursing · on demand</span>
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#thesis">The idea in one sentence</a></li>
+      <li><a href="#problem">A system stretched past its limit</a></li>
+      <li><a href="#gap">The missing middle</a></li>
+      <li><a href="#patients">Who we're helping: patients</a></li>
+      <li><a href="#nurses">Who we're helping: nurses</a></li>
+      <li><a href="#why">Why we started MobiSoins</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#visit">A visit, start to finish</a></li>
+      <li><a href="#economics">The economics of a fair model</a></li>
+      <li><a href="#objections">Objections we take seriously</a></li>
+      <li><a href="#montreal">Why Montréal first</a></li>
+      <li><a href="#trust">Trust, safety and dignity</a></li>
+      <li><a href="#now">Where we are now</a></li>
+      <li><a href="#vision">The vision</a></li>
+      <li><a href="#refs">Sources</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section id="thesis">
+    <div class="kicker">01</div>
+    <h2>The idea in one sentence.</h2>
+    <p class="lead">Care should come to people, not the other way around.</p>
+    <p>For most of the last century, needing a nurse meant going somewhere. A waiting room. An emergency department. A clinic across town. That made sense when medicine mostly lived inside buildings. It makes a lot less sense today, when a blood-pressure check, a wound dressing, an IV, a post-operative follow-up or a vaccination can be done safely and expertly at someone's own kitchen table.</p>
+    <p>MobiSoins is a marketplace that connects patients who need clinical nursing care with licensed nurses who deliver it at home, on demand. You open the app, see available nurses nearby on a live map, pick a service, pay securely, and watch your nurse travel to your door in real time. It's the on-demand model the rest of our lives already run on, pointed at the thing that matters most: your health.</p>
+    <p>The rest of this is about why that model isn't a convenience but a necessity, and why Québec needs it now. If you'd rather just see the product, it's live at <strong>mobisoins.com</strong>.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 2 -->
+  <section id="problem">
+    <div class="kicker">02</div>
+    <h2>A system stretched past its limit.</h2>
+    <p>Québec's public system is one of the best ideas in the country: universal, publicly funded, humane by design. It is also, right now, overwhelmed. You don't have to take our word for it. The numbers come from the province and its own hospitals.</p>
+
+    <h3>Emergency rooms have become waiting rooms</h3>
+    <p>Québec has the longest ER waits in Canada. In 2024-25 the average stay in a Québec emergency room was <strong>5 hours and 23 minutes</strong><sup><a href="#r1">1</a></sup>. For the sickest patients, the ones who need a stretcher, the median was <strong>11 hours and 6 minutes</strong>, and almost a quarter of them spent more than a full day in the department<sup><a href="#r2">2</a></sup>.</p>
+    <p>The rooms themselves are past full. By February 2025 the provincial stretcher-occupancy rate sat at <strong>123%</strong>, up more than ten points in a year, and some Montréal hospitals were far worse: the Jewish General hit <strong>196%</strong>, Lachine <strong>186%</strong>, and the Royal Victoria peaked around <strong>215%</strong>, with staff calling 150 to 175% a normal day<sup><a href="#r3">3</a></sup>. In the first days of January 2025 alone, <strong>829 people had waited more than 24 hours</strong> for care, and another 296 had waited past 48<sup><a href="#r3">3</a></sup>.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">5h 23m</div><div class="l">Average Québec ER stay, the longest in Canada (2024-25)<sup><a href="#r1">1</a></sup></div></div>
+      <div class="stat"><div class="n">123%</div><div class="l">Provincial ER stretcher occupancy, Feb 2025; some Montréal sites hit 196 to 215%<sup><a href="#r3">3</a></sup></div></div>
+      <div class="stat"><div class="n">829</div><div class="l">Patients who had waited over 24 hours, early January 2025<sup><a href="#r3">3</a></sup></div></div>
+    </div>
+
+    <p>Here is the part that should bother everyone. A large share of the people sitting in those chairs don't need an emergency room at all. They need a wound checked, a catheter changed, a medication given, a set of vitals taken. Twenty-minute jobs that could happen at home, if home were an option. Instead they wait, and while they wait they use up the very capacity the truly critical cases depend on.</p>
+
+    <h3>There aren't enough nurses, and the ones we have are exhausted</h3>
+    <p>At the root of the bottleneck is people. Québec has run short by roughly <strong>4,000 nurses</strong>, and the gap has been stubborn<sup><a href="#r4">4</a></sup>. To keep units open, the system leans on two exhausting crutches: mandatory overtime, known here as <em>TSO</em>, and expensive private agencies. Across Canada, public spending on those agencies was headed past <strong>$1.5 billion</strong> in a single year, up from $717 million just two years earlier<sup><a href="#r5">5</a></sup>. We'll come back to why nurses are walking away, because it turns out to be the crux of the whole thing.</p>
+
+    <h3>The demand curve only bends up</h3>
+    <p>Québec is aging faster than almost anywhere in North America. By <strong>2030, roughly 2.3 million Quebecers, one in four, will be over 65</strong>, up from one in five in 2021<sup><a href="#r6">6</a></sup>. The 65-and-over group alone is set to grow by more than <strong>half a million people by 2028</strong><sup><a href="#r7">7</a></sup>. Older adults are exactly the population that needs frequent, lower-acuity care, and exactly the people for whom a trip to a jammed ER is hardest and most dangerous.</p>
+
+    <h3>The place care is meant to move to is already full</h3>
+    <p>The obvious fix, more care at home, is official policy. Québec runs public home support (<em>soutien à domicile</em>) through its CLSC network, and in 2024 the government put <strong>$6 billion</strong> behind expanding home and community care through 2029<sup><a href="#r8">8</a></sup>. The intent is right. The capacity isn't there yet. In parts of Montréal the wait just for public home support can run <strong>past six weeks</strong>, and a real slice of seniors have home-care needs that go unmet while they sit on a list<sup><a href="#r9">9</a></sup>.</p>
+
+    <h3>The quiet cost</h3>
+    <p>Numbers describe the system. They don't describe the kitchen table where the strain actually lands. Behind almost every patient on a list is a family caregiver, very often a daughter, very often working, quietly absorbing the gap with unpaid hours and the low-grade dread of not knowing whether a wound is healing or turning. When care is hard to reach it doesn't disappear. It gets downloaded onto families who were never trained for it and can't keep it up.</p>
+    <p>There is a public cost to that private strain, too. A senior who can't get a simple dressing changed at home doesn't stay home. They end up back in the ER, or admitted, or unable to age in place at all. Putting off a cheap twenty-minute visit is one of the most reliable ways to manufacture an expensive one later.</p>
+    <p>Line the facts up and the picture is stark. Demand is climbing, staffing is short, the front door is jammed, the intended alternative has its own queue, and families carry the difference. Something has to give.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 3 -->
+  <section id="gap">
+    <div class="kicker">03</div>
+    <h2>The missing middle.</h2>
+    <p>Between the overloaded emergency room and the six-week home-care waitlist sits a gap. A <strong>missing middle</strong> where a huge amount of ordinary clinical care falls through.</p>
+    <p>On one side is the public system: essential, but rationed and slow to reach the home. On the other is the fully private clinic: fast, but often pricey, stuck inside a building, and out of reach for the people who need it most. What barely exists is the thing in between. A licensed nurse you can call to your home this week, at a clear price, without joining a queue or booking a room.</p>
+    <p>That missing middle is the whole reason MobiSoins exists. We aren't here to replace the public system, the CLSC or the hospital. We're here to catch the enormous volume of routine, home-appropriate care those institutions were never built to deliver at the speed real life demands, and to take pressure off the parts of the system that only a hospital can do.</p>
+    <blockquote><p>A nurse, at your door, when you actually need one.</p></blockquote>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 4 -->
+  <section id="patients">
+    <div class="kicker">04</div>
+    <h2>Who we're helping: patients.</h2>
+    <p>The easiest way to understand MobiSoins is to picture the people who open it.</p>
+    <p><strong>The older adult who wants to stay home.</strong> Aging in place is what almost everyone wants, and what the system says it wants too. For a senior managing diabetes, wound care or medication, a nurse who comes to them turns an exhausting, day-long ER expedition into a twenty-minute visit in a familiar chair.</p>
+    <p><strong>The patient just home from surgery.</strong> Post-operative care, whether that's dressing changes, drain management, injections or watching for complications, is high-stakes and routine at the same time. It's exactly the kind of care that's safest done consistently, at home, by a licensed professional, rather than left until something goes wrong.</p>
+    <p><strong>The person managing a chronic condition.</strong> Chronic illness is really a long series of small, recurring clinical needs. Meet them promptly at home and you head off the flare-ups that end in an ambulance.</p>
+    <p><strong>The new parent.</strong> Newborn checks, feeding support and postpartum care are needed at precisely the moment a family can least manage a clinic trip.</p>
+    <p><strong>The family caregiver.</strong> Behind almost every patient is an unpaid caregiver, often stretched to the limit. A reliable on-demand nurse gives them something they rarely get: relief, and the confidence that professional help is minutes away.</p>
+    <div class="note">
+      <div class="t">The common thread</div>
+      <p>Every one of these people needs care that is <strong>clinical but not critical</strong>. Real nursing, delivered where they already are. That's the exact band of care our system struggles most to reach, and the exact band MobiSoins is built for.</p>
+    </div>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 5 -->
+  <section id="nurses">
+    <div class="kicker">05</div>
+    <h2>Who we're helping: nurses.</h2>
+    <p>A marketplace has two sides, and the second one matters as much as the first. MobiSoins is built for nurses as much as for patients, because the reason care is hard to get is, in the end, that practising nursing has become hard to sustain.</p>
+    <p>The numbers here are grim. In a 2024 survey of more than 5,500 Canadian nurses, <strong>93% reported symptoms of burnout</strong>, about <strong>40% said they intend to leave the profession or retire</strong>, and 70% said their workplace regularly runs over capacity<sup><a href="#r10">10</a></sup>. In New Brunswick, one study found that roughly <strong>80 of every 100 nurses leave their job before age 35</strong><sup><a href="#r11">11</a></sup>. People aren't leaving because they stopped caring. They're leaving because the conditions stopped being survivable.</p>
+    <p>Pay is part of it. Registered-nurse wages in Québec run from about <strong>$27 to $50 an hour</strong>, but early-career nurses in Montréal often start closer to <strong>$24</strong>, for work that carries real clinical responsibility and rigid, employer-set hours<sup><a href="#r12">12</a></sup>. So when a private agency offers better money and, more importantly, control over your own schedule, the pull is obvious. That's the honest reason nurses leave the public system for agencies: not money alone, but flexibility<sup><a href="#r13">13</a></sup>.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n">93%</div><div class="l">Canadian nurses reporting burnout symptoms (2024 survey of 5,500+)<sup><a href="#r10">10</a></sup></div></div>
+      <div class="stat"><div class="n">40%</div><div class="l">Who intend to leave nursing or retire<sup><a href="#r10">10</a></sup></div></div>
+      <div class="stat"><div class="n">~$24/hr</div><div class="l">Typical starting pay for a Montréal RN, for high-responsibility work<sup><a href="#r12">12</a></sup></div></div>
+    </div>
+
+    <p>MobiSoins hands that control back. A nurse goes online when they want to work and appears on the patient map. They see each job's service, distance and payout <em>before</em> they accept. They pick their visits, set their own pace, and are paid <strong>per visit</strong> rather than on a fixed hourly grid, so the care they actually deliver is what sets their income, and for many that adds up to more than a public-sector wage would ever pay. No shift they didn't choose. No forced overtime. No agency skimming the middle.</p>
+    <blockquote><p>Give nurses autonomy and fair pay, and the shortage starts to look less like a lack of nurses and more like a lack of good ways to be one.</p></blockquote>
+    <p>Every nurse on MobiSoins is verified against their <strong>OIIQ</strong> registration, Québec's nursing order, so patients get a real professional and nurses get a platform that respects the licence they earned. Helping nurses build a sustainable, self-directed practice isn't a side effect of the model. It's half the mission.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 6 -->
+  <section id="why">
+    <div class="kicker">06</div>
+    <h2>Why we started MobiSoins.</h2>
+    <p>We didn't start with a technology. We started with a frustration that anyone who has helped an aging parent, recovered from surgery, or watched a loved one wait on a stretcher will recognize instantly. Getting a simple act of care done is far harder than it should be.</p>
+    <p>The more we looked, the more we saw the frustration wasn't a string of isolated failures. It was structural. The ER is full because the home isn't served. The home isn't served because there aren't enough nurses. There aren't enough nurses because the ways to practise are rigid and depleting. And demand climbs every single year as the province ages. Each problem feeds the next.</p>
+    <p>We also noticed that almost every other essential service in our lives had already been rebuilt around the person. You can summon a car, a meal or a plumber to your door in minutes, with a name, a price and a live map. Healthcare, the most personal service of all, had been left behind, still organized around buildings and queues.</p>
+    <p>MobiSoins is our attempt to close that gap responsibly. Not by cutting corners on safety or professionalism, but by using good software to do the unglamorous, genuinely hard work: verifying licences, matching the right nurse to the right visit in seconds, handling payment and records cleanly, and respecting the privacy laws healthcare demands. We started it because the need is real, it's local, it's growing, and because the people who could meet it, the nurses, deserved a better way to do their work.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 7 -->
+  <section id="how">
+    <div class="kicker">07</div>
+    <h2>How it works.</h2>
+    <p>The experience is deliberately simple on the surface, because the complexity lives underneath.</p>
+    <p><strong>For a patient:</strong> open the app, see licensed nurses available nearby on a live map, choose a service, confirm the address, and pay in-app before the visit. Watch the nurse travel to the door in real time, receive care, get a receipt automatically, and rate the visit.</p>
+    <p><strong>For a nurse:</strong> go online to appear on the map, receive a request showing the service, distance and payout, accept in seconds, navigate to the patient, deliver care, file a short visit report, and get paid on a weekly schedule.</p>
+    <p>Underneath, MobiSoins matches each request to the closest available nurse, holds payment securely until the visit is complete, streams live location so the patient is never left wondering, and keeps every record in line with Québec's privacy rules. The bar we hold ourselves to is concrete. A patient should go from opening the app to a confirmed nurse in under three minutes.</p>
+    <div class="note">
+      <div class="t">Want to see it, or go deeper?</div>
+      <p>The live product is at <a href="https://www.mobisoins.com" target="_blank" rel="noopener">mobisoins.com</a>. The full engineering write-up (real-time dispatch, escrow payments, the live-tracking pipeline, the Québec-compliance design) lives back on the portfolio, in the MobiSoins section's <strong>“View architecture”</strong> panel.</p>
+    </div>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 8 -->
+  <section id="visit">
+    <div class="kicker">08</div>
+    <h2>A visit, start to finish.</h2>
+    <p>Abstractions are easy to nod along to and hard to trust, so here is what a MobiSoins visit actually looks like from both sides of the door. The people are illustrative. The flow is exactly what the product does.</p>
+
+    <h3>From the patient's side</h3>
+    <p>It's a Tuesday evening. Denise, 74, came home from a minor procedure two days ago and her surgical dressing needs changing. A small thing that, done wrong or done late, can turn into a real problem. The public home-care line told her someone might come next week. The emergency room means a taxi, a five-hour wait, and a night she doesn't have in her.</p>
+    <p>Instead she opens MobiSoins. A live map shows three licensed nurses within a few kilometres. She taps the closest, reads a short profile and rating, selects wound and dressing care, confirms her address, and pays in-app at a clear, upfront price. Within a minute the request is accepted. She watches a small pin move across the map toward her street, and gets a gentle alert when the nurse is two hundred metres away. Twenty minutes after opening the app, a verified professional is at her table. The dressing is changed, a few questions are answered, a short visit note is filed, and a receipt lands in her inbox automatically. She rates the visit. The whole thing took less time than the drive to the hospital would have.</p>
+
+    <h3>From the nurse's side</h3>
+    <p>For Marie, three years into her nursing career, the appeal is simpler still. She decides when she works. After dropping her kids at school she taps <em>go online</em> and appears on the patient map. A request comes in. She sees the service, the distance and the payout before she commits, and accepts the ones that fit her day. Navigation opens to Denise's address. After the visit she files a short report from her phone and either takes the next request or logs off. On Friday she's paid for every visit she chose to take. No mandatory overtime. No shift she didn't agree to. No agency taking a cut in the middle.</p>
+    <p>Two people, one uneventful visit, which is exactly the point. In healthcare, uneventful is the highest praise there is.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 9 -->
+  <section id="economics">
+    <div class="kicker">09</div>
+    <h2>The economics of a fair model.</h2>
+    <p>A fair marketplace only works if the money makes sense for everyone in it: the patient, the nurse, and the wider system. Ours is built so it does.</p>
+    <p>Start with the system's own spending, because it shows where the waste is. Canada was on track to pay private nursing agencies more than <strong>$1.5 billion</strong> in a single year, up from $717 million two years earlier<sup><a href="#r5">5</a></sup>. Money that buys staffing but builds nothing lasting, much of it the agency's margin rather than the nurse's pay. Meanwhile, an ER visit for a problem that didn't need one is one of the most expensive ways in medicine to deliver a twenty-minute act of care. The dollars are already being spent. They're just being spent in the wrong rooms.</p>
+    <p>MobiSoins is built to move that spending somewhere saner. A home visit carries no hospital overhead and no idle-shift cost. The model only pays a nurse when a real patient needs real care, and it matches the closest available nurse so travel time, the one unproductive minute in a visit, stays small. Pricing is transparent to the patient before they book, and the nurse keeps the clear majority of it, because there's no staffing agency in the middle taking a slice for making a phone call. Crucially, nurses are paid <strong>per service, not by the hour</strong>, so their earnings track the care they actually give. For many that works out to more than the fixed public-sector hourly grid pays, without asking the patient to overpay.</p>
+    <blockquote><p>We don't want to pay nurses less than the agencies do. We want to remove the agency.</p></blockquote>
+    <p>That's the whole financial thesis. Cut the intermediary, price the care honestly, and let the efficiency of good matching, rather than a squeeze on the people doing the work, be where the savings come from.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 10 -->
+  <section id="objections">
+    <div class="kicker">10</div>
+    <h2>Objections we take seriously.</h2>
+    <p>A company that touches healthcare should be able to sit with the hardest questions about itself. Here are the ones we hear most, answered plainly.</p>
+
+    <h3>“Isn't this just privatizing healthcare?”</h3>
+    <p>We're not trying to replace universal care. We're trying to catch the enormous volume of routine, home-appropriate care the public system was never built to deliver at speed. Every visit that happens at home is one fewer body in an overflowing ER, which frees public capacity for the emergencies only a hospital can handle. The goal is to <strong>relieve the public system, not compete with it.</strong></p>
+
+    <h3>“Doesn't on-demand mean cutting corners on safety?”</h3>
+    <p>The opposite is the whole design. Care is only ever delivered by a nurse whose <strong>OIIQ licence we've verified</strong>. The platform is scoped to home-appropriate clinical acts, things like dressings, injections, vitals and follow-ups, not emergencies, which we route to the system built for them. Payment is held in escrow until the visit is done, every visit produces a record, and health data is handled under Québec's Law 25. Convenience never comes at the cost of who shows up or how they practise.</p>
+
+    <h3>“Will this pull nurses out of the public system?”</h3>
+    <p>Nurses are already leaving, for private agencies that offer better pay and, above all, control over their schedules<sup><a href="#r13">13</a></sup>. MobiSoins competes with <em>that</em>, not with the hospital. It's a better alternative to the agency middleman, and its flexibility can bring lapsed or part-time nurses back into active practice on hours that fit their lives. Making nursing sustainable again is how you grow the pool, not shrink it.</p>
+
+    <h3>“Is a two-tier system fair?”</h3>
+    <p>Fairness is exactly why we keep pricing transparent, pay nurses fairly, and stay focused on care the public network can't reach quickly today. Our long-term intent is to work <em>with</em> the system, as the home-care layer that keeps small problems from becoming expensive ones, not to skim the easy cases and leave the hard ones behind.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 11 -->
+  <section id="montreal">
+    <div class="kicker">11</div>
+    <h2>Why Montréal first.</h2>
+    <p>You don't launch a healthcare marketplace everywhere at once. You launch it where the need is sharpest and where you can earn trust one visit at a time. For us that's Montréal, and not by accident.</p>
+    <p><strong>The need is acute here.</strong> Québec's ER waits are the longest in the country, its nursing shortage is well documented, and its senior population is climbing fast<sup><a href="#r1">1</a></sup><sup><a href="#r6">6</a></sup>. Montréal concentrates all three pressures in one dense, walkable, transit-connected city, the ideal geography for an on-demand model where distance to the patient is everything.</p>
+    <p><strong>The rules are ours to respect.</strong> Operating in Québec means working in both French and English, verifying nurses against the OIIQ, and honouring Law 25, the province's strict privacy legislation. Those aren't obstacles to route around. They're the standard we chose to build to from day one, because a healthcare company that treats compliance as an afterthought has no business handling anyone's care.</p>
+    <p>Starting local also keeps us honest. In one city we can meet our nurses, learn from every visit, and fix what's broken quickly, before we ever ask another community to trust us.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 12 -->
+  <section id="trust">
+    <div class="kicker">12</div>
+    <h2>Trust, safety and dignity.</h2>
+    <p>Healthcare is not food delivery. The stakes are higher, and so is the bar. Three commitments are non-negotiable for us.</p>
+    <p><strong>Every nurse is verified.</strong> Care is only ever delivered by a professional whose OIIQ licence we've confirmed. The convenience of the model never changes who shows up at the door.</p>
+    <p><strong>Money is handled fairly.</strong> Payment is authorized when a patient books, but only captured after the visit is actually completed. Patients pay for care they received, and nurses are paid reliably for care they gave.</p>
+    <p><strong>Privacy is engineered in, not bolted on.</strong> Health information is among the most sensitive data that exists. We keep records in line with Law 25, store data in Canadian regions, and treat every patient's information as something borrowed, never owned.</p>
+    <p>Underneath all of it is a simple principle: dignity. A patient should feel cared for, not processed. A nurse should feel respected, not dispatched like a package. If the technology ever gets in the way of either, the technology is wrong.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 13 -->
+  <section id="now">
+    <div class="kicker">13</div>
+    <h2>Where we are now.</h2>
+    <p>MobiSoins is early, and we're proud of that, because early is where you earn the trust a healthcare brand lives or dies on.</p>
+    <p>We <strong>launched in Montréal in July 2025</strong>, and we're building the network the same way you'd want your own care built: carefully, one professional at a time. We're live with our <strong>first four founding nurses</strong>, a deliberately small, hand-verified cohort we can support closely while we learn from every real visit and sharpen the product around what actually happens at the door.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">Montréal</div><div class="l">Our launch market: dense, bilingual, and where the need is sharpest</div></div>
+      <div class="stat"><div class="n">July 2025</div><div class="l">MobiSoins went live to its first patients</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Founding nurses, hand-verified against the OIIQ</div></div>
+    </div>
+    <p>The near-term road is about depth before breadth: growing the nurse network neighbourhood by neighbourhood, tightening the loop between a patient's request and a nurse's arrival, and proving, visit by visit, that on-demand home nursing can be as safe and dependable as it is convenient. You can always see the latest at <strong>mobisoins.com</strong>.</p>
+  </section>
+
+  <hr class="div" />
+
+  <!-- 14 -->
+  <section id="vision">
+    <div class="kicker">14</div>
+    <h2>The vision.</h2>
+    <p>If we get the next few years right, MobiSoins becomes the layer of care that sits quietly between people and the hospital. The reason a wound never becomes an infection, a chronic condition never becomes an emergency, and a senior gets to grow older at home instead of in a waiting room.</p>
+    <p>Zoom out and the ambition is bigger than an app. An aging province, a strained public system, and a generation of nurses who want to practise on their own terms are on a collision course. The old answer, more buildings, more beds, more overtime, is neither affordable nor humane. The better answer is to move care to where people already are, and to give the professionals who deliver it the autonomy to keep doing so.</p>
+    <p>We know how these stories usually go, and we're wary of the clichés. Plenty of companies have promised to reinvent healthcare and mostly reinvented their own funding rounds. So we hold ourselves to a narrower, harder standard. Every decision has to make care safer, faster to reach, or fairer to the nurse, and preferably more than one at once. If a feature makes the app flashier without moving one of those three, it doesn't ship.</p>
+    <p>Success, for us, isn't a valuation or a map full of pins. It's mundane, and that's the point. A dressing changed on time so an infection never starts. A worried daughter who gets her evening back. A nurse who finishes the week having chosen every hour of it. A hospital bed that stays free for the person who truly needs it. Stack enough of those small, uneventful wins and you get something that actually matters: a city where good care is simply easier to get than it was the year before.</p>
+    <blockquote><p>A future where needing a nurse doesn't mean going anywhere at all.</p></blockquote>
+    <p>That's what we're building toward, starting with four nurses, one city, and a simple belief that care should come to people. Everything else is the work of earning the right to scale it.</p>
+
+    <div class="note">
+      <div class="t">Learn more</div>
+      <p>This document is the short version of the why. For the product, the services, and how to book or join as a nurse, visit <a href="https://www.mobisoins.com" target="_blank" rel="noopener">mobisoins.com</a>.</p>
+    </div>
+
+    <div class="endmark">
+      <span class="sig">The MobiSoins team, Montréal</span>
+      <a href="https://www.mobisoins.com" target="_blank" rel="noopener" class="btn">Visit mobisoins.com ↗</a>
+    </div>
+  </section>
+
+  <hr class="div" />
+
+  <!-- REFS -->
+  <section id="refs">
+    <div class="eyebrow"><span class="sq"></span>Sources</div>
+    <div class="refs">
+      <ol>
+        <li id="r1">Montreal Economic Institute, <em>ER Wait Times in Quebec Are Stagnating</em> (average length of stay 5h23, longest in Canada, 2024-25). <a href="https://www.iedm.org/er-wait-times-in-quebec-are-stagnating/" target="_blank" rel="noopener">iedm.org</a></li>
+        <li id="r2">Gouvernement du Québec, <em>Situation in emergency rooms in Québec</em> (stretcher median 11h06; ~23% over 24 hours, 2023-24). <a href="https://www.quebec.ca/en/health/health-system-and-services/service-organization/quebec-health-system-and-its-services/situation-in-emergency-rooms-in-quebec" target="_blank" rel="noopener">quebec.ca</a></li>
+        <li id="r3">True North / CBC News, Québec ER over-capacity reporting (Feb 2025 stretcher occupancy 123%; Jewish General 196%, Lachine 186%, Royal Victoria ~215%; 829 patients over 24h and 296 over 48h, early Jan 2025). <a href="https://tnc.news/2025/01/05/more-quebec-emergency-rooms-operating-over-capacity/" target="_blank" rel="noopener">tnc.news</a> · <a href="https://www.cbc.ca/news/canada/montreal/quebec-emergency-rooms-overcapacity-new-years-eve-1.7071864" target="_blank" rel="noopener">cbc.ca</a></li>
+        <li id="r4">Montreal Economic Institute, <em>The Nurse Shortage in Quebec</em> (~4,000 nurses short). <a href="https://www.iedm.org/the-nurse-shortage-in-quebec-improving-flexibility-and-working-conditions/" target="_blank" rel="noopener">iedm.org</a></li>
+        <li id="r5">Medscape, <em>Nursing Agencies Costly to Canada's Public Healthcare System</em> ($1.5B projected in 2023-24, up from $717M in 2021-22). <a href="https://www.medscape.com/viewarticle/nursing-agencies-costly-canadas-public-healthcare-system-2024a1000i9v" target="_blank" rel="noopener">medscape.com</a></li>
+        <li id="r6">Statistique Québec / Résidences Québec, Québec seniors projections (about 25% over 65 by 2030; 20% in 2021). <a href="https://residences-quebec.ca/blog/en/by-2056-28-of-the-population-will-be-65-years-of-age-or-older/" target="_blank" rel="noopener">residences-quebec.ca</a></li>
+        <li id="r7">Statistique Québec, <em>Portrait of seniors in Québec</em> (65+ population growth of about 578,000 by 2028). <a href="https://statistique.quebec.ca/en/communique/portrait-of-seniors-in-quebec" target="_blank" rel="noopener">statistique.quebec.ca</a></li>
+        <li id="r8">TheKey Canada, Montréal elderly care and Québec funding (2024-2029 $6B home and community care investment). <a href="https://thekey.ca/resources/learning-center/montreal-elderly-care-services-winter-isolation-new-quebec-funding-and-how-families-can-act-now" target="_blank" rel="noopener">thekey.ca</a></li>
+        <li id="r9">CIUSSS West-Central Montréal, <em>Support Program for the Autonomy of Seniors (SAPA)</em> / public home-support access and waitlists. <a href="https://www.ciussswestcentral.ca/programs-and-services/support-program-for-the-autonomy-of-seniors-sapa/support-program-for-the-autonomy-of-seniors-sapa/" target="_blank" rel="noopener">ciussswestcentral.ca</a></li>
+        <li id="r10">Canadian Federation of Nurses Unions, <em>2024 Members' Survey</em> (5,500+ nurses; 93% burnout symptoms; ~40% intend to leave or retire; 70% regularly over capacity). <a href="https://nursesunions.ca/wp-content/uploads/2024/03/2024-CFNU-Members-Survey-Web-1.pdf" target="_blank" rel="noopener">nursesunions.ca</a></li>
+        <li id="r11">CBC News / Montreal Economic Institute, New Brunswick nurse-retention report (roughly 80 of 100 nurses leave their job by age 35). <a href="https://www.cbc.ca/news/canada/new-brunswick/young-nurses-leaving-new-brunswick-report-montreal-economic-institute-1.7332203" target="_blank" rel="noopener">cbc.ca</a></li>
+        <li id="r12">Job Bank Canada, <em>Registered Nurse wages, Québec</em> (about $27 to $50/hour; entry-level Montréal pay near $24). <a href="https://www.jobbank.gc.ca/marketreport/wages-occupation/993/QC" target="_blank" rel="noopener">jobbank.gc.ca</a></li>
+        <li id="r13">CBC News, <em>Quebec tables bill to limit the use of private health agencies</em> (Bill 10; agencies draw nurses with better pay and flexible hours). <a href="https://www.cbc.ca/news/canada/montreal/quebec-tables-bill-to-limit-the-use-of-private-health-agencies-1.6749292" target="_blank" rel="noopener">cbc.ca</a></li>
+      </ol>
+      <p style="font-size:12.5px;color:var(--ink4);margin-top:20px;">Figures are drawn from public reporting and government sources as cited, and reflect the most recent data available at the time of writing (July 2026). This document is a narrative overview, not a clinical or statistical publication.</p>
+    </div>
+  </section>
+
+</article>
+</div>
+
+<script>
+  var prog = document.getElementById('prog');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max * 100 : 0;
+    prog.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+</script>
+</body>
+</html>

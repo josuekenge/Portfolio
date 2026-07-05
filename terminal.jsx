@@ -41,8 +41,17 @@ const FUN_TRACE = [
   '  ✓ reading    → Solo Leveling · Tower of God',
 ];
 
-// Highlight ✓ ticks, arrows, and numeric tokens in accent blue.
-const renderLine = (text) => {
+// Two palettes so the terminal can render dark (hero) or light (about),
+// both tuned to the warm cream / ink / moss brand system.
+const PALETTES = {
+  light: { pane: '#FCFBF7', border: '#E5E1D6', bar: '#EDEAE1', label: '#989487',
+    text: '#3C3A33', dotOff: '#D8D3C6', tick: '#4C9E68', num: '#3A43D6', cursor: '#3A43D6', shadow: '0 20px 50px rgba(27,26,22,0.07)' },
+  dark: { pane: 'linear-gradient(180deg,#242017 0%,#1a1712 100%)', border: 'rgba(236,231,216,0.12)', bar: 'rgba(236,231,216,0.08)', label: 'rgba(236,231,216,0.5)',
+    text: 'rgba(236,231,216,0.86)', dotOff: '#48453a', tick: '#7CC39A', num: '#A6ACF2', cursor: '#A6ACF2', shadow: '0 34px 80px rgba(27,26,22,0.35)' },
+};
+
+// Highlight tick, arrow, and numeric tokens in accent colors.
+const renderLine = (text, pal) => {
   if (!text) return '\u00A0';
   const parts = [];
   let last = 0;
@@ -50,8 +59,10 @@ const renderLine = (text) => {
   let m;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) parts.push(text.slice(last, m.index));
+    const tok = m[0];
+    const color = (tok === '✓' || tok === '→') ? pal.tick : pal.num;
     parts.push(
-      React.createElement('span', { key: m.index, style: { color: '#9bb4ff' } }, m[0])
+      React.createElement('span', { key: m.index, style: { color } }, tok)
     );
     last = m.index + m[0].length;
   }
@@ -65,7 +76,9 @@ const Terminal = ({
   minHeight = '420px',
   maxWidth = '720px',
   fontSize = 'clamp(11px, 2.6vw, 17px)',
+  dark = false,
 }) => {
+  const pal = dark ? PALETTES.dark : PALETTES.light;
   const [lines, setLines] = React.useState([]);
   const [cursor, setCursor] = React.useState(true);
   const reducedMotion = React.useMemo(
@@ -126,40 +139,28 @@ const Terminal = ({
 
   return (
     <div className="relative w-full mx-auto" style={{ maxWidth }}>
-      {/* outer cobalt glow */}
-      <div
-        className="absolute inset-0 -z-10 rounded-3xl"
-        style={{
-          background:
-            'radial-gradient(ellipse at 50% 50%, rgba(59,109,255,0.4) 0%, rgba(59,109,255,0.14) 35%, transparent 70%)',
-          filter: 'blur(48px)',
-          transform: 'scale(1.2)',
-        }}
-      />
-
       {/* terminal pane */}
       <div
         className="rounded-2xl overflow-hidden"
         style={{
-          background: '#06080f',
-          border: '1px solid rgba(96,165,250,0.15)',
-          boxShadow:
-            '0 30px 80px rgba(3,6,15,0.6), inset 0 1px 0 rgba(155,180,255,0.04)',
+          background: pal.pane,
+          border: `1px solid ${pal.border}`,
+          boxShadow: pal.shadow,
         }}
       >
         {/* top bar */}
         <div
           className="flex items-center justify-between px-5 py-3.5 border-b"
-          style={{ borderColor: 'rgba(96,165,250,0.1)' }}
+          style={{ borderColor: pal.bar }}
         >
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#5c2222' }} />
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#5c4a22' }} />
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#22442c' }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: pal.dotOff }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: pal.dotOff }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: pal.tick }} />
           </div>
           <div
             className="font-mono text-[11px] tracking-wider"
-            style={{ color: 'rgba(255,255,255,0.42)' }}
+            style={{ color: pal.label }}
           >
             {label}
           </div>
@@ -169,7 +170,7 @@ const Terminal = ({
         <div
           className="terminal-body px-4 sm:px-7 py-5 sm:py-7 font-mono whitespace-pre"
           style={{
-            color: 'rgba(255,255,255,0.85)',
+            color: pal.text,
             fontSize,
             lineHeight: 1.65,
             minHeight,
@@ -181,9 +182,9 @@ const Terminal = ({
             const isLast = i === lines.length - 1;
             return (
               <div key={i}>
-                {renderLine(line)}
+                {renderLine(line, pal)}
                 {isLast && !reducedMotion && (
-                  <span style={{ opacity: cursor ? 1 : 0, color: '#9bb4ff' }}>▊</span>
+                  <span style={{ opacity: cursor ? 1 : 0, color: pal.cursor }}>▊</span>
                 )}
               </div>
             );
@@ -194,7 +195,7 @@ const Terminal = ({
   );
 };
 
-// Convenience wrapper used by the hero
-const AgentTerminal = () => <Terminal trace={AGENT_TRACE} label="agent.session · live" />;
+// Convenience wrapper used by the hero — dark variant to match the reference.
+const AgentTerminal = () => <Terminal trace={AGENT_TRACE} label="agent.session · live" dark minHeight="360px" />;
 
 Object.assign(window, { Terminal, AgentTerminal, AGENT_TRACE, FUN_TRACE });

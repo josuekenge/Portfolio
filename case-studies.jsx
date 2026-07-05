@@ -6,54 +6,63 @@
 // DIAGRAM PRIMITIVES
 // ────────────────────────────────────────────────────────────────
 
-const DNode = ({ tier, name, sub, accent = '#3b6dff', wide }) => (
-  <div
-    className="rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center relative w-full sm:w-auto"
-    style={{
-      background: 'linear-gradient(160deg, rgba(28,58,143,0.4), rgba(10,26,74,0.6) 70%, rgba(5,10,31,0.85))',
-      border: `1px solid ${accent}55`,
-      boxShadow: `0 12px 30px rgba(3,6,15,0.4), inset 0 1px 0 rgba(155,180,255,0.08)`,
-      minWidth: 0,
-      maxWidth: '100%',
-    }}
-  >
-    <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-1.5" style={{ color: accent }}>
-      {tier}
+// Map the old light-blue accent palette to deeper, readable-on-cream tones.
+const AMAP = {
+  '#9bb4ff': '#4a63c8', '#6e8dff': '#3f52c0', '#3b6dff': '#2b3fb0',
+  '#1d3dc4': '#1d2a8a', '#7c5cff': '#6a3fd0', '#10b981': '#0f7a55',
+};
+
+const DNode = ({ tier, name, sub, accent = '#3A43D6', wide }) => {
+  const a = AMAP[accent] || accent;
+  return (
+    <div
+      className="rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center relative w-full sm:w-auto"
+      style={{
+        background: '#FCFBF7',
+        border: '1px solid #E5E1D6',
+        boxShadow: '0 8px 22px rgba(27,26,22,0.05)',
+        minWidth: 0,
+        maxWidth: '100%',
+      }}
+    >
+      <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-1.5" style={{ color: a }}>
+        {tier}
+      </div>
+      <div className="font-display text-xl text-ink leading-tight">{name}</div>
+      {sub && (
+        <div className="font-mono text-[10px] text-ink-400 mt-1.5 tracking-wide">{sub}</div>
+      )}
     </div>
-    <div className="font-display text-xl text-paper leading-tight">{name}</div>
-    {sub && (
-      <div className="font-mono text-[10px] text-paper/55 mt-1.5 tracking-wide">{sub}</div>
-    )}
-  </div>
-);
+  );
+};
 
 const DArrow = ({ dir = 'down', label }) => {
   if (dir === 'down') {
     return (
-      <div className="flex flex-col items-center" style={{ height: '36px' }}>
-        <div className="w-px flex-1" style={{ background: 'linear-gradient(to bottom, transparent, rgba(110,141,255,0.5), rgba(110,141,255,0.8))' }} />
-        <div className="text-cobalt-400 text-sm leading-none">▼</div>
-        {label && <div className="absolute font-mono text-[9px] text-paper/55 ml-12 mt-2">{label}</div>}
+      <div className="flex flex-col items-center relative" style={{ height: '36px' }}>
+        <div className="w-px flex-1" style={{ background: 'linear-gradient(to bottom, transparent, #C9C4B6)' }} />
+        <div className="text-ink-500 text-sm leading-none">▼</div>
+        {label && <div className="absolute font-mono text-[9px] text-ink-400 ml-12 mt-2">{label}</div>}
       </div>
     );
   }
   if (dir === 'split') {
     return (
       <svg width="100%" height="40" viewBox="0 0 200 40" preserveAspectRatio="none" style={{ display: 'block' }}>
-        <line x1="100" y1="0" x2="100" y2="14" stroke="rgba(110,141,255,0.6)" strokeWidth="1" />
-        <line x1="40" y1="14" x2="160" y2="14" stroke="rgba(110,141,255,0.6)" strokeWidth="1" />
-        <line x1="40" y1="14" x2="40" y2="34" stroke="rgba(110,141,255,0.6)" strokeWidth="1" />
-        <line x1="160" y1="14" x2="160" y2="34" stroke="rgba(110,141,255,0.6)" strokeWidth="1" />
-        <polygon points="36,30 44,30 40,38" fill="#6e8dff" />
-        <polygon points="156,30 164,30 160,38" fill="#6e8dff" />
+        <line x1="100" y1="0" x2="100" y2="14" stroke="#C9C4B6" strokeWidth="1" />
+        <line x1="40" y1="14" x2="160" y2="14" stroke="#C9C4B6" strokeWidth="1" />
+        <line x1="40" y1="14" x2="40" y2="34" stroke="#C9C4B6" strokeWidth="1" />
+        <line x1="160" y1="14" x2="160" y2="34" stroke="#C9C4B6" strokeWidth="1" />
+        <polygon points="36,30 44,30 40,38" fill="#8C8878" />
+        <polygon points="156,30 164,30 160,38" fill="#8C8878" />
       </svg>
     );
   }
   if (dir === 'right') {
     return (
       <div className="flex items-center px-2">
-        <div className="h-px w-12" style={{ background: 'linear-gradient(to right, rgba(110,141,255,0.4), rgba(110,141,255,0.8))' }} />
-        <div className="text-cobalt-400 text-sm leading-none ml-1">▶</div>
+        <div className="h-px w-12" style={{ background: 'linear-gradient(to right, transparent, #C9C4B6)' }} />
+        <div className="text-ink-500 text-sm leading-none ml-1">▶</div>
       </div>
     );
   }
@@ -66,12 +75,12 @@ const DRow = ({ children }) => (
 const DFrame = ({ children, label }) => (
   <div className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10"
     style={{
-      background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,109,255,0.08), transparent 60%), rgba(6,8,15,0.6)',
-      border: '1px solid rgba(96,165,250,0.15)',
+      background: '#F7F4EC',
+      border: '1px solid #E5E1D6',
     }}
   >
-    <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-4 sm:mb-6">
-      ◆ {label || 'Architecture'}
+    <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-4 sm:mb-6" style={{ color: '#8C8878' }}>
+      ■ {label || 'Architecture'}
     </div>
     {children}
   </div>
@@ -99,10 +108,9 @@ const DiagramAIQSR = () => (
       <DNode tier="DATABASE" name="Supabase (PostgreSQL)" sub="RLS · 44 migrations · 957 initiatives" accent="#1d3dc4" wide />
       <DNode tier="AI LAYER" name="Azure OpenAI" sub="GPT-4 · context-grounded chat" accent="#7c5cff" wide />
     </DRow>
-    <div className="mt-8 rounded-xl border border-cobalt-500/15 p-3 text-center"
-      style={{ background: 'rgba(6,8,15,0.5)' }}>
-      <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-300 uppercase mb-2">▸ INFRA</div>
-      <div className="font-mono text-[12px] text-paper/75">
+    <div className="mt-8 rounded-xl border border-line p-3 text-center bg-surface">
+      <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-2" style={{ color: '#3A43D6' }}>▸ INFRA</div>
+      <div className="font-mono text-[12px] text-ink-500">
         Docker · Azure Container Apps · Azure Container Registry · GitHub Actions CI/CD
       </div>
     </div>
@@ -131,17 +139,17 @@ const DiagramWes = () => (
       <DNode tier="DATABASE" name="Warehouse SQL DB" sub="1.2s avg query · 95% accuracy" wide accent="#1d3dc4" />
     </DRow>
     <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">20×</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">faster queries</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">20×</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">faster queries</div>
       </div>
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">95%</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">accuracy</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">95%</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">accuracy</div>
       </div>
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">2 wks</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">vs 4 planned</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">2 wks</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">vs 4 planned</div>
       </div>
     </div>
   </DFrame>
@@ -189,12 +197,11 @@ const DiagramComp = () => (
     <DRow>
       <DNode tier="OUTCOME" name="Production Chatbot · Shipped" sub="< 2 weeks · 1 day ahead of plan" wide accent="#10b981" />
     </DRow>
-    <div className="mt-8 rounded-xl border border-cobalt-500/15 p-4 text-center"
-      style={{ background: 'rgba(6,8,15,0.5)' }}>
-      <div className="font-mono text-[11px] tracking-[0.2em] text-emerald-300 uppercase mb-1">
+    <div className="mt-8 rounded-xl border p-4 text-center" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+      <div className="font-mono text-[11px] tracking-[0.2em] text-moss uppercase mb-1">
         ▸ ONGOING IMPACT
       </div>
-      <div className="text-paper/85 text-sm">
+      <div className="text-ink-700 text-sm">
         10+ person team now uses AI coding in their daily workflow via AI-DLC
       </div>
     </div>
@@ -245,17 +252,17 @@ const DiagramUlife = () => (
       <DNode tier="DATABASE" name="PostgreSQL" sub="Appointments · intake · client log" wide accent="#1d3dc4" />
     </DRow>
     <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">3</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">contracts closed</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">3</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">contracts closed</div>
       </div>
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">30–50</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">qualified meetings</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">30–50</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">qualified meetings</div>
       </div>
-      <div className="rounded-xl border border-emerald-400/30 p-3" style={{ background: 'rgba(16,185,129,0.05)' }}>
-        <div className="font-display text-2xl text-emerald-300">24/7</div>
-        <div className="font-mono text-[9px] tracking-widest text-paper/55 uppercase mt-1">always on</div>
+      <div className="rounded-xl border p-3" style={{ borderColor: '#bfe0cb', background: '#eef6f0' }}>
+        <div className="font-display text-2xl text-moss">24/7</div>
+        <div className="font-mono text-[9px] tracking-widest text-ink-400 uppercase mt-1">always on</div>
       </div>
     </div>
   </DFrame>
@@ -496,40 +503,53 @@ const CaseStudyModal = ({ project, onClose }) => {
   return (
     <div
       className="fixed inset-0 z-[200] overflow-y-auto"
-      style={{ background: 'rgba(3,6,15,0.88)', backdropFilter: 'blur(20px)' }}
+      style={{ background: 'rgba(27,26,22,0.5)', backdropFilter: 'blur(8px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="min-h-screen-d flex items-start justify-center py-6 sm:py-12 px-3 sm:px-4 md:px-8">
         <div className="relative w-full max-w-[1200px] rounded-2xl sm:rounded-3xl overflow-hidden"
           style={{
-            background: 'linear-gradient(180deg, rgba(12,18,38,0.95), rgba(7,11,26,0.95))',
-            border: '1px solid rgba(110,141,255,0.2)',
-            boxShadow: '0 40px 120px rgba(3,6,15,0.7)',
+            background: '#F4F1E9',
+            border: '1px solid #E5E1D6',
+            boxShadow: '0 50px 130px rgba(27,26,22,0.35)',
           }}
         >
           {/* Close button */}
           <button
             onClick={onClose}
             aria-label="Close"
-            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-ink-950/80 border border-cobalt-500/30 text-paper/70 hover:text-paper hover:border-cobalt-500 transition"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-surface border border-lined text-ink-500 hover:bg-ink hover:text-paper hover:border-ink transition"
           >
             ✕
           </button>
 
           {/* Header */}
-          <div className="p-5 sm:p-8 md:p-12 border-b" style={{ borderColor: 'rgba(110,141,255,0.12)' }}>
-            <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest text-cobalt-400/80 uppercase">
+          <div className="p-5 sm:p-8 md:p-12 border-b border-line">
+            <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-400">
               <span>CASE STUDY · {project.n}</span>
-              <span className="h-px w-6 bg-cobalt-500/30" />
-              <span className="text-paper/50">{project.year}</span>
+              <span className="h-px w-6 bg-lined" />
+              <span>{project.year}</span>
             </div>
-            <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl md:text-7xl tracking-tight leading-[0.95]">
-              {project.title} <span className="acc text-cobalt-400">— {project.sub}</span>
+            <h2 className="mt-4 sm:mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.0]">
+              {project.title} <span className="italic-accent text-ink-500">— {project.sub}</span>
             </h2>
-            <div className="mt-3 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
-              {project.role}
+            <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] tracking-widest uppercase text-ink-400">
+              <span>{project.role}</span>
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 text-ink-700 hover:text-ink transition-colors"
+                >
+                  <span className="border-b border-ink-300 group-hover:border-ink transition-colors">
+                    {project.link.replace(/^https?:\/\//, '')}
+                  </span>
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                </a>
+              )}
             </div>
-            <p className="mt-5 sm:mt-8 max-w-[820px] text-paper/80 text-sm sm:text-lg leading-relaxed">
+            <p className="mt-5 sm:mt-8 max-w-[820px] text-ink-500 font-light text-sm sm:text-lg leading-relaxed">
               {cs.summary}
             </p>
           </div>
@@ -543,14 +563,12 @@ const CaseStudyModal = ({ project, onClose }) => {
           <div className="grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-10 px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
             {/* Stack */}
             <div>
-              <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-5">
-                ◆ Stack
-              </div>
+              <div className="eyebrow mb-5"><span className="sq" />Stack</div>
               <div className="space-y-4">
                 {cs.stack.map(([k, v]) => (
                   <div key={k}>
-                    <div className="font-mono text-[10px] tracking-widest text-cobalt-300 uppercase mb-1">{k}</div>
-                    <div className="text-paper/80 text-sm leading-relaxed">{v}</div>
+                    <div className="text-[10px] tracking-widest uppercase mb-1" style={{ color: '#3A43D6' }}>{k}</div>
+                    <div className="text-ink-700 text-sm font-light leading-relaxed">{v}</div>
                   </div>
                 ))}
               </div>
@@ -558,13 +576,11 @@ const CaseStudyModal = ({ project, onClose }) => {
 
             {/* Approach */}
             <div>
-              <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-5">
-                ◆ Approach
-              </div>
+              <div className="eyebrow mb-5"><span className="sq" />Approach</div>
               <ul className="space-y-3">
                 {cs.approach.map((a, i) => (
-                  <li key={i} className="flex gap-3 text-paper/85 text-[15px] leading-relaxed">
-                    <span className="text-cobalt-400 flex-shrink-0 pt-1.5">◆</span>
+                  <li key={i} className="flex gap-3 text-ink-700 font-light text-[15px] leading-relaxed">
+                    <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" />
                     <span>{a}</span>
                   </li>
                 ))}
@@ -574,18 +590,12 @@ const CaseStudyModal = ({ project, onClose }) => {
 
           {/* Outcomes */}
           <div className="px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
-            <div className="font-mono text-[10px] tracking-[0.2em] text-cobalt-400/80 uppercase mb-5">
-              ◆ Outcomes
-            </div>
+            <div className="eyebrow mb-5"><span className="sq" />Outcomes</div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {cs.outcomes.map((o, i) => (
-                <div key={i} className="rounded-xl sm:rounded-2xl p-4 sm:p-5"
-                  style={{
-                    background: 'rgba(6,8,15,0.6)',
-                    border: '1px solid rgba(110,141,255,0.15)',
-                  }}>
-                  <div className="font-display text-3xl text-cobalt-300 num-glow leading-none">{o.v}</div>
-                  <div className="mt-2 font-mono text-[10px] tracking-widest text-paper/55 uppercase leading-snug">
+                <div key={i} className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-surface border border-line">
+                  <div className="font-display text-3xl text-ink leading-none">{o.v}</div>
+                  <div className="mt-2 text-[10px] tracking-widest uppercase text-ink-400 leading-snug">
                     {o.l}
                   </div>
                 </div>
@@ -596,16 +606,12 @@ const CaseStudyModal = ({ project, onClose }) => {
           {/* Quote */}
           {cs.quote && (
             <div className="px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
-              <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(59,109,255,0.1), rgba(110,141,255,0.04))',
-                  border: '1px solid rgba(110,141,255,0.25)',
-                }}>
-                <div className="font-display text-lg sm:text-2xl md:text-3xl text-paper/95 leading-snug">
-                  <span className="acc text-cobalt-400 text-3xl sm:text-4xl mr-2">"</span>
+              <div className="rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10" style={{ background: '#EEEAE0', border: '1px solid #E5E1D6' }}>
+                <div className="font-display text-lg sm:text-2xl md:text-3xl text-ink leading-snug">
+                  <span className="italic-accent text-ink-500 text-3xl sm:text-4xl mr-2">"</span>
                   {cs.quote.text}
                 </div>
-                <div className="mt-4 sm:mt-5 font-mono text-[10px] tracking-widest text-cobalt-300/80 uppercase">
+                <div className="mt-4 sm:mt-5 text-[10px] tracking-widest uppercase text-ink-400">
                   — {cs.quote.attr}
                 </div>
               </div>
@@ -613,14 +619,13 @@ const CaseStudyModal = ({ project, onClose }) => {
           )}
 
           {/* Footer */}
-          <div className="px-5 sm:px-8 md:px-12 py-6 sm:py-8 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
-            style={{ borderColor: 'rgba(110,141,255,0.12)' }}>
-            <div className="font-mono text-[10px] tracking-widest text-paper/45 uppercase">
-              ◆ {project.title} · {project.year}
+          <div className="px-5 sm:px-8 md:px-12 py-6 sm:py-8 border-t border-line flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="text-[10px] tracking-widest uppercase text-ink-400">
+              {project.title} · {project.year}
             </div>
             <button
               onClick={onClose}
-              className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-paper/70 hover:text-paper transition"
+              className="text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-500 hover:text-ink transition"
             >
               ← back to portfolio
             </button>

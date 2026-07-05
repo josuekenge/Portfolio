@@ -1,5 +1,5 @@
 // Josue Kenge — Portfolio
-// One file, organized top-to-bottom by section.
+// Warm editorial redesign (inspired by ulife.ai). One file, top-to-bottom by section.
 // Reveal animations driven by IntersectionObserver in index.html.
 
 const { useEffect, useRef, useState } = React;
@@ -8,7 +8,6 @@ const { useEffect, useRef, useState } = React;
 // DATA
 // ────────────────────────────────────────────────────────────────
 
-// Shipped outcomes — concrete artifacts, not generic stack words.
 const STACK_TICKER = [
   'IBM WATSONX · 25K SELLERS',
   'WES CHATBOT · 20× FASTER',
@@ -27,16 +26,41 @@ const HEADLINE_METRICS = [
   { v: '20×', l: 'query response speedup' },
 ];
 
+// What I do — "The Blueprint"-style capability grid.
+const CAPABILITIES = [
+  {
+    n: '01',
+    title: 'Brownfield Integration',
+    body: 'Embedding net-new AI capability into live production codebases — .NET, Angular, legacy stacks — without disrupting operations, often at 2× the expected velocity.',
+    icon: 'layers',
+  },
+  {
+    n: '02',
+    title: 'Agentic & RAG Systems',
+    body: 'Grounded document Q&A with clickable citations, text-to-SQL agents, and multi-model pipelines on Azure OpenAI, Bedrock, pgvector, and LangChain.',
+    icon: 'brain',
+  },
+  {
+    n: '03',
+    title: 'Full-stack Delivery',
+    body: 'Architecture to deployment — Next.js / FastAPI / Express front-to-back, Dockerized on Azure Container Apps with automated CI/CD, shipped in a single dev cycle.',
+    icon: 'code',
+  },
+];
+
 const EXPERIENCE = [
   {
     co: 'IBM',
     role: 'AI Engineer Intern, watsonx Workshop',
     loc: 'Markham, ON',
     when: 'May 2026 — Present',
-    color: '#3b6dff',
+    context: 'watsonx Workshop is IBM\'s internal AI platform that helps 25,000+ sellers research accounts, build demos, and rehearse pitches. I build the AI agents and full-stack features they use every day.',
     bullets: [
-      'Engineering AI features on watsonx Workshop, IBM\'s internal sales enablement platform serving 25,000+ sellers globally.',
-      'Building full-stack with FastAPI on Python backend and React / Next.js frontend, shipping features into the daily workflow of IBM\'s global sales force.',
+      'Engineering AI features across a FastAPI / Python backend and a React frontend, shipping into the daily workflow of IBM\'s global sales force.',
+      'Built the Demo Creator agent end-to-end: an LLM tool that turns a 2-question, product-led intake (replacing a 6-question form) into tailored demo recommendations, auto-deriving sales stage, audience, and industry from the seller\'s linked opportunity so they only answer what can\'t be inferred.',
+      'Architected its multi-source search — concurrent, permission-scoped Seismic (per-user OAuth) plus IBM TechZone and Navattic interactive demos over MCP — keeping scenario and product separate so each source is queried the way it ranks best, then fusing results through several tuned LLM passes into a deduped, availability-gated top-3 with matched L100–L300 build scripts.',
+      'Gave IBM\'s Slack bot long-term memory: a recall system that scores up to a dozen of a seller\'s prior threads (30-day window) with an LLM judge and, on a confident match, carries the earlier session\'s context into the new conversation.',
+      'Shipped AI podcast & presentation generation from any session (script → ElevenLabs audio / branded PPTX), with a Slack notification bell that DMs the owner a deep link the moment content is ready and auto-delivers the file back into the thread where they asked.',
     ],
   },
   {
@@ -44,13 +68,13 @@ const EXPERIENCE = [
     role: 'AI Engineer Intern',
     loc: 'Remote',
     when: 'Jan 2026 — Apr 2026',
-    color: '#6e8dff',
+    context: 'Jonas Software is part of Constellation Software (CSI), a portfolio of 100+ vertical-market software companies. I was the AI engineer embedding GenAI into their live products and coaching acquired teams to build with it.',
     bullets: [
-      'Shipped Wes, a production AI chatbot for warehouse management — cut query response from 1 min → 2.3s (20× faster) at 95% accuracy, unlocking $150K in 2 weeks.',
-      'Engineered AIQSR, an enterprise analytics platform on Azure Container Apps with fully automated CI/CD, tracking 957 AI initiatives across 100+ companies, 80% fewer redundant API calls.',
-      'Architected HIPAA-aware AI healthcare chatbot for Computrition on Amazon Bedrock, driving $33K savings and adoption across 400+ senior leaders.',
-      'Delivered a full-stack RAG-based M&A due diligence platform for the Jonas Finance team, generating $120K in yearly savings.',
-      'Led brownfield AWS AI-DLC engagements (Minisoft, Computrition) — 60% time savings, frontend component shipped in 72 hours.',
+      'Shipped Wes, a production AI chatbot embedded into an existing .NET warehouse system — translating natural-language questions into validated SQL, cutting query response from 1 min → 2.3s (20× faster) at 95% accuracy and unlocking $150K in 2 weeks.',
+      'Engineered AIQSR, an enterprise analytics platform on Azure Container Apps with fully automated CI/CD, tracking 957 AI initiatives across 100+ operating companies while cutting redundant API calls 80% via caching and request dedup.',
+      'Architected a HIPAA-aware AI healthcare chatbot for Computrition on Amazon Bedrock, driving $33K in savings and daily adoption across 400+ senior leaders.',
+      'Delivered a full-stack RAG M&A due-diligence platform for the Jonas finance team — grounded document Q&A with clickable citations back to the source — generating $120K in yearly savings.',
+      'Led brownfield AWS AI-DLC engagements (Minisoft, Computrition), coaching teams toward AI-native workflows — 60% time savings, with a production frontend component shipped in 72 hours.',
     ],
   },
   {
@@ -58,11 +82,12 @@ const EXPERIENCE = [
     role: 'Software Engineering & PM Intern',
     loc: 'Redmond, WA',
     when: 'Jun 2024 — Aug 2024',
-    color: '#9bb4ff',
+    context: 'On the Office 365 substrate search team in Redmond — the C# / Azure microservices behind enterprise search across Microsoft 365. A hybrid SWE/PM role: I scoped the work, set the targets, and shipped to Microsoft\'s core productivity stack.',
     bullets: [
-      'Built a semantic indexing prototype (Azure, C#) increasing search accuracy by 25% on a 1M+ entry dataset under heavy query load.',
-      'Multithreaded microservices workflow → 40% lower latency, $14,500/week saved on Azure compute via concurrency tuning and caching.',
-      'Maintainable, scalable C# microservices for Office 365 search infrastructure.',
+      'Prototyped a semantic-indexing approach in C# on Azure that lifted search accuracy 25% on a 1M+ entry corpus under production-scale query load — validating a concrete relevance improvement for Office 365 substrate search.',
+      'Re-worked a microservices workflow to run multithreaded, cutting request latency 40% and saving ~$14,500/week in Azure compute through concurrency tuning, request batching, and caching.',
+      'Shipped maintainable, scalable C# microservices into the Office 365 search infrastructure, meeting the reliability and code-review bar required of a service on Microsoft\'s core productivity stack.',
+      'Operated across engineering and product — scoping the prototype, defining its accuracy and latency targets, and presenting results back to the team to steer next steps.',
     ],
   },
 ];
@@ -72,99 +97,127 @@ const PROJECTS = [
     n: '01',
     title: 'AIQSR Dashboard',
     sub: 'AI Initiative Quarterly Scorecard',
+    tag: 'ENTERPRISE ANALYTICS',
+    link: 'https://www.csisoftware.com',
     year: '2025',
     role: 'Full-stack lead · Jonas Software',
-    tech: ['Next.js 14', 'Express', 'Supabase', 'Azure OpenAI', 'Docker', 'Azure Container Apps'],
-    blurb: 'Enterprise analytics platform tracking AI initiatives across 100+ operating companies at Jonas/CSI. Shipped from zero to production in a single dev cycle on a monorepo with automated CI/CD.',
+    tech: ['Next.js 14', 'Express', 'Supabase', 'Azure OpenAI', 'Docker'],
+    blurb: 'Enterprise analytics platform tracking AI initiatives across 100+ operating companies at Jonas / CSI. Shipped zero to production in a single dev cycle with automated CI/CD.',
+    metric: { v: '957', l: 'AI initiatives tracked' },
     metrics: [
       { v: '957', l: 'AI initiatives' },
       { v: '100+', l: 'companies' },
       { v: '80%', l: 'fewer API calls' },
     ],
+    grad: 'linear-gradient(150deg, #1d2a6b 0%, #14205a 45%, #0b1440 100%)',
   },
   {
     n: '02',
     title: 'Wes Chatbot',
     sub: 'AI for warehouse ops',
+    tag: 'BROWNFIELD · TEXT-TO-SQL',
+    link: 'https://www.csisoftware.com',
     year: '2025',
     role: 'AI Engineer · Jonas Software',
-    tech: ['.NET Framework', 'Angular', 'AWS AI-DLC', 'RBAC'],
-    blurb: 'Production AI chatbot embedded into existing warehouse software via brownfield approach. Cut query response from 1 minute to 2.3 seconds at 95% accuracy.',
+    tech: ['.NET', 'Angular', 'AWS AI-DLC', 'RBAC'],
+    blurb: 'Production AI chatbot embedded into existing warehouse software via a brownfield approach. Cut query response from 1 minute to 2.3 seconds at 95% accuracy.',
+    metric: { v: '20×', l: 'faster queries' },
     metrics: [
       { v: '20×', l: 'faster queries' },
       { v: '2 wks', l: 'delivery (vs 4)' },
       { v: '$150K', l: 'savings unlocked' },
     ],
+    grad: 'linear-gradient(150deg, #23221f 0%, #171613 55%, #0c0b09 100%)',
   },
   {
     n: '03',
     title: 'M&A Due Diligence',
-    sub: 'AI-powered Acquisition Intel',
+    sub: 'AI-powered acquisition intel',
+    tag: 'RAG · CITATIONS',
+    link: 'https://www.csisoftware.com',
     year: '2025',
     role: 'AI Engineer · Jonas Finance',
-    tech: ['Next.js 15', 'pgvector', 'Azure OpenAI GPT-4.1', 'LangChain', 'RAG'],
-    blurb: 'Full-stack RAG platform for the Jonas Software finance team — grounded document querying with clickable in-line citations linking AI responses to source passages.',
+    tech: ['Next.js 15', 'pgvector', 'GPT-4.1', 'LangChain'],
+    blurb: 'Full-stack RAG platform for the Jonas finance team — grounded document querying with clickable in-line citations linking every AI response to its source passage.',
+    metric: { v: '$120K', l: 'yearly savings' },
     metrics: [
       { v: 'RAG', l: 'on prod docs' },
       { v: 'GPT-4.1', l: '+ pgvector' },
       { v: '$120K', l: 'yearly savings' },
     ],
+    grad: 'linear-gradient(150deg, #0f5148 0%, #0b3f39 50%, #072a26 100%)',
   },
   {
     n: '04',
     title: 'Computrition Chatbot',
-    sub: 'Healthcare AI · Architect',
+    sub: 'Healthcare AI · architect',
+    tag: 'HEALTHCARE · HIPAA-AWARE',
+    link: 'https://www.csisoftware.com',
     year: '2025',
     role: 'AI Consultant · Jonas Subsidiary',
-    tech: ['Amazon Bedrock', 'AWS AI-DLC', 'HIPAA-aware', 'Brownfield'],
-    blurb: 'Designed end-to-end AI chatbot architecture for a healthcare platform and coached the Computrition team through implementation, guided by AWS AI-DLC.',
+    tech: ['Amazon Bedrock', 'AWS AI-DLC', 'Brownfield'],
+    blurb: 'Designed the end-to-end AI chatbot architecture for a healthcare platform and coached the Computrition team through implementation, guided by AWS AI-DLC.',
+    metric: { v: '400+', l: 'leaders adopted' },
     metrics: [
       { v: '< 2 wks', l: 'delivery' },
-      { v: '10+', l: 'team using AI daily' },
+      { v: '10+', l: 'team on AI daily' },
       { v: '+1 day', l: 'ahead of plan' },
     ],
+    grad: 'linear-gradient(150deg, #5a2b8f 0%, #431f72 50%, #2c1450 100%)',
   },
   {
     n: '05',
     title: 'Zerpha Intelligence',
-    sub: 'AI Vertical SaaS analysis · zerpha.ca',
+    sub: 'AI vertical SaaS analysis',
+    tag: 'FOUNDER · zerpha.ca',
+    link: 'https://zerpha.ca',
     year: '2025 — present',
     role: 'Founder',
-    tech: ['Node.js', 'Express', 'Supabase', 'React', 'Claude', 'Gemini'],
-    blurb: 'AI platform with modular services for discovery, multi-page scraping, and structured insight extraction — reducing analyst research time from hours to under 3 minutes.',
+    tech: ['Node.js', 'Supabase', 'React', 'Claude', 'Gemini'],
+    blurb: 'AI platform with modular services for discovery, multi-page scraping, and structured insight extraction — cutting analyst research from hours to under 3 minutes.',
+    metric: { v: '< 3 min', l: 'research cycles' },
     metrics: [
       { v: '< 3 min', l: 'research cycles' },
       { v: '4×', l: 'dev velocity' },
       { v: 'RAG', l: 'semantic M&A' },
     ],
+    grad: 'linear-gradient(150deg, #9a3b12 0%, #7c2f10 50%, #4d1d0a 100%)',
   },
   {
     n: '06',
     title: 'Ulife AI Agency',
-    sub: 'Automated AI Receptionist · ulife.ai',
+    sub: 'Automated AI receptionist',
+    tag: 'FOUNDER · ulife.ai',
+    link: 'https://ulife.ai',
     year: '2024 — 2025',
     role: 'Founder',
-    tech: ['React', 'Node.js', 'OpenAI API', 'PostgreSQL'],
-    blurb: 'Launched an AI receptionist for healthcare and service-industry clients — handles scheduling, intake queries, and client comms end-to-end.',
+    tech: ['React', 'Node.js', 'OpenAI', 'Vapi', 'PostgreSQL'],
+    blurb: 'Launched an AI voice receptionist for healthcare and service clients — handling scheduling, intake, and qualification end-to-end. Closed 3 paid contracts.',
+    metric: { v: '3', l: 'contracts closed' },
     metrics: [
       { v: '3', l: 'contracts closed' },
       { v: '30–50', l: 'qualified meetings' },
-      { v: 'Healthcare', l: 'service vertical' },
+      { v: '24/7', l: 'always on' },
     ],
+    grad: 'linear-gradient(150deg, #1e46b0 0%, #163a92 50%, #0d245e 100%)',
   },
   {
     n: '07',
     title: 'Minisoft Payments',
-    sub: 'AI-DLC Consulting',
+    sub: 'AI-DLC consulting',
+    tag: 'CONSULTING · AI-DLC',
+    link: 'https://www.csisoftware.com',
     year: '2025',
     role: 'AI Architect / Coach',
     tech: ['AWS AI-DLC', 'Brownfield', 'Payments'],
-    blurb: 'Coaching the Minisoft team (post-acquisition into Jonas/CSI) through AWS AI-DLC to build AI capabilities into their core payments feature.',
+    blurb: 'Coaching the Minisoft team (post-acquisition into Jonas / CSI) through AWS AI-DLC to build AI capability into their core payments feature.',
+    metric: { v: '60%', l: 'time saved' },
     metrics: [
       { v: '60%', l: 'time saved' },
       { v: 'AI-DLC', l: 'methodology' },
       { v: 'CSI', l: 'onboarding' },
     ],
+    grad: 'linear-gradient(150deg, #1f5136 0%, #163f2a 50%, #0c2a1c 100%)',
   },
 ];
 
@@ -175,336 +228,149 @@ const SKILLS = [
   { group: 'Infra / Cloud', items: ['Azure Container Apps', 'AWS Bedrock', 'Docker', 'PostgreSQL', 'Supabase', 'GitHub Actions', 'Firebase', 'REST APIs'] },
 ];
 
+// ── MobiSoins — flagship app spotlight (real product details). ──
+const MOBI_NAVY = '#253E7D';
+const MOBI_GREEN = '#45B39D';
+
+const MOBISOINS = {
+  status: 'In development · Montreal',
+  title: 'MobiSoins',
+  tagline: 'On-demand home nursing — Uber, but for licensed nurses.',
+  blurb: 'A two-sided marketplace connecting patients who need clinical care with licensed (OIIQ) nurses who deliver it at home — see nurses on a live map, book, pay, and track in real time. Architected and built end-to-end: a role-aware Expo / React Native client, a NestJS + TypeORM API over PostgreSQL as the system of record, and Firebase RTDB as the realtime layer — self-hosted on AWS (EC2, Cognito, S3 / SES / SNS) and glued to Stripe, Twilio, and Mapbox.',
+  roles: [
+    {
+      label: 'For patients',
+      items: [
+        'Live map of available nurses nearby',
+        'Book a service, pay in-app before the visit',
+        'Real-time tracking to your door + arrival alert',
+        'In-app chat, visit history, ratings & receipts',
+      ],
+    },
+    {
+      label: 'For nurses',
+      items: [
+        'Go online to appear on the patient map',
+        'Job requests with service, distance & payout',
+        '30-second accept, then one-tap navigation',
+        'Visit reports + weekly earnings dashboard',
+      ],
+    },
+  ],
+  highlights: [
+    { t: 'Uber-style dispatch', d: 'Online nurses are ranked by a Haversine SQL query and offered each job for an exclusive 18s, rolling through 3 rounds. A single atomic conditional UPDATE — guarded by a partial unique index — makes concurrent accepts race-safe: exactly one winner, everyone else a clean 409.' },
+    { t: 'Real-time tracking', d: 'Nurse GPS publishes to Firebase RTDB every few seconds; the client tweens the pin on a requestAnimationFrame loop so it glides instead of teleporting, fires a 200 m arrival alert, and speaks Mapbox turn-by-turn cues.' },
+    { t: 'Escrow payments', d: 'Stripe manual-capture PaymentIntents pre-authorize on booking and capture only after the visit report — itemized GST 5% + QST 9.975% + platform fee, a $25 partial-capture cancellation, signed idempotent webhooks, and weekly Stripe Connect payouts.' },
+    { t: 'Built for Québec', d: 'Law 25 by design: a PHI audit interceptor, soft deletes, 30-day deletion grace with purge fan-out (Cognito · S3 · Stripe), ca-central-1 residency, plus helmet + tiered rate-limiting on the API.' },
+  ],
+  note: 'Plus an in-app support assistant powered by Claude Haiku 4.5 with a hard medical-advice guardrail (emergencies → 911 / Info-Santé 811).',
+  techApp: ['Expo', 'React Native', 'TypeScript', 'Zustand', 'Mapbox', 'Stripe', 'Firebase'],
+  techApi: ['NestJS', 'TypeORM', 'PostgreSQL', 'AWS EC2', 'AWS Cognito', 'S3 · SES · SNS', 'Twilio', 'Claude'],
+  metrics: [
+    { v: '1 app', l: 'two roles, role-aware' },
+    { v: '< 3 min', l: 'open → nurse confirmed' },
+    { v: '~111', l: 'REST endpoints · 18 modules' },
+    { v: 'iOS · Android', l: 'Expo · EAS → TestFlight' },
+  ],
+};
+
 // ────────────────────────────────────────────────────────────────
-// PROJECT VISUALS — one designed mockup per project
+// PRIMITIVES
 // ────────────────────────────────────────────────────────────────
 
-const VisualFrame = ({ children, label }) => (
-  <div className="relative w-full" style={{ aspectRatio: '1 / 1' }}>
-    <div className="absolute inset-0 rounded-3xl overflow-hidden"
-      style={{
-        background: 'radial-gradient(circle at 30% 20%, #1c3a8f 0%, #0a1a4a 40%, #050a1f 100%)',
-        boxShadow: 'inset -8px -16px 40px rgba(3,6,15,0.6), inset 6px 10px 26px rgba(155,180,255,0.12), 0 20px 60px rgba(59,109,255,0.22)',
-      }}>
-      {/* faint grid */}
-      <div className="absolute inset-0 opacity-25"
-        style={{ backgroundImage: 'linear-gradient(rgba(155,180,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(155,180,255,0.08) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-      {/* glow highlight */}
-      <div className="absolute -top-12 -left-12 w-48 h-48 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(155,180,255,0.35), transparent 65%)' }} />
-      {/* content */}
-      <div className="absolute inset-0 p-5 flex flex-col">{children}</div>
-    </div>
-    {label && (
-      <div className="absolute top-3 right-3 font-mono text-[9px] tracking-[0.2em] text-paper/55 bg-ink-950/60 backdrop-blur px-2 py-1 rounded">
-        {label}
-      </div>
-    )}
+// Pixel-square brand mark
+const PixelMark = ({ size = 26, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="1" y="1" width="8" height="8" fill={color} />
+    <rect x="12" y="3" width="5" height="5" fill={color} opacity="0.55" />
+    <rect x="4" y="12" width="11" height="11" fill={color} opacity="0.28" />
+  </svg>
+);
+
+// Little scattered pixel-square decorations
+const PixelDeco = ({ className, style }) => (
+  <div className={`pixel ${className || ''}`} style={style} aria-hidden="true">
+    <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+      <rect x="0" y="0" width="12" height="12" fill="#1B1A16" opacity="0.9" />
+      <rect x="20" y="6" width="7" height="7" fill="#1B1A16" opacity="0.35" />
+      <rect x="8" y="20" width="16" height="16" fill="#B4B0A3" opacity="0.55" />
+    </svg>
   </div>
 );
 
-// 01 — AIQSR Dashboard
-const VAIQSR = () => (
-  <VisualFrame label="LIVE">
-    <div className="flex items-center justify-between font-mono text-[8px] tracking-widest text-paper/60">
-      <span>AIQSR / Q4</span>
-      <span className="flex items-center gap-1"><span className="w-1 h-1 rounded-full bg-emerald-400" />SYNCED</span>
-    </div>
-    <div className="mt-3 flex items-baseline gap-2">
-      <span className="font-display text-5xl text-paper leading-none num-glow">957</span>
-      <span className="font-mono text-[9px] text-cobalt-300 uppercase tracking-widest">initiatives</span>
-    </div>
-    <div className="mt-1 font-mono text-[8px] text-emerald-400">▲ +124 QoQ</div>
-
-    <div className="mt-4 space-y-1.5 flex-1">
-      {[
-        ['Jonas Construction', 92],
-        ['Computrition', 78],
-        ['Minisoft Inc', 64],
-        ['Aspire Software', 51],
-        ['Volaris Group', 38],
-      ].map(([name, pct], i) => (
-        <div key={i} className="flex items-center gap-2">
-          <span className="font-mono text-[8px] text-paper/70 w-20 truncate">{name}</span>
-          <div className="flex-1 h-1.5 rounded-full bg-ink-950/60 overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #3b6dff, #9bb4ff)' }} />
-          </div>
-          <span className="font-mono text-[8px] text-paper/55 w-6 text-right">{pct}</span>
-        </div>
-      ))}
-    </div>
-    <div className="flex items-center gap-3 font-mono text-[8px] tracking-widest text-paper/45">
-      <span>100+ COS</span>
-      <span className="text-cobalt-400">◆</span>
-      <span>5 VIEWS</span>
-    </div>
-  </VisualFrame>
+const Eyebrow = ({ children }) => (
+  <span className="eyebrow"><span className="sq" />{children}</span>
 );
 
-// 02 — Wes Chatbot
-const VWes = () => (
-  <VisualFrame label="WES">
-    <div className="font-mono text-[8px] tracking-widest text-paper/55">/ WAREHOUSE OPS</div>
-
-    <div className="mt-4 self-end max-w-[78%] bg-cobalt-500 text-ink-950 rounded-2xl rounded-br-sm px-3 py-2 text-[10px] leading-snug">
-      How many SKUs in zone B?
-    </div>
-
-    <div className="mt-3 max-w-[88%] bg-ink-950/50 border border-cobalt-500/25 rounded-2xl rounded-bl-sm px-3 py-2 text-[10px] text-paper/85 leading-snug">
-      1,247 active SKUs in Zone B. 38 below reorder threshold. Want the list?
-    </div>
-
-    <div className="mt-3 inline-flex items-center gap-1.5 self-start font-mono text-[8px] text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 rounded-full px-2 py-1 w-fit">
-      <span className="w-1 h-1 rounded-full bg-emerald-400" />
-      2.3s · 95% acc
-    </div>
-
-    <div className="flex-1" />
-    <div className="flex items-center gap-2 rounded-full bg-ink-950/60 border border-cobalt-500/20 px-3 py-1.5">
-      <span className="font-mono text-[8px] text-paper/40">Ask Wes…</span>
-      <span className="ml-auto text-cobalt-400 text-[10px]">▸</span>
-    </div>
-  </VisualFrame>
+const StatusPill = () => (
+  <span className="inline-flex items-center gap-2 pl-2.5 pr-3.5 py-1.5 rounded-full border border-lined bg-surface text-[11px] tracking-widest font-medium text-ink-700 uppercase">
+    <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
+    Active
+  </span>
 );
 
-// 03 — M&A RAG
-const VMA = () => (
-  <VisualFrame label="RAG">
-    <div className="flex items-center justify-between font-mono text-[8px] tracking-widest text-paper/55">
-      <span>M&A / DOC #12</span>
-      <span className="text-cobalt-300">GPT-4.1</span>
-    </div>
-    <div className="mt-3 space-y-1.5 flex-1">
-      <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '90%' }} />
-      <div className="flex gap-1 items-center">
-        <div className="h-1.5 rounded-full bg-cobalt-400" style={{ width: '40%' }} />
-        <span className="font-mono text-[7px] text-cobalt-300 bg-cobalt-500/20 px-1 rounded">¹</span>
-        <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '30%' }} />
-      </div>
-      <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '70%' }} />
-      <div className="flex gap-1 items-center">
-        <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '25%' }} />
-        <div className="h-1.5 rounded-full bg-cobalt-400" style={{ width: '45%' }} />
-        <span className="font-mono text-[7px] text-cobalt-300 bg-cobalt-500/20 px-1 rounded">²</span>
-      </div>
-      <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '85%' }} />
-      <div className="flex gap-1 items-center">
-        <div className="h-1.5 rounded-full bg-cobalt-400" style={{ width: '55%' }} />
-        <span className="font-mono text-[7px] text-cobalt-300 bg-cobalt-500/20 px-1 rounded">³</span>
-        <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '20%' }} />
-      </div>
-      <div className="h-1.5 rounded-full bg-paper/15" style={{ width: '65%' }} />
-    </div>
-
-    <div className="mt-3 rounded-xl bg-ink-950/60 border border-cobalt-500/20 p-2.5">
-      <div className="font-mono text-[8px] text-cobalt-300 mb-1">▸ AI RESPONSE</div>
-      <div className="text-[9px] text-paper/85 leading-snug">
-        Revenue grew 34% YoY <span className="text-cobalt-300 bg-cobalt-500/20 px-1 rounded">¹</span>,
-        with EBITDA <span className="text-cobalt-300 bg-cobalt-500/20 px-1 rounded">²</span>…
-      </div>
-    </div>
-  </VisualFrame>
-);
-
-// 04 — Computrition
-const VComp = () => (
-  <VisualFrame label="HIPAA">
-    <div className="font-mono text-[8px] tracking-widest text-paper/55">/ HEALTHCARE AI</div>
-    <div className="mt-1 font-display text-xl text-paper leading-tight">Architecture</div>
-
-    <div className="mt-4 flex-1 space-y-2">
-      {[
-        { l: 'CHAT INTERFACE', s: 'React · Angular', c: '#9bb4ff' },
-        { l: 'AI ORCHESTRATION', s: 'AWS AI-DLC', c: '#6e8dff' },
-        { l: 'AMAZON BEDROCK', s: 'Claude / Llama', c: '#3b6dff' },
-        { l: 'PATIENT DATA', s: 'HIPAA-aware', c: '#1d3dc4' },
-      ].map((row, i) => (
-        <div key={i} className="rounded-lg border px-2.5 py-1.5"
-          style={{ borderColor: `${row.c}55`, background: `linear-gradient(90deg, ${row.c}22, transparent)` }}>
-          <div className="font-mono text-[8px] tracking-widest" style={{ color: row.c }}>{row.l}</div>
-          <div className="font-mono text-[8px] text-paper/55 mt-0.5">{row.s}</div>
-        </div>
-      ))}
-    </div>
-
-    <div className="mt-2 flex items-center gap-2">
-      <div className="font-mono text-[8px] text-emerald-300 bg-emerald-400/10 border border-emerald-400/30 rounded px-2 py-0.5 inline-flex items-center gap-1">
-        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 2L3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4z" /></svg>
-        SHIELDED
-      </div>
-      <span className="font-mono text-[8px] text-paper/45">400+ leaders</span>
-    </div>
-  </VisualFrame>
-);
-
-// 05 — Zerpha
-const VZerpha = () => (
-  <VisualFrame label="SCRAPE">
-    <div className="font-mono text-[8px] tracking-widest text-paper/55">/ ZERPHA.CA</div>
-    <div className="relative flex-1 mt-3">
-      {/* stacked pages */}
-      {[0, 1, 2].map(i => (
-        <div key={i} className="absolute rounded-lg border border-cobalt-500/30 bg-ink-950/70 p-2"
-          style={{ top: `${i * 12}px`, left: `${i * 14}px`, right: `${(2 - i) * 14 + 60}px`, height: '54px', zIndex: 3 - i }}>
-          <div className="flex gap-1 mb-1.5">
-            <span className="w-1 h-1 rounded-full bg-paper/30" />
-            <span className="w-1 h-1 rounded-full bg-paper/30" />
-            <span className="w-1 h-1 rounded-full bg-paper/30" />
-          </div>
-          <div className="space-y-1">
-            <div className="h-1 rounded bg-paper/20" style={{ width: '70%' }} />
-            <div className="h-1 rounded bg-paper/20" style={{ width: '50%' }} />
-            <div className="h-1 rounded bg-cobalt-400/70" style={{ width: '40%' }} />
-          </div>
-        </div>
-      ))}
-      {/* arrow */}
-      <svg className="absolute right-[60px] top-[40px]" width="40" height="20" viewBox="0 0 40 20" fill="none">
-        <path d="M0 10 L 32 10" stroke="#6e8dff" strokeWidth="1.5" strokeDasharray="2 2" />
-        <path d="M28 4 L 36 10 L 28 16" stroke="#6e8dff" strokeWidth="1.5" fill="none" />
-      </svg>
-      {/* extracted data */}
-      <div className="absolute right-0 top-[20px] w-[56px] rounded-lg border border-cobalt-400/50 bg-cobalt-500/15 p-2">
-        <div className="font-mono text-[7px] text-cobalt-300 mb-1">JSON</div>
-        <div className="space-y-0.5">
-          <div className="h-0.5 rounded bg-cobalt-400/60" style={{ width: '80%' }} />
-          <div className="h-0.5 rounded bg-cobalt-400/60" style={{ width: '60%' }} />
-          <div className="h-0.5 rounded bg-cobalt-400/60" style={{ width: '90%' }} />
-          <div className="h-0.5 rounded bg-cobalt-400/60" style={{ width: '50%' }} />
-          <div className="h-0.5 rounded bg-cobalt-400/60" style={{ width: '70%' }} />
-        </div>
-      </div>
-    </div>
-    <div className="font-mono text-[8px] text-paper/45 tracking-widest">
-      <span className="text-cobalt-300">◆</span> CLAUDE + GEMINI · 3 MIN
-    </div>
-  </VisualFrame>
-);
-
-// 06 — Ulife
-const VUlife = () => {
-  const days = ['M','T','W','T','F','S','S'];
-  const booked = [1, 3, 4, 8, 9, 13, 15, 17, 20, 24, 26];
-  return (
-    <VisualFrame label="AI RX">
-      <div className="flex items-center justify-between font-mono text-[8px] tracking-widest text-paper/55">
-        <span>/ ULIFE.AI</span>
-        <span className="text-cobalt-300">DEC 2025</span>
-      </div>
-      <div className="mt-3 grid grid-cols-7 gap-1">
-        {days.map((d, i) => (
-          <div key={i} className="text-center font-mono text-[7px] text-paper/40">{d}</div>
-        ))}
-        {Array.from({ length: 28 }).map((_, i) => (
-          <div key={i} className={`aspect-square rounded text-center flex items-center justify-center font-mono text-[7px] ${booked.includes(i) ? 'bg-cobalt-500/80 text-ink-950' : 'bg-ink-950/40 text-paper/35'}`}>
-            {i + 1}
-          </div>
-        ))}
-      </div>
-      <div className="flex-1" />
-      <div className="rounded-lg bg-ink-950/60 border border-cobalt-500/20 px-2.5 py-1.5 flex items-center gap-2">
-        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span className="font-mono text-[8px] text-paper/85">3 appts booked today</span>
-      </div>
-    </VisualFrame>
-  );
-};
-
-// 07 — Minisoft Payments
-const VMini = () => (
-  <VisualFrame label="PAY">
-    <div className="font-mono text-[8px] tracking-widest text-paper/55">/ AI-DLC PAYMENTS</div>
-
-    {/* Payment card */}
-    <div className="mt-4 relative rounded-2xl p-4 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #3b6dff 0%, #1d3dc4 60%, #0a1750 100%)', boxShadow: '0 12px 30px rgba(59,109,255,0.4)' }}>
-      <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-cobalt-300/30 blur-2xl" />
-      <div className="flex justify-between items-start relative">
-        <div className="font-mono text-[8px] tracking-widest text-paper/80">MINISOFT</div>
-        <div className="w-6 h-4 rounded bg-gradient-to-br from-amber-200 to-amber-400" />
-      </div>
-      <div className="mt-4 font-mono text-[10px] tracking-[0.2em] text-paper relative">
-        4242 ◆◆◆◆ ◆◆◆◆ AI24
-      </div>
-      <div className="mt-2 flex justify-between font-mono text-[7px] text-paper/70 relative">
-        <span>AI-DLC EDITION</span>
-        <span>11/27</span>
-      </div>
-    </div>
-
-    <div className="flex-1" />
-
-    <div className="grid grid-cols-3 gap-1">
-      {['SCOPE', 'BUILD', 'SHIP'].map((s, i) => (
-        <div key={s} className={`rounded text-center py-1 font-mono text-[7px] tracking-widest ${i < 3 ? 'bg-cobalt-500/30 text-cobalt-200' : 'bg-ink-950/40 text-paper/40'}`}>
-          {s}
-        </div>
-      ))}
-    </div>
-    <div className="mt-1.5 font-mono text-[8px] text-emerald-300">▲ 60% TIME SAVED</div>
-  </VisualFrame>
-);
-
-const ProjectVisual = ({ n }) => {
-  const map = {
-    '01': VAIQSR,
-    '02': VWes,
-    '03': VMA,
-    '04': VComp,
-    '05': VZerpha,
-    '06': VUlife,
-    '07': VMini,
+// Simple line icons for capability / skill cards
+const Icon = ({ name, size = 20 }) => {
+  const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' };
+  const paths = {
+    layers: <><path d="M12 3 3 8l9 5 9-5-9-5Z" /><path d="M3 13l9 5 9-5" /><path d="M3 18l9 5 9-5" /></>,
+    brain: <><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5.8V16a3 3 0 0 0 4 2.8" /><path d="M15 4a3 3 0 0 1 3 3 3 3 0 0 1 1 5.8V16a3 3 0 0 1-4 2.8" /><path d="M12 4v15" /></>,
+    code: <><path d="m8 8-4 4 4 4" /><path d="m16 8 4 4-4 4" /><path d="m13 5-2 14" /></>,
+    cpu: <><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" /></>,
+    stack: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
+    cloud: <><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.98A6 6 0 0 0 6.34 9 4 4 0 0 0 7 17h10.5Z" /></>,
+    user: <><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></>,
+    map: <><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" /><path d="M9 4v14M15 6v14" /></>,
+    bolt: <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />,
+    star: <path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9L12 3Z" />,
+    chat: <path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v10Z" />,
+    lock: <><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></>,
+    card: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 10h18" /></>,
+    database: <><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5" /><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" /></>,
+    calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 9h18M8 3v4M16 3v4" /></>,
   };
-  const C = map[n] || VAIQSR;
-  return <C />;
+  return <svg {...common}>{paths[name] || paths.code}</svg>;
 };
-
-// ────────────────────────────────────────────────────────────────
-// SHARED BITS
-// ────────────────────────────────────────────────────────────────
-
-const Eyebrow = ({ children, n }) => (
-  <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-cobalt-400/80 uppercase">
-    {n && <span className="text-cobalt-400">{n}</span>}
-    <span className="h-px w-8 bg-cobalt-500/40" />
-    <span>{children}</span>
-  </div>
-);
-
-const SectionLabel = ({ n, title }) => (
-  <div className="flex items-baseline justify-between gap-4 sm:gap-6 mb-10 sm:mb-16 reveal">
-    <div className="flex items-center gap-3 sm:gap-5 min-w-0">
-      <span className="font-mono text-[10px] sm:text-xs text-cobalt-400/70 flex-shrink-0">{n}</span>
-      <h2 className="section-title font-display text-4xl sm:text-5xl md:text-7xl tracking-tight truncate">{title}</h2>
-    </div>
-    <div className="hidden md:block flex-1 h-px bg-gradient-to-r from-cobalt-500/40 via-cobalt-500/10 to-transparent" />
-  </div>
-);
 
 // ────────────────────────────────────────────────────────────────
 // NAV
 // ────────────────────────────────────────────────────────────────
 
-const Nav = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 py-4 md:py-6 flex items-center justify-between gap-3 backdrop-blur-md bg-ink-950/70 sm:bg-ink-950/50 border-b border-cobalt-500/10">
-    <a href="#top" className="flex items-center gap-2 sm:gap-3 font-mono text-[10px] sm:text-xs tracking-widest min-w-0">
-      <span className="inline-block w-2 h-2 rounded-full bg-cobalt-500 shadow-[0_0_12px_#3b6dff] flex-shrink-0" />
-      <span className="text-paper truncate">JOSUE KENGE</span>
-      <span className="text-cobalt-400/60 hidden sm:inline">/ AI ENGINEER</span>
-    </a>
-    <div className="hidden md:flex items-center gap-8 font-mono text-xs tracking-widest text-paper/70">
-      <a href="#work" className="hover:text-paper transition">WORK</a>
-      <a href="#experience" className="hover:text-paper transition">EXPERIENCE</a>
-      <a href="#skills" className="hover:text-paper transition">STACK</a>
-      <a href="#contact" className="hover:text-paper transition">CONTACT</a>
-    </div>
-    <a href="mailto:josuekenge4@gmail.com" className="font-mono text-[10px] sm:text-xs tracking-widest px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-cobalt-500/40 hover:bg-cobalt-500 hover:text-ink-950 transition-all flex-shrink-0">
-      <span className="hidden sm:inline">LET'S TALK </span>
-      <span className="sm:hidden">EMAIL </span>
-      →
-    </a>
-  </nav>
-);
+const Nav = () => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const links = [
+    ['Experience', '#experience'],
+    ['MobiSoins', '#mobisoins'],
+    ['Work', '#work'],
+    ['Stack', '#skills'],
+    ['About', '#about'],
+  ];
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-paper/85 backdrop-blur-md border-b border-line' : 'bg-transparent border-b border-transparent'}`}>
+      <div className="max-w-[1360px] mx-auto px-5 sm:px-8 py-4 md:py-5 flex items-center justify-between gap-4">
+        <a href="#top" className="flex items-center gap-2.5 min-w-0">
+          <PixelMark size={26} color="#1B1A16" />
+          <span className="font-display text-lg sm:text-xl tracking-tight text-ink truncate">Josue Kenge</span>
+        </a>
+        <div className="hidden md:flex items-center gap-8 text-[15px] text-ink-500">
+          {links.map(([label, href]) => (
+            <a key={href} href={href} className="hover:text-ink transition-colors">{label}</a>
+          ))}
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block"><StatusPill /></div>
+          <a href="mailto:josuekenge4@gmail.com" className="pill pill-solid text-sm py-2.5 px-4 md:hidden">Email</a>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 // ────────────────────────────────────────────────────────────────
 // HERO
@@ -524,101 +390,594 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="top" className="relative min-h-screen-d hero-bg pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-40" />
+    <section id="top" className="relative min-h-screen-d overflow-hidden pt-32 sm:pt-40 pb-20">
+      <div className="absolute inset-0 grid-lines opacity-70" />
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(244,241,233,0) 40%, #F4F1E9 92%)' }} />
 
-      <div className="relative max-w-[1480px] mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-[1.05fr_1fr] gap-10 md:gap-12 lg:gap-16 items-center">
-        {/* Left: text */}
-        <div className="relative z-10 max-w-[820px]">
+      {/* Scattered pixel glyphs — randomized across the gutters, clear of text + terminal */}
+      <PixelDeco style={{ top: '9%', left: '4%', transform: 'scale(.55) rotate(-8deg)' }} />
+      <PixelDeco style={{ top: '38%', left: '1.5%', transform: 'scale(.4) rotate(12deg)', opacity: .6 }} />
+      <PixelDeco style={{ bottom: '10%', left: '6.5%', transform: 'scale(.5) rotate(-15deg)', opacity: .85 }} />
+      <PixelDeco style={{ top: '18%', right: '3%', transform: 'scale(.34) rotate(9deg)', opacity: .5 }} />
+      <PixelDeco style={{ bottom: '22%', right: '5.5%', transform: 'scale(.46) rotate(-6deg)', opacity: .7 }} />
+
+      <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 grid lg:grid-cols-[1.02fr_0.98fr] gap-10 lg:gap-14 items-center">
+        {/* Left — copy */}
+        <div className="min-w-0">
           <div className="reveal">
-            <Eyebrow n="◆">AI Engineer · Markham / Toronto</Eyebrow>
+            <Eyebrow>AI Engineer · Markham / Toronto</Eyebrow>
           </div>
 
-          <h1 className="hero-headline reveal reveal-delay-1 mt-6 sm:mt-8 font-display text-[clamp(48px,9vw,156px)] leading-[0.92] tracking-[-0.02em]">
-            Building AI<br/>
-            <span className="acc text-cobalt-400">products </span>
-            that<br/>
-            actually <span className="acc">ship.</span>
+          <h1 className="hero-headline reveal reveal-delay-1 mt-7 font-display font-normal text-ink text-[clamp(46px,6vw,96px)] leading-[0.94] tracking-[-0.02em]">
+            <span className="whitespace-nowrap">Production AI,</span>
+            <br />
+            <span className="italic-accent text-ink-500">actually shipped.</span>
           </h1>
 
-          <p className="reveal reveal-delay-2 mt-6 sm:mt-10 max-w-[620px] text-base sm:text-lg md:text-xl text-paper/70 leading-relaxed">
-            I'm Josue — an AI Engineer shipping production GenAI systems for enterprise and healthcare clients.
-            Agentic workflows, RAG pipelines, and full-stack platforms serving <span className="text-paper">25,000+ users</span>.
-            From architecture to deployment.
+          <p className="reveal reveal-delay-2 mt-8 max-w-[540px] text-lg sm:text-xl text-ink-500 leading-relaxed font-light">
+            I'm Josue — an AI Engineer building GenAI systems for enterprise and healthcare.
+            Agentic workflows, RAG pipelines, and full-stack platforms serving
+            <span className="text-ink font-normal"> 25,000+ users</span>. From architecture to deployment.
           </p>
 
-          <div className="reveal reveal-delay-3 mt-8 sm:mt-12 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
-            <a href="#work" className="group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all">
-              View selected work
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+          <div className="reveal reveal-delay-3 mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <a href="#work" className="pill pill-solid justify-center">
+              View selected work <span className="arw">→</span>
             </a>
-            <a href="mailto:josuekenge4@gmail.com" className="inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full border border-paper/15 hover:border-paper/40 transition">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-xs sm:text-sm tracking-wider">AVAILABLE FOR WORK</span>
+            <a href="mailto:josuekenge4@gmail.com" className="pill pill-ghost justify-center">
+              Get in touch <span className="arw">→</span>
             </a>
           </div>
 
-          <div className="reveal reveal-delay-4 mt-10 sm:mt-16 flex flex-wrap gap-x-6 sm:gap-x-10 gap-y-3 sm:gap-y-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/45 uppercase">
-            <div><span className="text-cobalt-400">▸</span> {time || 'Loading…'}</div>
-            <div><span className="text-cobalt-400">▸</span> Carleton · Computer Science</div>
-            <div><span className="text-cobalt-400">▸</span> Currently @ IBM watsonx</div>
+          <div className="reveal reveal-delay-4 mt-12 sm:mt-16 flex flex-wrap gap-x-10 gap-y-3 text-[13px] tracking-wide text-ink-400">
+            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-ink-300" />{time || '— : —'}</div>
+            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-ink-300" />Carleton · Computer Science</div>
+            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-ink-300" />Currently @ IBM watsonx</div>
+          </div>
+
+          {/* Multi-agent pipeline — a signal sweeps left→right, each stage lights as it passes */}
+          <div className="reveal reveal-delay-4 mt-10 sm:mt-12 max-w-[460px]" aria-hidden="true">
+            <div className="eyebrow mb-6"><span className="sq" />multi-agent pipeline</div>
+            <div className="agentflow-row">
+              <div className="agentflow-line" />
+              {['Plan', 'Retrieve', 'Reason', 'Ship'].map((label, i) => (
+                <div key={label} className="agentflow-node">
+                  <span className="agentflow-dot" style={{ animationDelay: `${i * 0.9}s` }} />
+                  <span className="agentflow-label">{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Right: agent reasoning terminal */}
-        <div className="relative flex items-center justify-center lg:justify-end w-full lg:w-auto">
+        {/* Right — agent terminal (dark, matches brand) */}
+        <div className="reveal reveal-delay-2 hidden lg:block w-full">
           {window.AgentTerminal && <window.AgentTerminal />}
         </div>
       </div>
-
-      {/* Scroll indicator — hidden on mobile (saves space + avoids overlap) */}
-      <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.35em] text-paper/40 flex-col items-center gap-2">
-        <span>SCROLL</span>
-        <span className="w-px h-10 bg-gradient-to-b from-paper/40 to-transparent" />
-      </div>
     </section>
   );
 };
 
-
 // ────────────────────────────────────────────────────────────────
-// MARQUEE
+// TICKER
 // ────────────────────────────────────────────────────────────────
 
-const Marquee = () => {
+const Ticker = () => {
   const items = [...STACK_TICKER, ...STACK_TICKER];
+  const hairline = 'linear-gradient(90deg, transparent, rgba(27,26,22,0.07) 22%, rgba(27,26,22,0.07) 78%, transparent)';
+  const fade = 'linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent)';
   return (
-    <section className="border-y border-cobalt-500/10 py-5 sm:py-8 overflow-hidden bg-ink-900/40">
-      <div className="marquee marquee-mobile gap-6 sm:gap-12 font-display text-2xl sm:text-4xl md:text-6xl tracking-tight whitespace-nowrap">
+    <section className="relative overflow-hidden py-7">
+      <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ background: hairline }} />
+      <div className="marquee items-center" style={{ maskImage: fade, WebkitMaskImage: fade }}>
         {items.map((t, i) => (
-          <span key={i} className="flex items-center gap-6 sm:gap-12 marquee-text">
+          <span key={i} className="flex items-center gap-9 text-[11px] tracking-[0.28em] text-ink-400 font-medium whitespace-nowrap mr-9">
             {t}
-            <span className="text-cobalt-500 acc">◆</span>
+            <span className="w-[3px] h-[3px] rotate-45 bg-ink-300/70" />
           </span>
         ))}
       </div>
+      <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ background: hairline }} />
     </section>
   );
 };
 
 // ────────────────────────────────────────────────────────────────
-// METRICS STRIP
+// METRICS
 // ────────────────────────────────────────────────────────────────
 
 const Metrics = () => (
-  <section className="py-16 sm:py-24 lg:py-28 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
-    <div className="reveal mb-8 sm:mb-12">
-      <Eyebrow n="001">Impact at a glance</Eyebrow>
-    </div>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+  <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="reveal mb-12"><Eyebrow>Impact at a glance</Eyebrow></div>
+    <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-line">
       {HEADLINE_METRICS.map((m, i) => (
-        <div key={i} className={`reveal reveal-delay-${i+1} group`}>
-          <div className="num-big font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-cobalt-300 num-glow leading-none tracking-tight">
-            {m.v}
+        <div key={i} className={`reveal reveal-delay-${i + 1} py-8 sm:py-10 pr-6 border-b border-line ${i % 2 === 0 ? 'sm:border-r' : ''} lg:border-r ${i === 3 ? 'lg:border-r-0' : ''}`}>
+          <div className="font-display font-normal text-5xl sm:text-6xl lg:text-7xl text-ink leading-none tracking-tight">{m.v}</div>
+          <div className="mt-4 text-[13px] tracking-wide text-ink-500">{m.l}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────────────────────
+// CAPABILITIES — "The Blueprint"
+// ────────────────────────────────────────────────────────────────
+
+const Capabilities = () => (
+  <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end mb-12">
+      <div className="reveal">
+        <Eyebrow>How I work</Eyebrow>
+        <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.02]">
+          The Blueprint
+        </h2>
+        <p className="mt-5 max-w-[560px] text-ink-500 text-lg font-light leading-relaxed">
+          I bring the AI layer to companies — solving their hardest problems through
+          strategic architecture and hands-on engineering.
+        </p>
+      </div>
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 border-t border-l border-line">
+      {CAPABILITIES.map((c, i) => (
+        <div key={c.n} className="reveal group relative p-7 sm:p-9 border-b border-r border-line bg-surface/40 hover:bg-surface transition-colors" style={{ transitionDelay: `${i * 60}ms` }}>
+          <span className="absolute top-6 right-7 text-[12px] tracking-widest text-ink-300">{c.n}</span>
+          <span className="icon-sq"><Icon name={c.icon} /></span>
+          <h3 className="mt-8 font-display font-normal text-2xl sm:text-[26px] tracking-tight text-ink">{c.title}</h3>
+          <p className="mt-4 text-ink-500 leading-relaxed font-light text-[15px]">{c.body}</p>
+        </div>
+      ))}
+      {/* Quote cell */}
+      <div className="reveal p-7 sm:p-9 border-b border-r border-line bg-[#EEEAE0] flex flex-col justify-center">
+        <div className="flex items-center gap-3">
+          <span className="h-px w-10 bg-ink-300" />
+          <span className="italic-accent text-ink-700 text-lg sm:text-xl leading-snug">"Brownfield AI, without the disruption."</span>
+        </div>
+        <a href="#work" className="group mt-6 inline-flex items-center gap-2 text-[13px] tracking-widest uppercase text-ink-500 hover:text-ink transition-colors">
+          See it in production <span className="arw">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────────────────────
+// WORK — gradient project tiles
+// ────────────────────────────────────────────────────────────────
+
+const ProjectCard = ({ p, onOpen }) => (
+  <article className="reveal group cursor-pointer" onClick={onOpen} role="button" tabIndex={0}
+    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } }}
+    data-comment-anchor={`project-${p.n}`}>
+    {/* Gradient tile */}
+    <div className="proj-tile" style={{ background: p.grad }}>
+      <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
+        <span className="text-[11px] tracking-[0.2em] text-white/55 font-medium">{p.tag}</span>
+        <span className="text-[11px] tracking-widest text-white/45">{p.n}</span>
+      </div>
+      <div className="relative text-center px-6">
+        <div className="mx-auto mb-4 w-11 h-11 rounded-xl bg-white/12 border border-white/15 flex items-center justify-center text-white">
+          <Icon name={['stack','cpu','brain','layers','code','cloud','stack'][(+p.n - 1) % 7]} size={22} />
+        </div>
+        <h3 className="font-display font-normal text-white text-[28px] sm:text-3xl leading-tight tracking-tight">{p.title}</h3>
+      </div>
+      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+        <div>
+          <div className="font-display text-2xl text-white leading-none">{p.metric.v}</div>
+          <div className="text-[10px] tracking-widest uppercase text-white/55 mt-1">{p.metric.l}</div>
+        </div>
+        <span className="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white/80 group-hover:bg-white group-hover:text-ink transition-all">→</span>
+      </div>
+    </div>
+
+    {/* Body under tile */}
+    <div className="mt-5 px-1">
+      <div className="text-[11px] tracking-widest uppercase text-ink-400">{p.role} · {p.year}</div>
+      <p className="mt-2.5 text-ink-500 font-light leading-relaxed text-[15px]">{p.blurb}</p>
+      <div className="mt-4 flex flex-wrap gap-1.5">
+        {p.tech.map(t => (
+          <span key={t} className="px-2.5 py-1 rounded-full border border-line text-[11px] text-ink-500">{t}</span>
+        ))}
+      </div>
+      <div className="mt-5 inline-flex items-center gap-2 text-[12px] tracking-widest uppercase text-ink-700 group-hover:text-ink transition-colors">
+        View case study <span className="arw">→</span>
+      </div>
+    </div>
+  </article>
+);
+
+const Work = ({ onOpenProject }) => (
+  <section id="work" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="reveal flex items-end justify-between gap-6 mb-12">
+      <div>
+        <Eyebrow>Selected work</Eyebrow>
+        <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">Projects</h2>
+      </div>
+      <span className="hidden sm:block text-[13px] text-ink-400">{PROJECTS.length} shipped systems</span>
+    </div>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+      {PROJECTS.map(p => <ProjectCard key={p.n} p={p} onOpen={() => onOpenProject(p)} />)}
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────────────────────
+// MOBISOINS — mobile app spotlight
+// ────────────────────────────────────────────────────────────────
+
+// Real MobiSoins wordmark (navy text + green heartbeat) from the app.
+const MobiWordmark = () => (
+  <img src="assets/mobisoins-logo.png" alt="MobiSoins" style={{ width: 150, height: 'auto' }} />
+);
+
+// Clean mock of the MobiSoins welcome / role-select screen (English).
+const PhoneMock = () => {
+  const roleCards = [
+    { icon: 'user', title: 'I need care', sub: 'Book a nurse to your home', tint: MOBI_GREEN },
+    { icon: 'map', title: 'I provide care', sub: 'Go online & accept visits', tint: MOBI_NAVY },
+  ];
+  return (
+    <div className="relative mx-auto" style={{ width: 'min(292px, 80vw)' }}>
+      <div className="relative rounded-[2.7rem] p-2" style={{ background: '#111318', boxShadow: '0 40px 90px rgba(27,26,22,0.26)' }}>
+        <div className="relative rounded-[2.3rem] overflow-hidden" style={{ background: '#FDFDFC', aspectRatio: '9/19.3' }}>
+          {/* notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 rounded-b-2xl bg-[#111318] z-10" />
+          {/* status bar */}
+          <div className="flex items-center justify-between px-6 pt-3.5 text-[10px] font-medium" style={{ color: '#9aa1ac' }}>
+            <span>9:41</span>
+            <span className="flex items-center gap-1">
+              <svg width="15" height="10" viewBox="0 0 15 10" fill="none"><path d="M7.5 8.5a1 1 0 100-.01M4.7 6a4 4 0 015.6 0M2 3.4a8 8 0 0111 0" stroke="#c3c7cd" strokeWidth="1.1" strokeLinecap="round"/></svg>
+              <span className="inline-block w-4 h-2 rounded-[2px] border border-[#c3c7cd]"><span className="block h-full w-2.5 rounded-[1px] bg-[#c3c7cd]" /></span>
+            </span>
           </div>
-          <div className="mt-2 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
-            {m.l}
+          {/* content */}
+          <div className="px-6 pt-12">
+            <div className="flex justify-center"><MobiWordmark /></div>
+            <div className="mt-10 text-center font-display text-[26px] leading-none" style={{ color: '#2a2c30' }}>Welcome</div>
+            <div className="mt-2 text-center text-[11px] text-[#9aa1ac]">How can we help you today?</div>
+
+            <div className="mt-7 space-y-3">
+              {roleCards.map((r) => (
+                <div key={r.title} className="flex items-center gap-3 rounded-2xl bg-white px-3.5 py-3.5" style={{ border: '1px solid #eef0f2', boxShadow: '0 6px 16px rgba(37,62,125,0.05)' }}>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.tint}14`, color: r.tint }}>
+                    <Icon name={r.icon} size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[13px] font-medium" style={{ color: '#2a2c30' }}>{r.title}</div>
+                    <div className="text-[10.5px] text-[#9aa1ac] leading-snug mt-0.5">{r.sub}</div>
+                  </div>
+                  <span className="text-[#c3c7cd] text-sm flex-shrink-0">›</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-7 text-center text-[9.5px] text-[#b3b7bd]">You can switch roles anytime.</div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ── Architecture modal — a glimpse of how MobiSoins fits together ──
+const ANode = ({ tier, name, sub }) => (
+  <div className="rounded-2xl bg-surface border border-line px-4 py-3 text-center" style={{ boxShadow: '0 8px 22px rgba(27,26,22,0.05)' }}>
+    <div className="text-[9.5px] tracking-[0.2em] uppercase text-ink-400 mb-1">{tier}</div>
+    <div className="font-display text-[17px] text-ink leading-tight">{name}</div>
+    {sub && <div className="text-[10.5px] text-ink-400 mt-1 font-light leading-snug">{sub}</div>}
+  </div>
+);
+const ADown = ({ label }) => (
+  <div className="flex flex-col items-center py-1.5">
+    {label && <span className="text-[9.5px] tracking-widest uppercase text-ink-400 mb-1">{label}</span>}
+    <span className="text-ink-300 text-xs leading-none">▼</span>
+  </div>
+);
+
+const ARCH_CARDS = [
+  { icon: 'map', t: 'Live map & discovery', d: 'Nearby nurses come from a Haversine geo-query; each pin’s live GPS rides Firebase and is interpolated client-side so it glides instead of jumping.' },
+  { icon: 'bolt', t: 'Booking & accept', d: 'A booking pre-authorizes payment, then the API offers it to the closest nurse for 18s across 3 rounds. The first atomic accept wins — everyone else gets a clean 409.' },
+  { icon: 'cpu', t: 'Real-time speed', d: 'Offers land in ~hundreds of ms over Firebase, with push + polling as fallbacks. A patient goes from open → nurse confirmed in under 3 minutes.' },
+  { icon: 'star', t: 'Reviews & ratings', d: 'A delayed prompt after each completed visit collects a rating; nurse profiles aggregate reviews that feed back into discovery.' },
+  { icon: 'chat', t: 'Firebase SDK', d: 'The realtime backbone — RTDB streams GPS, job offers, and in-app chat keyed by bookingId; FCM handles push. App uses the JS SDK, backend the Admin SDK.' },
+  { icon: 'lock', t: 'Auth & OTP', d: 'Google, Apple & Facebook sign-in flow through Firebase/Cognito; email OTP goes through AWS (Cognito + SES), phone OTP through Twilio. The backend verifies tokens (JWKS + Apple verifier) and issues role-scoped JWTs.' },
+  { icon: 'card', t: 'Escrow payments', d: 'Stripe manual-capture holds funds until the visit report is filed; signed, idempotent webhooks reconcile state and nurses are paid weekly via Connect.' },
+  { icon: 'database', t: 'Data & compliance', d: 'PostgreSQL via TypeORM — 15 entities, 18 migrations — with Law 25 audit logging, soft deletes, and ca-central-1 residency.' },
+];
+
+const MobiArchModal = ({ open, onClose }) => {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [open, onClose]);
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] overflow-y-auto" style={{ background: 'rgba(27,26,22,0.5)', backdropFilter: 'blur(8px)' }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="min-h-screen-d flex items-start justify-center py-6 sm:py-12 px-3 sm:px-4 md:px-8">
+        <div className="relative w-full max-w-[1120px] rounded-2xl sm:rounded-3xl overflow-hidden"
+          style={{ background: '#F4F1E9', border: '1px solid #E5E1D6', boxShadow: '0 50px 130px rgba(27,26,22,0.35)' }}>
+          <button onClick={onClose} aria-label="Close"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-surface border border-lined text-ink-500 hover:bg-ink hover:text-paper hover:border-ink transition">✕</button>
+
+          {/* Header */}
+          <div className="p-5 sm:p-8 md:p-11 border-b border-line">
+            <Eyebrow>System architecture</Eyebrow>
+            <h2 className="mt-4 font-display font-normal text-3xl sm:text-4xl md:text-5xl tracking-tight leading-[1.02]">
+              How MobiSoins <span className="italic-accent text-ink-500">fits together</span>
+            </h2>
+            <p className="mt-4 max-w-[760px] text-ink-500 font-light text-sm sm:text-base leading-relaxed">
+              One role-aware app, a NestJS API as the system of record, and Firebase as a realtime side-channel —
+              here’s a glimpse of each piece and how they intertwine.
+            </p>
+          </div>
+
+          {/* Diagram */}
+          <div className="p-5 sm:p-8 md:p-11">
+            <div className="rounded-2xl p-5 sm:p-7" style={{ background: '#F7F4EC', border: '1px solid #E5E1D6' }}>
+              <div className="grid lg:grid-cols-[1fr_248px] gap-6 lg:gap-8 items-start">
+                {/* Center stack */}
+                <div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <ANode tier="Patient" name="Patient app" sub="map · book · track · pay" />
+                    <ANode tier="Nurse" name="Nurse app" sub="go online · accept · navigate" />
+                  </div>
+                  <div className="text-center text-[10.5px] text-ink-400 mt-2 font-light">One Expo / React Native codebase · role-aware navigation</div>
+                  <ADown label="REST · Axios (typed errors)" />
+                  <ANode tier="Gateway · system of record" name="NestJS API" sub="Node.js on AWS EC2 · 18 modules · ~111 endpoints · guards · i18n FR/EN" />
+                  <ADown label="TypeORM" />
+                  <ANode tier="Persistence" name="PostgreSQL" sub="15 entities · 18 migrations · Law 25 audit + soft deletes" />
+                </div>
+
+                {/* Firebase rail */}
+                <div className="lg:pt-1">
+                  <div className="rounded-2xl border border-line bg-surface p-4" style={{ boxShadow: '0 8px 22px rgba(27,26,22,0.05)' }}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="icon-sq w-8 h-8 rounded-lg"><Icon name="chat" size={15} /></span>
+                      <span className="text-[12px] font-medium text-ink">Firebase — realtime bus</span>
+                    </div>
+                    <ul className="space-y-2">
+                      {['Live nurse GPS', 'Job offers & accept', 'In-app chat', 'FCM push'].map(x => (
+                        <li key={x} className="flex items-center gap-2 text-[12px] text-ink-500 font-light"><span className="w-1 h-1 bg-ink-300" />{x}</li>
+                      ))}
+                    </ul>
+                    <div className="mt-3 pt-3 border-t border-line text-[10px] text-ink-400 font-light leading-snug">Keyed by bookingId · JS SDK (app) ↔ Admin SDK (API)</div>
+                  </div>
+                  <div className="mt-2 text-center text-[10px] text-ink-400 font-light">↔ linked live to both apps</div>
+                </div>
+              </div>
+
+              {/* External services */}
+              <div className="mt-6 pt-5 border-t border-line">
+                <div className="text-[10px] tracking-widest uppercase text-ink-400 mb-2.5">External services</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {['AWS EC2 · hosting', 'AWS Cognito · auth + email OTP', 'Twilio · phone OTP', 'Stripe · escrow + Connect', 'Mapbox · maps + directions', 'S3 · SES · SNS', 'Claude Haiku · assistant'].map(s => (
+                    <span key={s} className="px-2.5 py-1 rounded-full border border-line bg-surface text-[11px] text-ink-500">{s}</span>
+                  ))}
+                </div>
+                <div className="mt-4 pt-4 border-t border-line flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11.5px] text-ink-500 font-light">
+                  <span className="text-[10px] tracking-widest uppercase text-ink-400">Delivery</span>
+                  CI/CD from GitHub → build → SSH deploy to the AWS EC2 instance · iOS builds via EAS → TestFlight for pre-prod QA.
+                </div>
+              </div>
+            </div>
+
+            {/* Glimpse cards */}
+            <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-lined">
+              {ARCH_CARDS.map(c => (
+                <div key={c.t} className="p-5 border-b border-r border-lined bg-surface/40">
+                  <span className="icon-sq w-9 h-9 rounded-lg"><Icon name={c.icon} size={16} /></span>
+                  <div className="mt-4 font-display font-normal text-[17px] text-ink tracking-tight">{c.t}</div>
+                  <p className="mt-2 text-[12.5px] text-ink-500 font-light leading-relaxed">{c.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-5 sm:px-8 md:px-11 py-6 border-t border-line flex items-center justify-between">
+            <span className="text-[10px] tracking-widest uppercase text-ink-400">MobiSoins · architecture</span>
+            <button onClick={onClose} className="text-[11px] tracking-widest uppercase text-ink-500 hover:text-ink transition">← back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Mobisoins = () => {
+  const m = MOBISOINS;
+  const [arch, setArch] = useState(false);
+  return (
+    <section id="mobisoins" className="relative overflow-hidden border-y border-line" style={{ background: '#EFEBE0' }}>
+      <div className="absolute inset-0 grid-lines opacity-50" />
+      <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        {/* Top: intro + phone */}
+        <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-start">
+          <div>
+            <div className="reveal"><Eyebrow>Featured build · flagship</Eyebrow></div>
+            <div className="reveal reveal-delay-1 mt-5 flex items-center gap-3 flex-wrap">
+              <h2 className="section-title font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">{m.title}</h2>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lined bg-surface text-[11px] tracking-widest uppercase text-ink-500">
+                <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />{m.status}
+              </span>
+            </div>
+            <p className="reveal reveal-delay-1 mt-4 italic-accent text-ink-500 text-xl sm:text-2xl">{m.tagline}</p>
+            <p className="reveal reveal-delay-2 mt-6 max-w-[600px] text-ink-500 text-lg font-light leading-relaxed">{m.blurb}</p>
+
+            <div className="reveal reveal-delay-2 mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button onClick={() => setArch(true)} className="pill pill-solid justify-center">
+                <Icon name="layers" size={16} /> View architecture <span className="arw">→</span>
+              </button>
+              <a href="https://www.mobisoins.com" target="_blank" rel="noopener" className="pill pill-ghost justify-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-moss" /> Visit mobisoins.com <span className="arw">↗</span>
+              </a>
+              <a href="mobisoins-story.html" className="pill pill-ghost justify-center">
+                <Icon name="chat" size={15} /> Read the story <span className="arw">→</span>
+              </a>
+            </div>
+
+            {/* Role columns */}
+            <div className="reveal reveal-delay-2 mt-9 grid sm:grid-cols-2 gap-6 max-w-[620px]">
+              {m.roles.map((r, ri) => (
+                <div key={r.label} className="rounded-2xl border border-line bg-surface/70 p-5">
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: ri === 0 ? MOBI_GREEN : MOBI_NAVY }} />
+                    <span className="text-[11px] tracking-widest uppercase text-ink-700 font-medium">{r.label}</span>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {r.items.map((it) => (
+                      <li key={it} className="flex gap-2.5 text-[13.5px] text-ink-500 font-light leading-snug">
+                        <span className="mt-1.5 w-1 h-1 bg-ink-300 flex-shrink-0" />{it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Phone visual */}
+          <div className="reveal reveal-delay-2 relative flex justify-center">
+            <PhoneMock />
+          </div>
+        </div>
+
+        {/* Engineering highlights */}
+        <div className="reveal mt-16 grid sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-lined">
+          {m.highlights.map((h) => (
+            <div key={h.t} className="p-6 border-b border-r border-lined bg-surface/40">
+              <div className="font-display font-normal text-xl text-ink tracking-tight">{h.t}</div>
+              <p className="mt-2.5 text-[13.5px] text-ink-500 font-light leading-relaxed">{h.d}</p>
+            </div>
+          ))}
+        </div>
+
+        {m.note && (
+          <p className="reveal mt-6 flex items-start gap-2.5 text-[13.5px] text-ink-500 font-light max-w-[760px]">
+            <span className="mt-0.5 flex-shrink-0 text-ink-400">✦</span>{m.note}
+          </p>
+        )}
+
+        {/* Stacks + metrics */}
+        <div className="reveal mt-12 grid lg:grid-cols-[1fr_auto] gap-10 items-end">
+          <div className="space-y-4">
+            <div>
+              <div className="text-[11px] tracking-widest uppercase text-ink-400 mb-2">Mobile app</div>
+              <div className="flex flex-wrap gap-1.5">
+                {m.techApp.map(t => <span key={t} className="px-2.5 py-1 rounded-full border border-line bg-surface text-[11px] text-ink-500">{t}</span>)}
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] tracking-widest uppercase text-ink-400 mb-2">Backend API</div>
+              <div className="flex flex-wrap gap-1.5">
+                {m.techApi.map(t => <span key={t} className="px-2.5 py-1 rounded-full border border-line bg-surface text-[11px] text-ink-500">{t}</span>)}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="reveal mt-12 grid grid-cols-2 lg:grid-cols-4 border-t border-line pt-8">
+          {m.metrics.map((mt, i) => (
+            <div key={i} className={`pr-6 ${i < 3 ? 'border-r border-line' : ''}`}>
+              <div className="font-display font-normal text-2xl sm:text-3xl text-ink leading-none tracking-tight">{mt.v}</div>
+              <div className="mt-2 text-[11px] tracking-wide text-ink-400 leading-snug">{mt.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <MobiArchModal open={arch} onClose={() => setArch(false)} />
+    </section>
+  );
+};
+
+// ────────────────────────────────────────────────────────────────
+// EXPERIENCE
+// ────────────────────────────────────────────────────────────────
+
+const EducationCard = () => (
+  <div className="card rounded-3xl p-7">
+    <div className="flex items-start justify-between gap-4">
+      <Eyebrow>Education</Eyebrow>
+      <span className="font-display font-normal text-4xl text-ink leading-none tracking-tight">'27</span>
+    </div>
+    <h3 className="mt-6 font-display font-normal text-2xl sm:text-[28px] tracking-tight leading-tight">Carleton University</h3>
+    <p className="mt-1.5 italic-accent text-ink-500 text-lg sm:text-xl">B.Sc. Computer Science</p>
+    <p className="mt-5 pt-5 border-t border-line text-[12px] tracking-widest uppercase text-ink-400">Ottawa, ON · Expected May 2027</p>
+  </div>
+);
+
+const Experience = () => (
+  <section id="experience" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="reveal mb-12">
+      <Eyebrow>Career</Eyebrow>
+      <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">Experience</h2>
+    </div>
+    <div className="grid lg:grid-cols-[1fr_330px] gap-10 lg:gap-14 items-start">
+      {/* Left: timeline */}
+      <div className="border-t border-line">
+        {EXPERIENCE.map((e, i) => (
+          <div key={i} className="reveal grid md:grid-cols-[180px_1fr] gap-4 md:gap-8 py-9 sm:py-12 border-b border-line group">
+            <div className="md:pt-2">
+              <div className="text-[12px] tracking-widest uppercase text-ink-400">{e.when}</div>
+              <div className="text-[12px] tracking-widest uppercase text-ink-300 mt-1.5">{e.loc}</div>
+            </div>
+            <div>
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <h3 className="font-display font-normal text-3xl sm:text-4xl tracking-tight text-ink">{e.co}</h3>
+                <span className="italic-accent text-ink-500 text-lg sm:text-xl">— {e.role}</span>
+              </div>
+              {e.context && (
+                <p className="mt-4 max-w-[760px] text-ink-500 font-light leading-relaxed text-[15px] sm:text-base border-l-2 border-lined pl-4">{e.context}</p>
+              )}
+              <ul className="mt-5 space-y-3">
+                {e.bullets.map((b, j) => (
+                  <li key={j} className="flex gap-3.5 text-ink-500 font-light leading-relaxed text-[15px] sm:text-base">
+                    <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Right: Education — same row as Experience */}
+      <aside className="reveal reveal-delay-1 lg:sticky lg:top-28">
+        <EducationCard />
+      </aside>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────────────────────
+// SKILLS
+// ────────────────────────────────────────────────────────────────
+
+const Skills = () => (
+  <section id="skills" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="reveal mb-12">
+      <Eyebrow>Toolkit</Eyebrow>
+      <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">Stack</h2>
+    </div>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {SKILLS.map((s, i) => (
+        <div key={i} className={`reveal card rounded-2xl p-6 reveal-delay-${i + 1}`}>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="icon-sq w-9 h-9 rounded-lg"><Icon name={['brain','code','stack','cloud'][i]} size={17} /></span>
+            <h3 className="font-display font-normal text-xl tracking-tight">{s.group}</h3>
+          </div>
+          <ul className="space-y-2.5">
+            {s.items.map(item => (
+              <li key={item} className="flex items-center gap-3 text-ink-500 text-[14px] font-light">
+                <span className="w-1 h-1 bg-ink-300 flex-shrink-0" />{item}
+              </li>
+            ))}
+          </ul>
         </div>
       ))}
     </div>
@@ -630,263 +989,78 @@ const Metrics = () => (
 // ────────────────────────────────────────────────────────────────
 
 const About = () => (
-  <section id="about" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8">
-    <div className="max-w-[1480px] mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-10 md:gap-12 lg:gap-16 items-start">
+  <section id="about" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+    <div className="grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-start">
       <div>
-        <div className="reveal"><Eyebrow n="002">About</Eyebrow></div>
-        <h2 className="about-headline reveal reveal-delay-1 mt-5 sm:mt-6 font-display text-4xl sm:text-5xl md:text-7xl leading-[0.95] tracking-tight">
-          I ship GenAI<br/>
-          <span className="acc text-cobalt-400">end-to-end</span> — from<br/>
-          architecture to <span className="acc">production.</span>
+        <div className="reveal"><Eyebrow>About</Eyebrow></div>
+        <h2 className="reveal reveal-delay-1 mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl leading-[1.02] tracking-tight">
+          I ship GenAI <span className="italic-accent text-ink-500">end-to-end</span> — architecture to production.
         </h2>
-        <div className="reveal reveal-delay-2 mt-6 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg text-paper/70 leading-relaxed max-w-[640px]">
+        <div className="reveal reveal-delay-2 mt-8 space-y-5 text-ink-500 text-lg font-light leading-relaxed max-w-[620px]">
           <p>
-            I'm a Computer Science student at Carleton, currently engineering AI features
-            on <span className="text-paper">IBM watsonx Workshop</span> for 25,000+ sellers globally. Before that I shipped 7 production AI systems
-            at Jonas Software / CSI — chatbots, analytics platforms, and RAG pipelines that moved real numbers.
+            I'm a Computer Science student at Carleton, currently engineering AI features on
+            <span className="text-ink font-normal"> IBM watsonx Workshop</span> for 25,000+ sellers globally.
+            Before that I shipped 7 production AI systems at Jonas Software / CSI — chatbots, analytics
+            platforms, and RAG pipelines that moved real numbers.
           </p>
           <p>
-            I'm fluent across the stack and the AI layer. My favorite mode is brownfield integration —
-            embedding net-new AI capabilities into existing production codebases without disrupting live operations,
-            often at 2× the expected velocity.
+            My favorite mode is brownfield integration — embedding net-new AI capability into existing
+            production codebases without disrupting live operations, often at 2× the expected velocity.
           </p>
         </div>
 
-        {/* Fun stuff terminal */}
-        <div className="reveal reveal-delay-3 mt-8 sm:mt-12 max-w-[640px]">
+        <div className="reveal reveal-delay-3 mt-10 max-w-[620px]">
           {window.Terminal && (
             <window.Terminal
               trace={window.FUN_TRACE}
               label="josue.fun · live"
               maxWidth="100%"
-              minHeight="320px"
+              minHeight="300px"
               fontSize="clamp(11px, 2.8vw, 13px)"
             />
           )}
         </div>
       </div>
 
-      {/* Right: designed identity card + meta */}
-      <div className="reveal reveal-delay-3 space-y-6 max-w-md mx-auto lg:max-w-none">
-        <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
-          <div className="absolute inset-0 rounded-3xl overflow-hidden"
+      {/* Identity card + meta */}
+      <div className="reveal reveal-delay-2 space-y-5 max-w-md mx-auto lg:max-w-none w-full">
+        <div className="relative w-full rounded-3xl overflow-hidden card" style={{ aspectRatio: '4/5' }}>
+          <div className="absolute inset-0 grid-lines-sm opacity-60" />
+          <img src="avatars/josue.png" alt="Josue Kenge"
+            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[92%] object-contain"
             style={{
-              background: 'radial-gradient(circle at 30% 25%, #2a4ed3 0%, #0e1a52 45%, #050a1f 100%)',
-              boxShadow: 'inset -10px -16px 50px rgba(3,6,15,0.6), inset 6px 12px 30px rgba(155,180,255,0.15), 0 24px 80px rgba(59,109,255,0.3)',
-            }}>
-            {/* grid */}
-            <div className="absolute inset-0 opacity-25"
-              style={{ backgroundImage: 'linear-gradient(rgba(155,180,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(155,180,255,0.08) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-            {/* glow */}
-            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(155,180,255,0.4), transparent 65%)' }} />
-            {/* avatar */}
-            <img
-              src="avatars/josue.png"
-              alt="Josue Kenge avatar"
-              className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[92%] object-contain"
-              style={{
-                filter: 'drop-shadow(0 24px 40px rgba(3,6,15,0.55))',
-                WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%)',
-                maskImage: 'linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%)',
-              }}
-            />
-            {/* top tag */}
-            <div className="absolute top-5 left-5 right-5 flex justify-between font-mono text-[10px] tracking-[0.2em] text-paper/70">
-              <span><span className="text-cobalt-300">◆</span> JOSUE KENGE</span>
-              <span>'26</span>
+              filter: 'drop-shadow(0 20px 30px rgba(27,26,22,0.18))',
+              WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
+            }} />
+          <div className="absolute top-5 left-5 right-5 flex justify-between items-start">
+            <PixelMark size={22} color="#1B1A16" />
+            <span className="text-[11px] tracking-widest text-ink-400">'26</span>
+          </div>
+          <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end text-[11px] tracking-widest uppercase">
+            <div>
+              <div className="text-ink font-medium">AI Engineer</div>
+              <div className="text-ink-400 mt-1">Markham · ON</div>
             </div>
-            {/* bottom tag */}
-            <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end font-mono text-[10px] tracking-[0.2em] text-paper/65">
-              <div>
-                <div className="text-cobalt-300">AI ENGINEER</div>
-                <div className="text-paper/50 mt-1">MARKHAM · ON</div>
-              </div>
-              <div className="text-right">
-                <div>EST.</div>
-                <div className="text-paper/50">2024</div>
-              </div>
+            <div className="text-right text-ink-400">
+              <div>Est.</div>
+              <div>2024</div>
             </div>
           </div>
         </div>
-        <div className="glass rounded-2xl p-6 space-y-3">
+        <div className="card rounded-2xl p-6 space-y-3.5">
           {[
-            ['EDUCATION', 'Carleton University · B.Sc. Computer Science'],
-            ['BASED IN', 'Markham, ON · open to remote'],
-            ['LANGUAGES', 'English, French'],
-            ['EMAIL', 'josuekenge4@gmail.com'],
+            ['Education', 'Carleton University · B.Sc. CS'],
+            ['Based in', 'Markham, ON · open to remote'],
+            ['Languages', 'English, French'],
+            ['Email', 'josuekenge4@gmail.com'],
           ].map(([k, v]) => (
             <div key={k} className="flex items-baseline justify-between gap-4 text-sm">
-              <span className="font-mono text-[10px] tracking-widest text-cobalt-400/80">{k}</span>
-              <span className="text-paper/85 text-right">{v}</span>
+              <span className="text-[11px] tracking-widest uppercase text-ink-400 flex-shrink-0">{k}</span>
+              <span className="text-ink-700 text-right font-light">{v}</span>
             </div>
           ))}
         </div>
-      </div>
-    </div>
-  </section>
-);
-
-// ────────────────────────────────────────────────────────────────
-// WORK / PROJECTS
-// ────────────────────────────────────────────────────────────────
-
-const ProjectCard = ({ p, onOpen }) => {
-  return (
-    <article
-      className="reveal magnet glass rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 grid lg:grid-cols-[1fr_280px] gap-6 sm:gap-8 items-center group cursor-pointer"
-      data-comment-anchor={`project-${p.n}`}
-      onClick={onOpen}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); } }}
-    >
-      <div className="min-w-0">
-        <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest text-cobalt-400/80">
-          <span>PROJECT {p.n}</span>
-          <span className="h-px w-6 bg-cobalt-500/30" />
-          <span className="text-paper/50">{p.year}</span>
-        </div>
-
-        <h3 className="project-title mt-3 sm:mt-4 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">
-          {p.title} <span className="acc text-cobalt-400">— {p.sub}</span>
-        </h3>
-
-        <p className="mt-2 sm:mt-3 font-mono text-[10px] sm:text-[11px] tracking-widest text-paper/45 uppercase">
-          {p.role}
-        </p>
-
-        <p className="mt-4 sm:mt-5 text-paper/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-[680px]">
-          {p.blurb}
-        </p>
-
-        <div className="mt-5 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2">
-          {p.tech.map(t => (
-            <span key={t} className="px-2.5 sm:px-3 py-1 rounded-full border border-cobalt-500/25 text-[10px] sm:text-xs font-mono text-paper/75">
-              {t}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-3 sm:gap-6 max-w-[480px]">
-          {p.metrics.map((m, j) => (
-            <div key={j} className="min-w-0">
-              <div className="num-mid font-display text-2xl sm:text-3xl text-cobalt-300 num-glow truncate">{m.v}</div>
-              <div className="mt-1 font-mono text-[9px] sm:text-[10px] tracking-widest text-paper/45 uppercase leading-tight">{m.l}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 sm:mt-6 flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-cobalt-300/90 uppercase group-hover:text-cobalt-300 transition">
-          <span>View case study</span>
-          <span className="transition-transform group-hover:translate-x-1">→</span>
-        </div>
-      </div>
-
-      {/* Right: designed 3D-feel mockup */}
-      <div className="relative w-full max-w-[280px] mx-auto lg:mx-0 lg:max-w-none">
-        <ProjectVisual n={p.n} />
-      </div>
-    </article>
-  );
-};
-
-const Work = ({ onOpenProject }) => (
-  <section id="work" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
-    <SectionLabel n="003" title="Selected work" />
-    <div className="space-y-5 sm:space-y-6">
-      {PROJECTS.map((p) => <ProjectCard p={p} key={p.n} onOpen={() => onOpenProject(p)} />)}
-    </div>
-  </section>
-);
-
-// ────────────────────────────────────────────────────────────────
-// EXPERIENCE
-// ────────────────────────────────────────────────────────────────
-
-const Experience = () => (
-  <section id="experience" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
-    <SectionLabel n="004" title="Experience" />
-    <div className="relative grid lg:grid-cols-[180px_1fr] gap-4 sm:gap-6 lg:gap-8">
-      <div className="hidden lg:block absolute left-[226px] top-0 bottom-0 w-px conn" />
-
-      {EXPERIENCE.map((e, i) => (
-        <React.Fragment key={i}>
-          <div className="reveal font-mono text-[11px] sm:text-xs tracking-widest text-paper/55 pt-0 lg:pt-2 flex items-center lg:items-start gap-3 lg:gap-0 lg:flex-col">
-            <span className="lg:block">{e.when}</span>
-            <span className="lg:hidden text-cobalt-400/40">·</span>
-            <span className="text-paper/35 lg:mt-1">{e.loc}</span>
-          </div>
-          <div className="reveal reveal-delay-1 relative pl-0 lg:pl-16 pb-10 sm:pb-14 lg:pb-16 border-b border-cobalt-500/10">
-            <div className="hidden lg:block absolute left-[6px] top-4 w-4 h-4 rounded-full border-2 border-ink-950" style={{ background: e.color, boxShadow: `0 0 20px ${e.color}` }} />
-            <div className="flex items-baseline gap-2 sm:gap-4 flex-wrap">
-              <h3 className="font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">{e.co}</h3>
-              <span className="acc text-cobalt-400 text-lg sm:text-2xl">— {e.role}</span>
-            </div>
-            <ul className="mt-4 sm:mt-6 space-y-3 max-w-[920px]">
-              {e.bullets.map((b, j) => (
-                <li key={j} className="flex gap-3 sm:gap-4 text-paper/75 text-sm sm:text-base lg:text-lg leading-relaxed">
-                  <span className="text-cobalt-400 flex-shrink-0 pt-1.5 sm:pt-2">◆</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </React.Fragment>
-      ))}
-    </div>
-  </section>
-);
-
-// ────────────────────────────────────────────────────────────────
-// SKILLS
-// ────────────────────────────────────────────────────────────────
-
-const Skills = () => (
-  <section id="skills" className="relative py-20 sm:py-28 lg:py-32 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
-    <SectionLabel n="005" title="Stack" />
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-      {SKILLS.map((s, i) => (
-        <div key={i} className={`reveal reveal-delay-${i+1} glass rounded-2xl sm:rounded-3xl p-5 sm:p-7`}>
-          <div className="flex items-center gap-3 mb-4 sm:mb-6">
-            <span className="font-mono text-cobalt-400 text-xs">0{i+1}</span>
-            <h3 className="font-display text-xl sm:text-2xl tracking-tight">{s.group}</h3>
-          </div>
-          <ul className="space-y-2">
-            {s.items.map(item => (
-              <li key={item} className="flex items-center gap-3 text-paper/80 text-sm">
-                <span className="w-1 h-1 rounded-full bg-cobalt-400" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  </section>
-);
-
-// ────────────────────────────────────────────────────────────────
-// EDUCATION
-// ────────────────────────────────────────────────────────────────
-
-const Education = () => (
-  <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 md:px-8 max-w-[1480px] mx-auto">
-    <div className="reveal glass rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-14 grid lg:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-end">
-      <div>
-        <Eyebrow n="006">Education</Eyebrow>
-        <h3 className="mt-4 sm:mt-6 font-display text-3xl sm:text-5xl md:text-6xl tracking-tight">
-          Carleton University
-        </h3>
-        <p className="mt-2 sm:mt-3 acc text-cobalt-400 text-xl sm:text-3xl">
-          B.Sc. Computer Science
-        </p>
-        <p className="mt-3 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-paper/55 uppercase">
-          Ottawa, ON · Expected May 2027
-        </p>
-      </div>
-      <div className="num-big font-display text-6xl sm:text-7xl md:text-8xl text-cobalt-300 num-glow tracking-tight leading-none">
-        '27
       </div>
     </div>
   </section>
@@ -897,48 +1071,33 @@ const Education = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Contact = () => (
-  <section id="contact" className="relative py-20 sm:py-28 px-5 sm:px-6 md:px-8 overflow-hidden">
-    <div className="absolute inset-0 hero-bg opacity-80" />
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] sm:w-[480px] sm:h-[480px] lg:w-[600px] lg:h-[600px] opacity-40 pointer-events-none">
-      <div className="orb w-full h-full" />
-    </div>
-
-    <div className="relative max-w-[1480px] mx-auto text-center">
-      <div className="reveal">
-        <Eyebrow n="007">Contact</Eyebrow>
-      </div>
-      <h2 className="contact-headline reveal reveal-delay-1 mt-6 sm:mt-8 font-display text-[clamp(40px,8vw,140px)] leading-[0.92] tracking-tight">
-        Let's build<br/>
-        something <span className="acc text-cobalt-400">that ships.</span>
+  <section id="contact" className="relative overflow-hidden py-24 sm:py-36">
+    <div className="absolute inset-0 grid-lines opacity-60" />
+    <PixelDeco style={{ top: '20%', left: '12%', transform: 'scale(.7)' }} />
+    <PixelDeco style={{ bottom: '24%', right: '14%', transform: 'scale(.6)' }} />
+    <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 text-center">
+      <div className="reveal flex justify-center"><Eyebrow>Contact</Eyebrow></div>
+      <h2 className="contact-headline reveal reveal-delay-1 mt-7 font-display font-normal text-[clamp(48px,9vw,140px)] leading-[0.96] tracking-tight">
+        Let's build something
+        <br /><span className="italic-accent text-ink-500">that ships.</span>
       </h2>
 
-      <div className="reveal reveal-delay-2 mt-8 sm:mt-12">
-        <a href="mailto:josuekenge4@gmail.com" className="group inline-flex items-center gap-3 px-5 sm:px-8 py-4 sm:py-5 rounded-full bg-cobalt-500 text-ink-950 font-medium hover:bg-paper transition-all text-sm sm:text-lg break-all sm:break-normal max-w-full">
-          <span className="truncate">josuekenge4@gmail.com</span>
-          <span className="group-hover:translate-x-1 transition-transform flex-shrink-0">→</span>
+      <div className="reveal reveal-delay-2 mt-10 flex justify-center">
+        <a href="mailto:josuekenge4@gmail.com" className="pill pill-solid text-base sm:text-lg py-4 px-7">
+          josuekenge4@gmail.com <span className="arw">→</span>
         </a>
       </div>
 
-      {/* Compact social text links */}
-      <div className="reveal reveal-delay-3 mt-8 sm:mt-10 flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-5 gap-y-3 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase">
-        <a href="https://www.linkedin.com/in/josuekenge/" target="_blank" rel="noopener"
-           className="text-paper/60 hover:text-paper transition">
-          LinkedIn / @josuekenge
-        </a>
-        <span className="text-cobalt-400" aria-hidden="true">◆</span>
-        <a href="https://github.com/josuekenge" target="_blank" rel="noopener"
-           className="text-paper/60 hover:text-paper transition">
-          GitHub / @josuekenge
-        </a>
-        <span className="text-cobalt-400" aria-hidden="true">◆</span>
-        <a href="https://x.com/kengejosue" target="_blank" rel="noopener"
-           className="text-paper/60 hover:text-paper transition">
-          X / @kengejosue
-        </a>
+      <div className="reveal reveal-delay-3 mt-10 flex flex-wrap justify-center items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.15em] uppercase text-ink-500">
+        <a href="https://www.linkedin.com/in/josuekenge/" target="_blank" rel="noopener" className="hover:text-ink transition-colors">LinkedIn / @josuekenge</a>
+        <span className="w-1.5 h-1.5 bg-ink-300" />
+        <a href="https://github.com/josuekenge" target="_blank" rel="noopener" className="hover:text-ink transition-colors">GitHub / @josuekenge</a>
+        <span className="w-1.5 h-1.5 bg-ink-300" />
+        <a href="https://x.com/kengejosue" target="_blank" rel="noopener" className="hover:text-ink transition-colors">X / @kengejosue</a>
       </div>
 
-      <div className="reveal reveal-delay-4 mt-8 sm:mt-10 font-mono text-[10px] sm:text-xs tracking-widest text-paper/45 uppercase">
-        <span className="text-cobalt-400">◆</span> 613.415.6829 · Markham, ON · Open to remote
+      <div className="reveal reveal-delay-4 mt-8 text-[12px] tracking-widest uppercase text-ink-400">
+        613.415.6829 · Markham, ON · Open to remote
       </div>
     </div>
   </section>
@@ -949,72 +1108,50 @@ const Contact = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Footer = () => (
-  <footer className="border-t border-cobalt-500/10 py-8 sm:py-12 px-5 sm:px-6 md:px-8">
-    <div className="max-w-[1480px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 text-center md:text-left">
-      <div className="font-mono text-[10px] sm:text-xs tracking-widest text-paper/40 uppercase">
-        © 2026 Josue Kenge · Designed & built end-to-end
+  <footer className="border-t border-line py-10 px-5 sm:px-8">
+    <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div className="flex items-center gap-2.5">
+        <PixelMark size={20} color="#1B1A16" />
+        <span className="text-[12px] tracking-wide text-ink-400">© 2026 Josue Kenge · Designed & built end-to-end</span>
       </div>
-
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {[
           { icon: 'assets/social/linkedin.png', label: 'LinkedIn', href: 'https://www.linkedin.com/in/josuekenge/' },
           { icon: 'assets/social/x.png', label: 'X / Twitter', href: 'https://x.com/kengejosue' },
           { icon: 'assets/social/whatsapp.png', label: 'WhatsApp', href: 'https://wa.me/16134156829' },
         ].map(s => (
-          <a key={s.label} href={s.href} target="_blank" rel="noopener"
-             aria-label={s.label} title={s.label}
-             className="group relative w-12 h-12 flex items-center justify-center rounded-2xl transition-transform duration-300 hover:-translate-y-1 hover:-rotate-6">
-            <img src={s.icon} alt={s.label}
-                 className="w-full h-full object-contain"
-                 style={{ filter: 'drop-shadow(0 8px 16px rgba(3,6,15,0.5))' }} />
+          <a key={s.label} href={s.href} target="_blank" rel="noopener" aria-label={s.label} title={s.label}
+            className="w-10 h-10 flex items-center justify-center rounded-xl transition-transform duration-300 hover:-translate-y-1">
+            <img src={s.icon} alt={s.label} className="w-full h-full object-contain"
+              style={{ filter: 'drop-shadow(0 6px 12px rgba(27,26,22,0.15))' }} />
           </a>
         ))}
       </div>
-
-      <div className="flex items-center gap-3 font-mono text-xs tracking-widest text-paper/40 uppercase">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        Available for AI engineering roles
+      <div className="flex items-center gap-2.5 text-[12px] tracking-widest uppercase text-ink-400">
+        <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />Open to AI engineering roles
       </div>
     </div>
   </footer>
 );
 
 // ────────────────────────────────────────────────────────────────
-// TWEAKS PANEL
+// FLOATING "GET IN TOUCH"
 // ────────────────────────────────────────────────────────────────
 
-const DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#3b6dff",
-  "headline": "Building AI products that actually ship.",
-  "showCursor": true
-}/*EDITMODE-END*/;
-
-const Tweaks = () => {
-  if (!window.useTweaks) return null;
-  const [t, setTweak] = window.useTweaks(DEFAULTS);
-
+const FloatingContact = () => {
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    document.documentElement.style.setProperty('--accent', t.accent);
-    const blob = document.getElementById('cursorBlob');
-    if (blob) blob.style.display = t.showCursor ? '' : 'none';
-  }, [t]);
-
-  const TP = window.TweaksPanel;
-  const TS = window.TweakSection;
-  const TC = window.TweakColor;
-  const TT = window.TweakToggle;
-  if (!TP) return null;
-
+    const onScroll = () => setShow(window.scrollY > 700);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   return (
-    <TP>
-      <TS title="Theme">
-        <TC label="Accent" value={t.accent} onChange={v => setTweak('accent', v)}
-           options={['#3b6dff', '#5b8bff', '#7c5cff', '#00d4ff']} />
-      </TS>
-      <TS title="Interactions">
-        <TT label="Cursor glow" value={t.showCursor} onChange={v => setTweak('showCursor', v)} />
-      </TS>
-    </TP>
+    <a href="mailto:josuekenge4@gmail.com"
+      className={`fixed bottom-5 right-5 z-40 pill pill-solid shadow-lg transition-all duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+      <PixelMark size={16} color="#F4F1E9" />
+      Get in touch
+    </a>
   );
 };
 
@@ -1028,16 +1165,17 @@ const App = () => {
     <>
       <Nav />
       <Hero />
-      <Marquee />
-      <Metrics />
-      <About />
-      <Work onOpenProject={setOpenProject} />
       <Experience />
+      <Ticker />
+      <Metrics />
+      <Capabilities />
+      <Mobisoins />
+      <Work onOpenProject={setOpenProject} />
       <Skills />
-      <Education />
+      <About />
       <Contact />
       <Footer />
-      <Tweaks />
+      <FloatingContact />
       {window.CaseStudyModal && (
         <window.CaseStudyModal project={openProject} onClose={() => setOpenProject(null)} />
       )}
