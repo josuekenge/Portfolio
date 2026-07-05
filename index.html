@@ -39,6 +39,9 @@
           sans: ['"Poppins"', 'system-ui', 'sans-serif'],
           mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
         },
+        screens: {
+          xs: '500px',
+        },
       }
     }
   };
@@ -97,29 +100,55 @@
   .marquee { display: flex; width: max-content; animation: marquee 55s linear infinite; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ─────────── Agent pipeline ─────────── */
-  .agentflow-row { position: relative; display: flex; justify-content: space-between; align-items: flex-start; }
+  /* ─────────── Evolution strip (code → machine → AI → agent) ─────────── */
+  .agentflow-eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #B4B0A3; }
+  .agentflow-row { position: relative; display: flex; justify-content: space-between; align-items: center; }
   .agentflow-line {
-    position: absolute; top: 6px; left: 7px; right: 7px; height: 1.5px; border-radius: 2px;
-    background: linear-gradient(90deg, #D8D3C6 0%, #D8D3C6 40%, #3A43D6 50%, #D8D3C6 60%, #D8D3C6 100%);
-    background-size: 240% 100%;
-    animation: agentSweep 3.6s linear infinite;
+    position: absolute; top: 50%; left: 10px; right: 10px; height: 1px; transform: translateY(-50%);
+    background: linear-gradient(90deg, #E1DDD1 0%, #E1DDD1 44%, #A9A597 50%, #E1DDD1 56%, #E1DDD1 100%);
+    background-size: 260% 100%;
+    animation: agentSweep 5.4s linear infinite;
   }
-  @keyframes agentSweep { from { background-position: 120% 0; } to { background-position: -120% 0; } }
-  .agentflow-node { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .agentflow-node:first-child { align-items: flex-start; }
-  .agentflow-node:last-child { align-items: flex-end; }
-  .agentflow-dot {
-    width: 14px; height: 14px; background: #FCFBF7; border: 1.5px solid #B4B0A3;
-    transform: rotate(45deg); transform-origin: center;
-    animation: agentNode 3.6s ease-in-out infinite; will-change: transform, border-color, box-shadow;
+  @keyframes agentSweep { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+  .agentflow-icon {
+    position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
+    line-height: 0; padding: 0 9px; background: #F4F1E9; color: #C4C0B3;
+    animation: agentNode 5.4s ease-in-out infinite; will-change: color, transform;
   }
+  .agentflow-icon svg { display: block; }
+  .agentflow-bin { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: inherit; }
   @keyframes agentNode {
-    0%, 100% { border-color: #B4B0A3; box-shadow: 0 0 0 0 rgba(58,67,214,0); transform: rotate(45deg) scale(1); }
-    8%       { border-color: #3A43D6; box-shadow: 0 0 12px 2px rgba(58,67,214,0.45); transform: rotate(45deg) scale(1.28); }
-    22%      { border-color: #B4B0A3; box-shadow: 0 0 0 0 rgba(58,67,214,0); transform: rotate(45deg) scale(1); }
+    0%, 100% { color: #C4C0B3; transform: translateY(0) scale(1); }
+    9%       { color: #4E4B42; transform: translateY(-0.5px) scale(1.06); }
+    24%      { color: #C4C0B3; transform: translateY(0) scale(1); }
   }
-  .agentflow-label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #989487; white-space: nowrap; }
+
+  /* ─────────── Continuation roadmap (work → stack) ─────────── */
+  .roadmap-path {
+    fill: none; stroke: #D3CEC0; stroke-width: 1.5; stroke-linecap: round;
+    stroke-dasharray: 1 9; animation: roadFlow 5.5s linear infinite;
+  }
+  @keyframes roadFlow { to { stroke-dashoffset: -100; } }
+  .roadmap-node {
+    fill: #F4F1E9; stroke: #C4C0B3; stroke-width: 1.5;
+    animation: roadNode 5.5s ease-in-out infinite;
+  }
+  @keyframes roadNode {
+    0%, 100% { stroke: #C4C0B3; fill: #F4F1E9; }
+    10%      { stroke: #3C3A33; fill: #3C3A33; }
+    26%      { stroke: #C4C0B3; fill: #F4F1E9; }
+  }
+  .roadmap-end { fill: #F4F1E9; stroke: #B4B0A3; stroke-width: 1.5; animation: roadEnd 5.5s ease-in-out infinite; }
+  @keyframes roadEnd {
+    0%, 100% { stroke: #B4B0A3; }
+    66%      { stroke: #3A43D6; }
+  }
+  .roadmap-arrow { animation: roadArrow 5.5s ease-in-out infinite; }
+  @keyframes roadArrow {
+    0%, 58%, 100% { opacity: .45; }
+    74%           { opacity: 1; }
+  }
+  .roadmap-label { fill: #A9A597; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: 1.6px; }
 
   /* ─────────── Pill buttons ─────────── */
   .pill {
@@ -165,6 +194,21 @@
   .work-row { transition: background .35s; }
   .work-row:hover { background: #FBFAF5; }
 
+  /* About visual — mobile: text full width, then terminal | identity side by side */
+  .about-visual {
+    display: grid; gap: 0.7rem;
+    grid-template-columns: 1fr 43%;
+    grid-template-areas: "text text" "term idty";
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .about-visual {
+      gap: 2.5rem 4rem;
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-areas: "text idty" "term idty";
+    }
+  }
+
   /* Gradient project tiles — text always light */
   .proj-tile {
     aspect-ratio: 1 / 1; border-radius: 22px; position: relative; overflow: hidden;
@@ -180,6 +224,19 @@
       linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
     background-size: 30px 30px;
   }
+  /* Seamless rotating light circle — fades to 0 at both ends so the loop never seams */
+  .proj-tile::after {
+    content:''; position:absolute; inset:-35%; z-index:0; pointer-events:none;
+    background: conic-gradient(from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,255,255,0.14) 55deg,
+      rgba(255,255,255,0) 130deg,
+      rgba(255,255,255,0) 360deg);
+    animation: projspin 11s linear infinite;
+    will-change: transform;
+  }
+  @keyframes projspin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .proj-tile::after { animation: none; } }
 
   /* Section eyebrow square */
   .eyebrow { display:inline-flex; align-items:center; gap:.6rem; font-size:.72rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#8C8878; }
@@ -192,6 +249,7 @@
   @media (prefers-reduced-motion: reduce) {
     .marquee { animation: none !important; }
     .agentflow-line, .agentflow-dot { animation: none !important; }
+    .roadmap-path, .roadmap-node, .roadmap-end, .roadmap-arrow { animation: none !important; }
     .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
     html { scroll-behavior: auto; }
   }

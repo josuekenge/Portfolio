@@ -16,70 +16,91 @@ const DNode = ({ tier, name, sub, accent = '#3A43D6', wide }) => {
   const a = AMAP[accent] || accent;
   return (
     <div
-      className="rounded-2xl px-4 sm:px-5 py-3 sm:py-4 text-center relative w-full sm:w-auto"
+      className="rounded-xl sm:rounded-2xl px-3.5 sm:px-6 py-2 sm:py-4 text-center relative w-full sm:w-auto"
       style={{
         background: '#FCFBF7',
         border: '1px solid #E5E1D6',
-        boxShadow: '0 8px 22px rgba(27,26,22,0.05)',
+        boxShadow: '0 2px 10px rgba(27,26,22,0.035)',
         minWidth: 0,
         maxWidth: '100%',
       }}
     >
-      <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-1.5" style={{ color: a }}>
+      <div className="font-mono text-[8.5px] sm:text-[10px] tracking-[0.18em] uppercase mb-0.5 sm:mb-1.5" style={{ color: a }}>
         {tier}
       </div>
-      <div className="font-display text-xl text-ink leading-tight">{name}</div>
+      <div className="font-display text-[15px] sm:text-xl text-ink leading-tight">{name}</div>
       {sub && (
-        <div className="font-mono text-[10px] text-ink-400 mt-1.5 tracking-wide">{sub}</div>
+        <div className="font-mono text-[9px] sm:text-[10px] text-ink-400 mt-0.5 sm:mt-1.5 tracking-wide leading-snug">{sub}</div>
       )}
     </div>
   );
 };
 
+// Thin, non-distorting connectors — consistent 1px lines + small chevrons.
+const LINE = '#D8D3C6';
+const HEAD = '#A9A597';
+
+const ChevDown = () => (
+  <svg width="11" height="7" viewBox="0 0 11 7" fill="none" style={{ display: 'block' }}>
+    <path d="M1 1.2l4.5 4.4L10 1.2" stroke={HEAD} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const DArrow = ({ dir = 'down', label }) => {
-  if (dir === 'down') {
-    return (
-      <div className="flex flex-col items-center relative" style={{ height: '36px' }}>
-        <div className="w-px flex-1" style={{ background: 'linear-gradient(to bottom, transparent, #C9C4B6)' }} />
-        <div className="text-ink-500 text-sm leading-none">▼</div>
-        {label && <div className="absolute font-mono text-[9px] text-ink-400 ml-12 mt-2">{label}</div>}
-      </div>
-    );
-  }
   if (dir === 'split') {
     return (
-      <svg width="100%" height="40" viewBox="0 0 200 40" preserveAspectRatio="none" style={{ display: 'block' }}>
-        <line x1="100" y1="0" x2="100" y2="14" stroke="#C9C4B6" strokeWidth="1" />
-        <line x1="40" y1="14" x2="160" y2="14" stroke="#C9C4B6" strokeWidth="1" />
-        <line x1="40" y1="14" x2="40" y2="34" stroke="#C9C4B6" strokeWidth="1" />
-        <line x1="160" y1="14" x2="160" y2="34" stroke="#C9C4B6" strokeWidth="1" />
-        <polygon points="36,30 44,30 40,38" fill="#8C8878" />
-        <polygon points="156,30 164,30 160,38" fill="#8C8878" />
-      </svg>
+      <div className="relative flex justify-center" style={{ height: '30px' }} aria-hidden="true">
+        <div className="relative" style={{ width: 'min(56%, 420px)' }}>
+          {/* center stem */}
+          <div className="absolute left-1/2 top-0" style={{ width: '1px', height: '12px', background: LINE, transform: 'translateX(-50%)' }} />
+          {/* horizontal rail */}
+          <div className="absolute" style={{ left: 0, right: 0, top: '12px', height: '1px', background: LINE }} />
+          {/* left branch */}
+          <div className="absolute" style={{ left: 0, top: '12px', width: '1px', height: '13px', background: LINE }} />
+          <div className="absolute" style={{ left: 0, top: '24px', transform: 'translateX(-50%)' }}><ChevDown /></div>
+          {/* right branch */}
+          <div className="absolute" style={{ right: 0, top: '12px', width: '1px', height: '13px', background: LINE }} />
+          <div className="absolute" style={{ right: 0, top: '24px', transform: 'translateX(50%)' }}><ChevDown /></div>
+        </div>
+      </div>
     );
   }
   if (dir === 'right') {
     return (
-      <div className="flex items-center px-2">
-        <div className="h-px w-12" style={{ background: 'linear-gradient(to right, transparent, #C9C4B6)' }} />
-        <div className="text-ink-500 text-sm leading-none ml-1">▶</div>
+      <div className="flex items-center px-1" aria-hidden="true">
+        <div style={{ width: '28px', height: '1px', background: LINE }} />
+        <svg width="7" height="11" viewBox="0 0 7 11" fill="none" style={{ marginLeft: '-1px' }}>
+          <path d="M1.2 1l4.4 4.5L1.2 10" stroke={HEAD} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
     );
   }
+  // down
+  return (
+    <div className="relative flex flex-col items-center justify-center" style={{ height: '22px' }} aria-hidden="true">
+      <div style={{ width: '1px', height: '12px', background: LINE }} />
+      <ChevDown />
+      {label && (
+        <div className="absolute font-mono text-[9px] text-ink-400 whitespace-nowrap" style={{ left: '50%', marginLeft: '12px', top: '50%', transform: 'translateY(-50%)' }}>
+          {label}
+        </div>
+      )}
+    </div>
+  );
 };
 
 const DRow = ({ children }) => (
-  <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 flex-wrap">{children}</div>
+  <div className="flex flex-col sm:flex-row items-stretch justify-center gap-2 sm:gap-6 flex-wrap">{children}</div>
 );
 
 const DFrame = ({ children, label }) => (
-  <div className="relative rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10"
+  <div className="relative rounded-2xl sm:rounded-3xl p-3 sm:p-8 lg:p-10"
     style={{
       background: '#F7F4EC',
       border: '1px solid #E5E1D6',
     }}
   >
-    <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-4 sm:mb-6" style={{ color: '#8C8878' }}>
+    <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mb-3 sm:mb-6" style={{ color: '#8C8878' }}>
       ■ {label || 'Architecture'}
     </div>
     {children}
@@ -524,13 +545,13 @@ const CaseStudyModal = ({ project, onClose }) => {
           </button>
 
           {/* Header */}
-          <div className="p-5 sm:p-8 md:p-12 border-b border-line">
-            <div className="flex items-center gap-3 sm:gap-4 font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-400">
+          <div className="p-4 sm:p-8 md:p-12 border-b border-line">
+            <div className="flex items-center gap-3 sm:gap-4 font-mono text-[9px] sm:text-[11px] tracking-widest uppercase text-ink-400">
               <span>CASE STUDY · {project.n}</span>
               <span className="h-px w-6 bg-lined" />
               <span>{project.year}</span>
             </div>
-            <h2 className="mt-4 sm:mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.0]">
+            <h2 className="mt-3 sm:mt-5 font-display font-normal text-2xl sm:text-5xl md:text-6xl tracking-tight leading-[1.08] sm:leading-[1.0]">
               {project.title} <span className="italic-accent text-ink-500">— {project.sub}</span>
             </h2>
             <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] tracking-widest uppercase text-ink-400">
@@ -549,26 +570,26 @@ const CaseStudyModal = ({ project, onClose }) => {
                 </a>
               )}
             </div>
-            <p className="mt-5 sm:mt-8 max-w-[820px] text-ink-500 font-light text-sm sm:text-lg leading-relaxed">
+            <p className="mt-4 sm:mt-8 max-w-[820px] text-ink-500 font-light text-[13px] sm:text-lg leading-relaxed">
               {cs.summary}
             </p>
           </div>
 
           {/* Diagram — horizontal scroll if it overflows on mobile */}
-          <div className="p-5 sm:p-8 md:p-12 overflow-x-auto">
+          <div className="p-3 sm:p-8 md:p-12 overflow-x-auto">
             {Diagram && <Diagram />}
           </div>
 
-          {/* Stack + Approach */}
-          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-10 px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
+          {/* Stack + Approach — side by side */}
+          <div className="grid grid-cols-[0.8fr_1.2fr] lg:grid-cols-[1fr_1.5fr] gap-3 sm:gap-10 px-4 sm:px-8 md:px-12 pb-6 sm:pb-12">
             {/* Stack */}
             <div>
-              <div className="eyebrow mb-5"><span className="sq" />Stack</div>
-              <div className="space-y-4">
+              <div className="eyebrow mb-2.5 sm:mb-5"><span className="sq" />Stack</div>
+              <div className="space-y-2 sm:space-y-4">
                 {cs.stack.map(([k, v]) => (
                   <div key={k}>
-                    <div className="text-[10px] tracking-widest uppercase mb-1" style={{ color: '#3A43D6' }}>{k}</div>
-                    <div className="text-ink-700 text-sm font-light leading-relaxed">{v}</div>
+                    <div className="text-[8.5px] sm:text-[10px] tracking-widest uppercase mb-0.5 sm:mb-1" style={{ color: '#3A43D6' }}>{k}</div>
+                    <div className="text-ink-700 text-[11px] sm:text-sm font-light leading-snug sm:leading-relaxed">{v}</div>
                   </div>
                 ))}
               </div>
@@ -576,11 +597,11 @@ const CaseStudyModal = ({ project, onClose }) => {
 
             {/* Approach */}
             <div>
-              <div className="eyebrow mb-5"><span className="sq" />Approach</div>
-              <ul className="space-y-3">
+              <div className="eyebrow mb-2.5 sm:mb-5"><span className="sq" />Approach</div>
+              <ul className="space-y-2 sm:space-y-3">
                 {cs.approach.map((a, i) => (
-                  <li key={i} className="flex gap-3 text-ink-700 font-light text-[15px] leading-relaxed">
-                    <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" />
+                  <li key={i} className="flex gap-2 sm:gap-3 text-ink-700 font-light text-[11px] sm:text-[15px] leading-snug sm:leading-relaxed">
+                    <span className="mt-1 sm:mt-2 w-1 h-1 sm:w-1.5 sm:h-1.5 bg-ink-300 flex-shrink-0" />
                     <span>{a}</span>
                   </li>
                 ))}
@@ -589,13 +610,13 @@ const CaseStudyModal = ({ project, onClose }) => {
           </div>
 
           {/* Outcomes */}
-          <div className="px-5 sm:px-8 md:px-12 pb-8 sm:pb-12">
-            <div className="eyebrow mb-5"><span className="sq" />Outcomes</div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="px-4 sm:px-8 md:px-12 pb-6 sm:pb-12">
+            <div className="eyebrow mb-3 sm:mb-5"><span className="sq" />Outcomes</div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
               {cs.outcomes.map((o, i) => (
-                <div key={i} className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-surface border border-line">
-                  <div className="font-display text-3xl text-ink leading-none">{o.v}</div>
-                  <div className="mt-2 text-[10px] tracking-widest uppercase text-ink-400 leading-snug">
+                <div key={i} className="rounded-xl sm:rounded-2xl p-3 sm:p-5 bg-surface border border-line">
+                  <div className="font-display text-2xl sm:text-3xl text-ink leading-none">{o.v}</div>
+                  <div className="mt-1.5 sm:mt-2 text-[9px] sm:text-[10px] tracking-widest uppercase text-ink-400 leading-snug">
                     {o.l}
                   </div>
                 </div>

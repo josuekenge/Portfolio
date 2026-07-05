@@ -287,6 +287,31 @@ const PixelMark = ({ size = 26, color = 'currentColor' }) => (
   </svg>
 );
 
+// Evolution strip glyphs — code → machine → AI → agent
+const EVOLUTION_STEPS = [
+  // 01 — raw code / binary
+  <span className="agentflow-bin">01</span>,
+  // PC — the machine
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="12" rx="1.5" />
+    <path d="M8 20h8M12 16v4" />
+  </svg>,
+  // AI — the chip / model
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="7" y="7" width="10" height="10" rx="1.5" />
+    <circle cx="12" cy="12" r="2.2" />
+    <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5" />
+  </svg>,
+  // Robot — the embodied agent
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="8" width="14" height="11" rx="2.5" />
+    <path d="M12 4.5V8" />
+    <circle cx="12" cy="3.5" r="1.1" />
+    <path d="M2.5 12v3M21.5 12v3" />
+    <path d="M9.5 13h.01M14.5 13h.01" strokeWidth="2.2" />
+  </svg>,
+];
+
 // Little scattered pixel-square decorations
 const PixelDeco = ({ className, style }) => (
   <div className={`pixel ${className || ''}`} style={style} aria-hidden="true">
@@ -338,6 +363,7 @@ const Icon = ({ name, size = 20 }) => {
 
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -350,22 +376,52 @@ const Nav = () => {
     ['Work', '#work'],
     ['Stack', '#skills'],
     ['About', '#about'],
+    ['Contact', '#contact'],
   ];
+  const solid = scrolled || menuOpen;
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-paper/85 backdrop-blur-md border-b border-line' : 'bg-transparent border-b border-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${solid ? 'bg-paper/95 backdrop-blur-md border-b border-line' : 'bg-transparent border-b border-transparent'}`}>
       <div className="max-w-[1360px] mx-auto px-5 sm:px-8 py-4 md:py-5 flex items-center justify-between gap-4">
-        <a href="#top" className="flex items-center gap-2.5 min-w-0">
+        <a href="#top" onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5 min-w-0">
           <PixelMark size={26} color="#1B1A16" />
           <span className="font-display text-lg sm:text-xl tracking-tight text-ink truncate">Josue Kenge</span>
         </a>
         <div className="hidden md:flex items-center gap-8 text-[15px] text-ink-500">
-          {links.map(([label, href]) => (
+          {links.slice(0, 5).map(([label, href]) => (
             <a key={href} href={href} className="hover:text-ink transition-colors">{label}</a>
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden sm:block"><StatusPill /></div>
-          <a href="mailto:josuekenge4@gmail.com" className="pill pill-solid text-sm py-2.5 px-4 md:hidden">Email</a>
+          <div className="hidden md:block"><StatusPill /></div>
+          <button
+            onClick={() => setMenuOpen(v => !v)}
+            aria-label="Menu" aria-expanded={menuOpen}
+            className="md:hidden w-10 h-10 rounded-full border border-lined bg-surface flex items-center justify-center"
+          >
+            {menuOpen ? (
+              <span className="text-ink text-lg leading-none">✕</span>
+            ) : (
+              <span className="flex flex-col items-center justify-center gap-[5px] w-[18px]">
+                <span className="block h-px w-full bg-ink" />
+                <span className="block h-px w-full bg-ink" />
+                <span className="block h-px w-full bg-ink" />
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown — all sections */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? 'max-h-[460px] border-t border-line' : 'max-h-0'}`}>
+        <div className="bg-paper/98 px-5 pt-2 pb-4">
+          {links.map(([label, href]) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between py-3 border-b border-line text-ink text-[17px]">
+              {label}<span className="text-ink-300">→</span>
+            </a>
+          ))}
+          <a href="mailto:josuekenge4@gmail.com" onClick={() => setMenuOpen(false)}
+            className="mt-4 pill pill-solid w-full justify-center">Get in touch <span className="arw">→</span></a>
         </div>
       </div>
     </nav>
@@ -408,10 +464,10 @@ const Hero = () => {
             <Eyebrow>AI Engineer · Markham / Toronto</Eyebrow>
           </div>
 
-          <h1 className="hero-headline reveal reveal-delay-1 mt-7 font-display font-normal text-ink text-[clamp(46px,6vw,96px)] leading-[0.94] tracking-[-0.02em]">
+          <h1 className="hero-headline reveal reveal-delay-1 mt-7 font-display font-normal text-ink text-[clamp(33px,6vw,96px)] leading-[0.94] tracking-[-0.02em]">
             <span className="whitespace-nowrap">Production AI,</span>
             <br />
-            <span className="italic-accent text-ink-500">actually shipped.</span>
+            <span className="italic-accent text-ink-500 whitespace-nowrap">actually shipped.</span>
           </h1>
 
           <p className="reveal reveal-delay-2 mt-8 max-w-[540px] text-lg sm:text-xl text-ink-500 leading-relaxed font-light">
@@ -435,16 +491,15 @@ const Hero = () => {
             <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-ink-300" />Currently @ IBM watsonx</div>
           </div>
 
-          {/* Multi-agent pipeline — a signal sweeps left→right, each stage lights as it passes */}
-          <div className="reveal reveal-delay-4 mt-10 sm:mt-12 max-w-[460px]" aria-hidden="true">
-            <div className="eyebrow mb-6"><span className="sq" />multi-agent pipeline</div>
+          {/* Evolution strip — code → machine → AI → agent; a faint pulse drifts through */}
+          <div className="reveal reveal-delay-4 mt-20 sm:mt-24 max-w-[340px]" aria-hidden="true">
+            <div className="agentflow-eyebrow mb-6">from code to agents</div>
             <div className="agentflow-row">
               <div className="agentflow-line" />
-              {['Plan', 'Retrieve', 'Reason', 'Ship'].map((label, i) => (
-                <div key={label} className="agentflow-node">
-                  <span className="agentflow-dot" style={{ animationDelay: `${i * 0.9}s` }} />
-                  <span className="agentflow-label">{label}</span>
-                </div>
+              {EVOLUTION_STEPS.map((glyph, i) => (
+                <span key={i} className="agentflow-icon" style={{ animationDelay: `${i * 1.05}s` }}>
+                  {glyph}
+                </span>
               ))}
             </div>
           </div>
@@ -488,13 +543,13 @@ const Ticker = () => {
 // ────────────────────────────────────────────────────────────────
 
 const Metrics = () => (
-  <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
-    <div className="reveal mb-12"><Eyebrow>Impact at a glance</Eyebrow></div>
+  <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-10 sm:py-28">
+    <div className="reveal mb-6 sm:mb-12"><Eyebrow>Impact at a glance</Eyebrow></div>
     <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-line">
       {HEADLINE_METRICS.map((m, i) => (
-        <div key={i} className={`reveal reveal-delay-${i + 1} py-8 sm:py-10 pr-6 border-b border-line ${i % 2 === 0 ? 'sm:border-r' : ''} lg:border-r ${i === 3 ? 'lg:border-r-0' : ''}`}>
-          <div className="font-display font-normal text-5xl sm:text-6xl lg:text-7xl text-ink leading-none tracking-tight">{m.v}</div>
-          <div className="mt-4 text-[13px] tracking-wide text-ink-500">{m.l}</div>
+        <div key={i} className={`reveal reveal-delay-${i + 1} py-4 sm:py-10 pr-4 sm:pr-6 border-b border-line ${i % 2 === 0 ? 'border-r sm:border-r' : ''} lg:border-r ${i === 3 ? 'lg:border-r-0' : ''}`}>
+          <div className="font-display font-normal text-3xl sm:text-6xl lg:text-7xl text-ink leading-none tracking-tight">{m.v}</div>
+          <div className="mt-1.5 sm:mt-4 text-[11px] sm:text-[13px] tracking-wide text-ink-500 leading-snug">{m.l}</div>
         </div>
       ))}
     </div>
@@ -506,7 +561,7 @@ const Metrics = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Capabilities = () => (
-  <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
+  <section className="hidden md:block max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
     <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end mb-12">
       <div className="reveal">
         <Eyebrow>How I work</Eyebrow>
@@ -553,36 +608,36 @@ const ProjectCard = ({ p, onOpen }) => (
     data-comment-anchor={`project-${p.n}`}>
     {/* Gradient tile */}
     <div className="proj-tile" style={{ background: p.grad }}>
-      <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
-        <span className="text-[11px] tracking-[0.2em] text-white/55 font-medium">{p.tag}</span>
-        <span className="text-[11px] tracking-widest text-white/45">{p.n}</span>
+      <div className="absolute top-3 left-3 right-3 sm:top-5 sm:left-5 sm:right-5 flex items-center justify-between z-[2]">
+        <span className="text-[8px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] text-white/55 font-medium truncate pr-2">{p.tag}</span>
+        <span className="text-[9px] sm:text-[11px] tracking-widest text-white/45">{p.n}</span>
       </div>
-      <div className="relative text-center px-6">
-        <div className="mx-auto mb-4 w-11 h-11 rounded-xl bg-white/12 border border-white/15 flex items-center justify-center text-white">
-          <Icon name={['stack','cpu','brain','layers','code','cloud','stack'][(+p.n - 1) % 7]} size={22} />
+      <div className="relative text-center px-4 sm:px-6 z-[2]">
+        <div className="mx-auto mb-2.5 sm:mb-4 w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white/12 border border-white/15 flex items-center justify-center text-white">
+          <Icon name={['stack','cpu','brain','layers','code','cloud','stack'][(+p.n - 1) % 7]} size={18} />
         </div>
-        <h3 className="font-display font-normal text-white text-[28px] sm:text-3xl leading-tight tracking-tight">{p.title}</h3>
+        <h3 className="font-display font-normal text-white text-lg sm:text-3xl leading-tight tracking-tight">{p.title}</h3>
       </div>
-      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-        <div>
-          <div className="font-display text-2xl text-white leading-none">{p.metric.v}</div>
-          <div className="text-[10px] tracking-widest uppercase text-white/55 mt-1">{p.metric.l}</div>
+      <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 flex items-end justify-between gap-2 z-[2]">
+        <div className="min-w-0">
+          <div className="font-display text-lg sm:text-2xl text-white leading-none">{p.metric.v}</div>
+          <div className="text-[8px] sm:text-[10px] tracking-widest uppercase text-white/55 mt-1 truncate">{p.metric.l}</div>
         </div>
-        <span className="w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white/80 group-hover:bg-white group-hover:text-ink transition-all">→</span>
+        <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border border-white/25 flex items-center justify-center text-white/80 text-sm group-hover:bg-white group-hover:text-ink transition-all flex-shrink-0">→</span>
       </div>
     </div>
 
     {/* Body under tile */}
-    <div className="mt-5 px-1">
-      <div className="text-[11px] tracking-widest uppercase text-ink-400">{p.role} · {p.year}</div>
-      <p className="mt-2.5 text-ink-500 font-light leading-relaxed text-[15px]">{p.blurb}</p>
-      <div className="mt-4 flex flex-wrap gap-1.5">
+    <div className="mt-3 sm:mt-5 px-0.5 sm:px-1">
+      <div className="text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-400 leading-snug">{p.role} · {p.year}</div>
+      <p className="hidden sm:block mt-2.5 text-ink-500 font-light leading-relaxed text-[15px]">{p.blurb}</p>
+      <div className="hidden sm:flex mt-4 flex-wrap gap-1.5">
         {p.tech.map(t => (
           <span key={t} className="px-2.5 py-1 rounded-full border border-line text-[11px] text-ink-500">{t}</span>
         ))}
       </div>
-      <div className="mt-5 inline-flex items-center gap-2 text-[12px] tracking-widest uppercase text-ink-700 group-hover:text-ink transition-colors">
-        View case study <span className="arw">→</span>
+      <div className="mt-2.5 sm:mt-5 inline-flex items-center gap-1.5 text-[10px] sm:text-[12px] tracking-widest uppercase text-ink-700 group-hover:text-ink transition-colors">
+        View study <span className="arw">→</span>
       </div>
     </div>
   </article>
@@ -597,10 +652,49 @@ const Work = ({ onOpenProject }) => (
       </div>
       <span className="hidden sm:block text-[13px] text-ink-400">{PROJECTS.length} shipped systems</span>
     </div>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-14">
       {PROJECTS.map(p => <ProjectCard key={p.n} p={p} onOpen={() => onOpenProject(p)} />)}
+      <ContinuationCard />
     </div>
   </section>
+);
+
+// Fills the empty grid cells after the last project — a snaking roadmap that leads into Stack.
+const RM_NODES = [
+  { x: 50, y: 70, label: 'BUILD', lx: 50, ly: 46, d: 0 },
+  { x: 330, y: 250, label: 'SHIP', lx: 330, ly: 284, d: 0.7 },
+  { x: 610, y: 90, label: 'SCALE', lx: 610, ly: 66, d: 1.4 },
+];
+
+const ContinuationCard = () => (
+  <div className="reveal flex sm:col-span-1 lg:col-span-2 flex-col justify-center sm:justify-between gap-5 sm:gap-0 py-2 sm:py-0">
+    <div className="agentflow-eyebrow">the roadmap continues</div>
+
+    <svg viewBox="0 0 720 360" style={{ width: '100%', height: 'auto', maxWidth: 700, margin: '8px auto' }} aria-hidden="true">
+      <path className="roadmap-path"
+        d="M50 70 C 190 70 190 250 330 250 C 470 250 470 90 610 90 C 660 90 680 140 680 200 C 680 270 560 300 470 300" />
+      {RM_NODES.map((n, i) => (
+        <g key={n.label}>
+          <rect className="roadmap-node" x={n.x - 5} y={n.y - 5} width="10" height="10" rx="1.5"
+            transform={`rotate(45 ${n.x} ${n.y})`} style={{ animationDelay: `${n.d}s` }} />
+          <text className="roadmap-label" x={n.lx} y={n.ly} textAnchor="middle">{n.label}</text>
+        </g>
+      ))}
+      {/* terminal — points down into the Stack section */}
+      <rect className="roadmap-end" x="463" y="293" width="14" height="14" rx="1.5" transform="rotate(45 470 300)" />
+      <path className="roadmap-arrow" d="M461 316 l9 10 l9 -10" fill="none" stroke="#8C8878" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+
+    <div>
+      <h3 className="font-display font-normal text-2xl sm:text-[30px] tracking-tight leading-[1.05]">
+        Seven shipped. <span className="italic-accent text-ink-500">The next one's a conversation.</span>
+      </h3>
+      <a href="#skills"
+        className="mt-5 inline-flex items-center gap-2 text-[12px] tracking-widest uppercase text-ink-700 hover:text-ink transition-colors">
+        See the stack <span className="arw">↓</span>
+      </a>
+    </div>
+  </div>
 );
 
 // ────────────────────────────────────────────────────────────────
@@ -618,41 +712,43 @@ const PhoneMock = () => {
     { icon: 'user', title: 'I need care', sub: 'Book a nurse to your home', tint: MOBI_GREEN },
     { icon: 'map', title: 'I provide care', sub: 'Go online & accept visits', tint: MOBI_NAVY },
   ];
+  // Everything is sized in container-query units (cqw) so the whole screen
+  // scales cleanly with the phone width — no overflow at small sizes.
   return (
-    <div className="relative mx-auto" style={{ width: 'min(292px, 80vw)' }}>
-      <div className="relative rounded-[2.7rem] p-2" style={{ background: '#111318', boxShadow: '0 40px 90px rgba(27,26,22,0.26)' }}>
-        <div className="relative rounded-[2.3rem] overflow-hidden" style={{ background: '#FDFDFC', aspectRatio: '9/19.3' }}>
+    <div className="relative mx-auto" style={{ width: 'clamp(158px, 34vw, 250px)', containerType: 'inline-size' }}>
+      <div className="relative" style={{ background: '#111318', borderRadius: '10cqw', padding: '2.6cqw', boxShadow: '0 40px 90px rgba(27,26,22,0.26)' }}>
+        <div className="relative overflow-hidden" style={{ background: '#FDFDFC', borderRadius: '8.4cqw', aspectRatio: '9 / 19.3' }}>
           {/* notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 rounded-b-2xl bg-[#111318] z-10" />
+          <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 0, width: '30cqw', height: '5.6cqw', background: '#111318', borderBottomLeftRadius: '4cqw', borderBottomRightRadius: '4cqw', zIndex: 10 }} />
           {/* status bar */}
-          <div className="flex items-center justify-between px-6 pt-3.5 text-[10px] font-medium" style={{ color: '#9aa1ac' }}>
+          <div className="flex items-center justify-between" style={{ padding: '4.6cqw 7cqw 0', color: '#9aa1ac', fontSize: '3.4cqw', fontWeight: 500 }}>
             <span>9:41</span>
-            <span className="flex items-center gap-1">
-              <svg width="15" height="10" viewBox="0 0 15 10" fill="none"><path d="M7.5 8.5a1 1 0 100-.01M4.7 6a4 4 0 015.6 0M2 3.4a8 8 0 0111 0" stroke="#c3c7cd" strokeWidth="1.1" strokeLinecap="round"/></svg>
-              <span className="inline-block w-4 h-2 rounded-[2px] border border-[#c3c7cd]"><span className="block h-full w-2.5 rounded-[1px] bg-[#c3c7cd]" /></span>
+            <span className="flex items-center" style={{ gap: '1.4cqw' }}>
+              <svg viewBox="0 0 15 10" fill="none" style={{ width: '5cqw', height: '3.3cqw' }}><path d="M7.5 8.5a1 1 0 100-.01M4.7 6a4 4 0 015.6 0M2 3.4a8 8 0 0111 0" stroke="#c3c7cd" strokeWidth="1.1" strokeLinecap="round"/></svg>
+              <span style={{ display: 'inline-block', width: '5.4cqw', height: '2.8cqw', border: '0.4cqw solid #c3c7cd', borderRadius: '0.8cqw' }}><span style={{ display: 'block', height: '100%', width: '64%', background: '#c3c7cd', borderRadius: '0.4cqw' }} /></span>
             </span>
           </div>
           {/* content */}
-          <div className="px-6 pt-12">
-            <div className="flex justify-center"><MobiWordmark /></div>
-            <div className="mt-10 text-center font-display text-[26px] leading-none" style={{ color: '#2a2c30' }}>Welcome</div>
-            <div className="mt-2 text-center text-[11px] text-[#9aa1ac]">How can we help you today?</div>
+          <div style={{ padding: '9cqw 7cqw 0' }}>
+            <div className="flex justify-center"><img src="assets/mobisoins-logo.png" alt="MobiSoins" style={{ width: '52cqw', height: 'auto' }} /></div>
+            <div className="text-center font-display" style={{ marginTop: '8.5cqw', fontSize: '9cqw', lineHeight: 1, color: '#2a2c30' }}>Welcome</div>
+            <div className="text-center" style={{ marginTop: '2.4cqw', fontSize: '3.7cqw', color: '#9aa1ac' }}>How can we help you today?</div>
 
-            <div className="mt-7 space-y-3">
+            <div style={{ marginTop: '6.5cqw', display: 'flex', flexDirection: 'column', gap: '3cqw' }}>
               {roleCards.map((r) => (
-                <div key={r.title} className="flex items-center gap-3 rounded-2xl bg-white px-3.5 py-3.5" style={{ border: '1px solid #eef0f2', boxShadow: '0 6px 16px rgba(37,62,125,0.05)' }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.tint}14`, color: r.tint }}>
-                    <Icon name={r.icon} size={17} />
+                <div key={r.title} className="flex items-center" style={{ gap: '3cqw', borderRadius: '5cqw', background: '#fff', padding: '3.4cqw', border: '1px solid #eef0f2', boxShadow: '0 6px 16px rgba(37,62,125,0.05)' }}>
+                  <div className="flex items-center justify-center flex-shrink-0" style={{ width: '11cqw', height: '11cqw', borderRadius: '3.2cqw', background: `${r.tint}14`, color: r.tint, fontSize: '6cqw' }}>
+                    <Icon name={r.icon} size="1em" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13px] font-medium" style={{ color: '#2a2c30' }}>{r.title}</div>
-                    <div className="text-[10.5px] text-[#9aa1ac] leading-snug mt-0.5">{r.sub}</div>
+                    <div style={{ fontSize: '4.2cqw', fontWeight: 500, color: '#2a2c30', whiteSpace: 'nowrap' }}>{r.title}</div>
+                    <div style={{ fontSize: '3.4cqw', color: '#9aa1ac', lineHeight: 1.25, marginTop: '0.6cqw' }}>{r.sub}</div>
                   </div>
-                  <span className="text-[#c3c7cd] text-sm flex-shrink-0">›</span>
+                  <span className="flex-shrink-0" style={{ color: '#c3c7cd', fontSize: '4.6cqw' }}>›</span>
                 </div>
               ))}
             </div>
-            <div className="mt-7 text-center text-[9.5px] text-[#b3b7bd]">You can switch roles anytime.</div>
+            <div className="text-center" style={{ marginTop: '6cqw', fontSize: '3cqw', color: '#b3b7bd' }}>You can switch roles anytime.</div>
           </div>
         </div>
       </div>
@@ -797,62 +893,66 @@ const Mobisoins = () => {
       <div className="absolute inset-0 grid-lines opacity-50" />
       <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
         {/* Top: intro + phone */}
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-start">
-          <div>
+        <div className="grid xs:grid-cols-[minmax(0,1fr)_auto] gap-5 lg:gap-20 items-center">
+          <div className="min-w-0">
             <div className="reveal"><Eyebrow>Featured build · flagship</Eyebrow></div>
             <div className="reveal reveal-delay-1 mt-5 flex items-center gap-3 flex-wrap">
               <h2 className="section-title font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">{m.title}</h2>
+              <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-ink-400">
+                <span className="text-ink-300 mr-2">·</span>Healthcare marketplace
+              </span>
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lined bg-surface text-[11px] tracking-widest uppercase text-ink-500">
                 <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />{m.status}
               </span>
             </div>
-            <p className="reveal reveal-delay-1 mt-4 italic-accent text-ink-500 text-xl sm:text-2xl">{m.tagline}</p>
-            <p className="reveal reveal-delay-2 mt-6 max-w-[600px] text-ink-500 text-lg font-light leading-relaxed">{m.blurb}</p>
+            <p className="reveal reveal-delay-1 mt-4 italic-accent text-ink-500 text-base sm:text-2xl">{m.tagline}</p>
+            <p className="reveal reveal-delay-2 mt-4 sm:mt-6 max-w-[600px] text-ink-500 text-[13.5px] sm:text-lg font-light leading-relaxed">{m.blurb}</p>
 
-            <div className="reveal reveal-delay-2 mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <button onClick={() => setArch(true)} className="pill pill-solid justify-center">
-                <Icon name="layers" size={16} /> View architecture <span className="arw">→</span>
+            <div className="reveal reveal-delay-2 mt-6 sm:mt-7 flex flex-wrap items-center gap-2 sm:gap-3">
+              <button onClick={() => setArch(true)} className="pill pill-solid justify-center text-[12.5px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
+                <Icon name="layers" size={14} /> View architecture <span className="arw">→</span>
               </button>
-              <a href="https://www.mobisoins.com" target="_blank" rel="noopener" className="pill pill-ghost justify-center">
+              <a href="https://www.mobisoins.com" target="_blank" rel="noopener" className="pill pill-ghost justify-center text-[12.5px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-moss" /> Visit mobisoins.com <span className="arw">↗</span>
               </a>
-              <a href="mobisoins-story.html" className="pill pill-ghost justify-center">
-                <Icon name="chat" size={15} /> Read the story <span className="arw">→</span>
+              <a href="mobisoins-story.html" className="pill pill-ghost justify-center text-[12.5px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
+                <Icon name="chat" size={14} /> Read the story <span className="arw">→</span>
               </a>
             </div>
 
-            {/* Role columns */}
-            <div className="reveal reveal-delay-2 mt-9 grid sm:grid-cols-2 gap-6 max-w-[620px]">
-              {m.roles.map((r, ri) => (
-                <div key={r.label} className="rounded-2xl border border-line bg-surface/70 p-5">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: ri === 0 ? MOBI_GREEN : MOBI_NAVY }} />
-                    <span className="text-[11px] tracking-widest uppercase text-ink-700 font-medium">{r.label}</span>
-                  </div>
-                  <ul className="space-y-2.5">
-                    {r.items.map((it) => (
-                      <li key={it} className="flex gap-2.5 text-[13.5px] text-ink-500 font-light leading-snug">
-                        <span className="mt-1.5 w-1 h-1 bg-ink-300 flex-shrink-0" />{it}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Phone visual */}
-          <div className="reveal reveal-delay-2 relative flex justify-center">
+          <div className="reveal reveal-delay-2 relative flex justify-center xs:justify-start">
             <PhoneMock />
           </div>
         </div>
 
+        {/* Role columns — full width below intro */}
+        <div className="reveal reveal-delay-2 mt-10 sm:mt-12 grid grid-cols-2 gap-3 sm:gap-6 max-w-[760px]">
+          {m.roles.map((r, ri) => (
+            <div key={r.label} className="rounded-2xl border border-line bg-surface/70 p-4 sm:p-5">
+              <div className="flex items-center gap-2.5 mb-3 sm:mb-4">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: ri === 0 ? MOBI_GREEN : MOBI_NAVY }} />
+                <span className="text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-700 font-medium">{r.label}</span>
+              </div>
+              <ul className="space-y-2 sm:space-y-2.5">
+                {r.items.map((it) => (
+                  <li key={it} className="flex gap-2 sm:gap-2.5 text-[12px] sm:text-[13.5px] text-ink-500 font-light leading-snug">
+                    <span className="mt-1.5 w-1 h-1 bg-ink-300 flex-shrink-0" />{it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
         {/* Engineering highlights */}
-        <div className="reveal mt-16 grid sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-lined">
+        <div className="reveal mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-lined">
           {m.highlights.map((h) => (
-            <div key={h.t} className="p-6 border-b border-r border-lined bg-surface/40">
-              <div className="font-display font-normal text-xl text-ink tracking-tight">{h.t}</div>
-              <p className="mt-2.5 text-[13.5px] text-ink-500 font-light leading-relaxed">{h.d}</p>
+            <div key={h.t} className="p-4 sm:p-6 border-b border-r border-lined bg-surface/40">
+              <div className="font-display font-normal text-base sm:text-xl text-ink tracking-tight leading-tight">{h.t}</div>
+              <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13.5px] text-ink-500 font-light leading-relaxed">{h.d}</p>
             </div>
           ))}
         </div>
@@ -864,28 +964,28 @@ const Mobisoins = () => {
         )}
 
         {/* Stacks + metrics */}
-        <div className="reveal mt-12 grid lg:grid-cols-[1fr_auto] gap-10 items-end">
-          <div className="space-y-4">
+        <div className="reveal mt-8 sm:mt-12 grid lg:grid-cols-[1fr_auto] gap-10 items-end">
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-4 gap-y-4">
             <div>
-              <div className="text-[11px] tracking-widest uppercase text-ink-400 mb-2">Mobile app</div>
-              <div className="flex flex-wrap gap-1.5">
-                {m.techApp.map(t => <span key={t} className="px-2.5 py-1 rounded-full border border-line bg-surface text-[11px] text-ink-500">{t}</span>)}
+              <div className="text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-400 mb-1.5 sm:mb-2">Mobile app</div>
+              <div className="flex flex-wrap gap-1">
+                {m.techApp.map(t => <span key={t} className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-line bg-surface text-[10px] sm:text-[11px] text-ink-500">{t}</span>)}
               </div>
             </div>
             <div>
-              <div className="text-[11px] tracking-widest uppercase text-ink-400 mb-2">Backend API</div>
-              <div className="flex flex-wrap gap-1.5">
-                {m.techApi.map(t => <span key={t} className="px-2.5 py-1 rounded-full border border-line bg-surface text-[11px] text-ink-500">{t}</span>)}
+              <div className="text-[10px] sm:text-[11px] tracking-widest uppercase text-ink-400 mb-1.5 sm:mb-2">Backend API</div>
+              <div className="flex flex-wrap gap-1">
+                {m.techApi.map(t => <span key={t} className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-line bg-surface text-[10px] sm:text-[11px] text-ink-500">{t}</span>)}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="reveal mt-12 grid grid-cols-2 lg:grid-cols-4 border-t border-line pt-8">
+        <div className="reveal mt-8 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-y-5 border-t border-line pt-6 sm:pt-8">
           {m.metrics.map((mt, i) => (
-            <div key={i} className={`pr-6 ${i < 3 ? 'border-r border-line' : ''}`}>
-              <div className="font-display font-normal text-2xl sm:text-3xl text-ink leading-none tracking-tight">{mt.v}</div>
-              <div className="mt-2 text-[11px] tracking-wide text-ink-400 leading-snug">{mt.l}</div>
+            <div key={i} className={`pr-4 sm:pr-6 ${i < 3 ? 'border-r border-line' : ''}`}>
+              <div className="font-display font-normal text-xl sm:text-3xl text-ink leading-none tracking-tight">{mt.v}</div>
+              <div className="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] tracking-wide text-ink-400 leading-snug">{mt.l}</div>
             </div>
           ))}
         </div>
@@ -911,69 +1011,148 @@ const EducationCard = () => (
   </div>
 );
 
-const Experience = () => (
-  <section id="experience" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
-    <div className="reveal mb-12">
-      <Eyebrow>Career</Eyebrow>
-      <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">Experience</h2>
-    </div>
-    <div className="grid lg:grid-cols-[1fr_330px] gap-10 lg:gap-14 items-start">
-      {/* Left: timeline */}
-      <div className="border-t border-line">
-        {EXPERIENCE.map((e, i) => (
-          <div key={i} className="reveal grid md:grid-cols-[180px_1fr] gap-4 md:gap-8 py-9 sm:py-12 border-b border-line group">
-            <div className="md:pt-2">
-              <div className="text-[12px] tracking-widest uppercase text-ink-400">{e.when}</div>
-              <div className="text-[12px] tracking-widest uppercase text-ink-300 mt-1.5">{e.loc}</div>
+// Education, treated as a 4th "experience" so the mobile quadrant grid forms a clean cross.
+const EDU_EXP = {
+  co: 'Carleton University',
+  role: 'B.Sc. Computer Science',
+  loc: 'Ottawa, ON',
+  when: 'Expected May 2027',
+  context: 'Studying Computer Science while shipping production AI on the side — coursework in parallel with full-time-caliber internships and founder work.',
+  bullets: [
+    'B.Sc. Computer Science, expected May 2027.',
+    'Balancing a full course load with AI engineering internships at IBM, Jonas Software, and Microsoft.',
+    'Founder of MobiSoins and Zerpha alongside school.',
+  ],
+};
+
+// Full-experience modal (opened from the mobile quadrant grid).
+const ExpModal = ({ exp, onClose }) => {
+  useEffect(() => {
+    if (!exp) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [exp, onClose]);
+  if (!exp) return null;
+  return (
+    <div className="fixed inset-0 z-[200] overflow-y-auto" style={{ background: 'rgba(27,26,22,0.5)', backdropFilter: 'blur(8px)' }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="min-h-screen-d flex items-start justify-center py-6 px-4">
+        <div className="relative w-full max-w-[640px] rounded-3xl overflow-hidden"
+          style={{ background: '#F4F1E9', border: '1px solid #E5E1D6', boxShadow: '0 40px 100px rgba(27,26,22,0.35)' }}>
+          <button onClick={onClose} aria-label="Close"
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-surface border border-lined text-ink-500 hover:bg-ink hover:text-paper hover:border-ink transition">✕</button>
+          <div className="p-6 sm:p-8">
+            <div className="flex items-center gap-3 text-[10px] tracking-widest uppercase text-ink-400">
+              <span>{exp.when}</span><span className="h-px w-5 bg-lined" /><span>{exp.loc}</span>
             </div>
-            <div>
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <h3 className="font-display font-normal text-3xl sm:text-4xl tracking-tight text-ink">{e.co}</h3>
-                <span className="italic-accent text-ink-500 text-lg sm:text-xl">— {e.role}</span>
-              </div>
-              {e.context && (
-                <p className="mt-4 max-w-[760px] text-ink-500 font-light leading-relaxed text-[15px] sm:text-base border-l-2 border-lined pl-4">{e.context}</p>
-              )}
-              <ul className="mt-5 space-y-3">
-                {e.bullets.map((b, j) => (
-                  <li key={j} className="flex gap-3.5 text-ink-500 font-light leading-relaxed text-[15px] sm:text-base">
-                    <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h3 className="mt-4 font-display font-normal text-3xl sm:text-4xl tracking-tight text-ink leading-tight">{exp.co}</h3>
+            <p className="mt-1.5 italic-accent text-ink-500 text-lg">— {exp.role}</p>
+            {exp.context && (
+              <p className="mt-5 text-ink-500 font-light leading-relaxed text-[15px] border-l-2 border-lined pl-4">{exp.context}</p>
+            )}
+            <ul className="mt-6 space-y-3">
+              {exp.bullets.map((b, j) => (
+                <li key={j} className="flex gap-3 text-ink-700 font-light leading-relaxed text-[14.5px]">
+                  <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" /><span>{b}</span>
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Experience = () => {
+  const [openExp, setOpenExp] = useState(null);
+  const quads = [...EXPERIENCE, EDU_EXP];
+  return (
+    <section id="experience" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-14 sm:py-28">
+      <div className="reveal mb-7 sm:mb-12">
+        <Eyebrow>Career</Eyebrow>
+        <h2 className="section-title mt-4 sm:mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl tracking-tight">Experience</h2>
+      </div>
+
+      {/* Mobile: 2×2 quadrant cross — tap to open the full experience */}
+      <div className="md:hidden reveal grid grid-cols-2 border-t border-l border-lined rounded-2xl overflow-hidden">
+        {quads.map((e, i) => (
+          <button key={i} onClick={() => setOpenExp(e)}
+            className="text-left p-4 border-b border-r border-lined bg-surface/40 active:bg-surface transition-colors flex flex-col justify-between min-h-[138px]">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[9px] tracking-widest uppercase text-ink-400 truncate">{e.when}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-ink-300 flex-shrink-0" />
+            </div>
+            <div className="mt-3">
+              <h3 className="font-display font-normal text-[19px] leading-[1.1] tracking-tight text-ink">{e.co}</h3>
+              <p className="mt-1 text-[11px] text-ink-500 leading-snug">{e.role}</p>
+              <span className="mt-2.5 inline-flex items-center gap-1 text-[9.5px] tracking-widest uppercase text-ink-400">Open <span>→</span></span>
+            </div>
+          </button>
         ))}
       </div>
-      {/* Right: Education — same row as Experience */}
-      <aside className="reveal reveal-delay-1 lg:sticky lg:top-28">
-        <EducationCard />
-      </aside>
-    </div>
-  </section>
-);
+
+      {/* Desktop: full timeline + Education sidebar */}
+      <div className="hidden md:grid lg:grid-cols-[1fr_330px] gap-10 lg:gap-14 items-start">
+        <div className="border-t border-line">
+          {EXPERIENCE.map((e, i) => (
+            <div key={i} className="reveal grid md:grid-cols-[180px_1fr] gap-4 md:gap-8 py-9 sm:py-12 border-b border-line group">
+              <div className="md:pt-2">
+                <div className="text-[12px] tracking-widest uppercase text-ink-400">{e.when}</div>
+                <div className="text-[12px] tracking-widest uppercase text-ink-300 mt-1.5">{e.loc}</div>
+              </div>
+              <div>
+                <div className="flex items-baseline gap-3 flex-wrap">
+                  <h3 className="font-display font-normal text-3xl sm:text-4xl tracking-tight text-ink">{e.co}</h3>
+                  <span className="italic-accent text-ink-500 text-lg sm:text-xl">— {e.role}</span>
+                </div>
+                {e.context && (
+                  <p className="mt-4 max-w-[760px] text-ink-500 font-light leading-relaxed text-[15px] sm:text-base border-l-2 border-lined pl-4">{e.context}</p>
+                )}
+                <ul className="mt-5 space-y-3">
+                  {e.bullets.map((b, j) => (
+                    <li key={j} className="flex gap-3.5 text-ink-500 font-light leading-relaxed text-[15px] sm:text-base">
+                      <span className="mt-2 w-1.5 h-1.5 bg-ink-300 flex-shrink-0" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+        <aside className="reveal reveal-delay-1 hidden lg:block lg:sticky lg:top-28">
+          <EducationCard />
+        </aside>
+      </div>
+
+      <ExpModal exp={openExp} onClose={() => setOpenExp(null)} />
+    </section>
+  );
+};
 
 // ────────────────────────────────────────────────────────────────
 // SKILLS
 // ────────────────────────────────────────────────────────────────
 
 const Skills = () => (
-  <section id="skills" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
-    <div className="reveal mb-12">
+  <section id="skills" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-14 sm:py-28">
+    <div className="reveal mb-7 sm:mb-12">
       <Eyebrow>Toolkit</Eyebrow>
-      <h2 className="section-title mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl tracking-tight">Stack</h2>
+      <h2 className="section-title mt-4 sm:mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl tracking-tight">Stack</h2>
     </div>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
       {SKILLS.map((s, i) => (
-        <div key={i} className={`reveal card rounded-2xl p-6 reveal-delay-${i + 1}`}>
-          <div className="flex items-center gap-3 mb-5">
-            <span className="icon-sq w-9 h-9 rounded-lg"><Icon name={['brain','code','stack','cloud'][i]} size={17} /></span>
-            <h3 className="font-display font-normal text-xl tracking-tight">{s.group}</h3>
+        <div key={i} className={`reveal card rounded-xl sm:rounded-2xl p-3 sm:p-6 reveal-delay-${i + 1}`}>
+          <div className="flex items-center gap-2 sm:gap-3 mb-2.5 sm:mb-5">
+            <span className="icon-sq w-6 h-6 sm:w-9 sm:h-9 rounded-md sm:rounded-lg"><Icon name={['brain','code','stack','cloud'][i]} size={13} /></span>
+            <h3 className="font-display font-normal text-[13.5px] sm:text-xl tracking-tight">{s.group}</h3>
           </div>
-          <ul className="space-y-2.5">
+          <ul className="space-y-1 sm:space-y-2.5">
             {s.items.map(item => (
-              <li key={item} className="flex items-center gap-3 text-ink-500 text-[14px] font-light">
+              <li key={item} className="flex items-center gap-2 text-ink-500 text-[11px] sm:text-[14px] font-light leading-snug">
                 <span className="w-1 h-1 bg-ink-300 flex-shrink-0" />{item}
               </li>
             ))}
@@ -989,14 +1168,15 @@ const Skills = () => (
 // ────────────────────────────────────────────────────────────────
 
 const About = () => (
-  <section id="about" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-20 sm:py-28">
-    <div className="grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 items-start">
-      <div>
+  <section id="about" className="max-w-[1360px] mx-auto px-5 sm:px-8 py-16 sm:py-28">
+    <div className="about-visual">
+      {/* Text */}
+      <div className="min-w-0" style={{ gridArea: 'text' }}>
         <div className="reveal"><Eyebrow>About</Eyebrow></div>
-        <h2 className="reveal reveal-delay-1 mt-5 font-display font-normal text-4xl sm:text-5xl md:text-6xl leading-[1.02] tracking-tight">
+        <h2 className="reveal reveal-delay-1 mt-5 font-display font-normal text-3xl sm:text-5xl md:text-6xl leading-[1.04] tracking-tight max-w-[620px]">
           I ship GenAI <span className="italic-accent text-ink-500">end-to-end</span> — architecture to production.
         </h2>
-        <div className="reveal reveal-delay-2 mt-8 space-y-5 text-ink-500 text-lg font-light leading-relaxed max-w-[620px]">
+        <div className="reveal reveal-delay-2 mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-ink-500 text-base sm:text-lg font-light leading-relaxed max-w-[620px]">
           <p>
             I'm a Computer Science student at Carleton, currently engineering AI features on
             <span className="text-ink font-normal"> IBM watsonx Workshop</span> for 25,000+ sellers globally.
@@ -1008,23 +1188,24 @@ const About = () => (
             production codebases without disrupting live operations, often at 2× the expected velocity.
           </p>
         </div>
-
-        <div className="reveal reveal-delay-3 mt-10 max-w-[620px]">
-          {window.Terminal && (
-            <window.Terminal
-              trace={window.FUN_TRACE}
-              label="josue.fun · live"
-              maxWidth="100%"
-              minHeight="300px"
-              fontSize="clamp(11px, 2.8vw, 13px)"
-            />
-          )}
-        </div>
       </div>
 
-      {/* Identity card + meta */}
-      <div className="reveal reveal-delay-2 space-y-5 max-w-md mx-auto lg:max-w-none w-full">
-        <div className="relative w-full rounded-3xl overflow-hidden card" style={{ aspectRatio: '4/5' }}>
+      {/* Terminal */}
+      <div className="reveal reveal-delay-3 mt-2 sm:mt-4 lg:mt-0 min-w-0 w-full max-w-[620px] overflow-hidden" style={{ gridArea: 'term' }}>
+        {window.Terminal && (
+          <window.Terminal
+            trace={window.FUN_TRACE}
+            label="josue.fun · live"
+            maxWidth="100%"
+            height="clamp(230px, 46vw, 280px)"
+            fontSize="clamp(8px, 1.9vw, 11px)"
+          />
+        )}
+      </div>
+
+      {/* Identity: avatar on top, meta box under it */}
+      <div className="reveal reveal-delay-2 flex flex-col gap-2.5 sm:gap-4 lg:gap-5" style={{ gridArea: 'idty' }}>
+        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden card w-full" style={{ aspectRatio: '4/5' }}>
           <div className="absolute inset-0 grid-lines-sm opacity-60" />
           <img src="avatars/josue.png" alt="Josue Kenge"
             className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[92%] object-contain"
@@ -1033,11 +1214,11 @@ const About = () => (
               WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
               maskImage: 'linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)',
             }} />
-          <div className="absolute top-5 left-5 right-5 flex justify-between items-start">
+          <div className="hidden lg:flex absolute top-5 left-5 right-5 justify-between items-start">
             <PixelMark size={22} color="#1B1A16" />
             <span className="text-[11px] tracking-widest text-ink-400">'26</span>
           </div>
-          <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end text-[11px] tracking-widest uppercase">
+          <div className="hidden lg:flex absolute bottom-5 left-5 right-5 justify-between items-end text-[11px] tracking-widest uppercase">
             <div>
               <div className="text-ink font-medium">AI Engineer</div>
               <div className="text-ink-400 mt-1">Markham · ON</div>
@@ -1048,16 +1229,16 @@ const About = () => (
             </div>
           </div>
         </div>
-        <div className="card rounded-2xl p-6 space-y-3.5">
+        <div className="card rounded-xl lg:rounded-2xl p-3 sm:p-5 lg:p-6 space-y-2 sm:space-y-3 lg:space-y-3.5">
           {[
-            ['Education', 'Carleton University · B.Sc. CS'],
-            ['Based in', 'Markham, ON · open to remote'],
+            ['Education', 'Carleton · B.Sc. CS'],
+            ['Based in', 'Markham, ON'],
             ['Languages', 'English, French'],
             ['Email', 'josuekenge4@gmail.com'],
           ].map(([k, v]) => (
-            <div key={k} className="flex items-baseline justify-between gap-4 text-sm">
-              <span className="text-[11px] tracking-widest uppercase text-ink-400 flex-shrink-0">{k}</span>
-              <span className="text-ink-700 text-right font-light">{v}</span>
+            <div key={k} className="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-0.5 lg:gap-4">
+              <span className="text-[9px] sm:text-[10px] lg:text-[11px] tracking-widest uppercase text-ink-400 flex-shrink-0">{k}</span>
+              <span className="text-ink-700 lg:text-right font-light text-[11px] sm:text-[13px] lg:text-sm break-all lg:break-words">{v}</span>
             </div>
           ))}
         </div>
@@ -1071,32 +1252,24 @@ const About = () => (
 // ────────────────────────────────────────────────────────────────
 
 const Contact = () => (
-  <section id="contact" className="relative overflow-hidden py-24 sm:py-36">
+  <section id="contact" className="relative overflow-hidden py-16 sm:py-36">
     <div className="absolute inset-0 grid-lines opacity-60" />
     <PixelDeco style={{ top: '20%', left: '12%', transform: 'scale(.7)' }} />
     <PixelDeco style={{ bottom: '24%', right: '14%', transform: 'scale(.6)' }} />
     <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 text-center">
       <div className="reveal flex justify-center"><Eyebrow>Contact</Eyebrow></div>
-      <h2 className="contact-headline reveal reveal-delay-1 mt-7 font-display font-normal text-[clamp(48px,9vw,140px)] leading-[0.96] tracking-tight">
+      <h2 className="contact-headline reveal reveal-delay-1 mt-6 sm:mt-7 font-display font-normal text-[clamp(44px,9vw,140px)] leading-[0.96] tracking-tight">
         Let's build something
         <br /><span className="italic-accent text-ink-500">that ships.</span>
       </h2>
 
-      <div className="reveal reveal-delay-2 mt-10 flex justify-center">
+      <div className="reveal reveal-delay-2 mt-8 sm:mt-10 flex justify-center">
         <a href="mailto:josuekenge4@gmail.com" className="pill pill-solid text-base sm:text-lg py-4 px-7">
-          josuekenge4@gmail.com <span className="arw">→</span>
+          Get in touch <span className="arw">→</span>
         </a>
       </div>
 
-      <div className="reveal reveal-delay-3 mt-10 flex flex-wrap justify-center items-center gap-x-4 gap-y-3 text-[12px] tracking-[0.15em] uppercase text-ink-500">
-        <a href="https://www.linkedin.com/in/josuekenge/" target="_blank" rel="noopener" className="hover:text-ink transition-colors">LinkedIn / @josuekenge</a>
-        <span className="w-1.5 h-1.5 bg-ink-300" />
-        <a href="https://github.com/josuekenge" target="_blank" rel="noopener" className="hover:text-ink transition-colors">GitHub / @josuekenge</a>
-        <span className="w-1.5 h-1.5 bg-ink-300" />
-        <a href="https://x.com/kengejosue" target="_blank" rel="noopener" className="hover:text-ink transition-colors">X / @kengejosue</a>
-      </div>
-
-      <div className="reveal reveal-delay-4 mt-8 text-[12px] tracking-widest uppercase text-ink-400">
+      <div className="reveal reveal-delay-3 mt-7 sm:mt-8 text-[12px] tracking-widest uppercase text-ink-400">
         613.415.6829 · Markham, ON · Open to remote
       </div>
     </div>
@@ -1114,16 +1287,15 @@ const Footer = () => (
         <PixelMark size={20} color="#1B1A16" />
         <span className="text-[12px] tracking-wide text-ink-400">© 2026 Josue Kenge · Designed & built end-to-end</span>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {[
-          { icon: 'assets/social/linkedin.png', label: 'LinkedIn', href: 'https://www.linkedin.com/in/josuekenge/' },
-          { icon: 'assets/social/x.png', label: 'X / Twitter', href: 'https://x.com/kengejosue' },
-          { icon: 'assets/social/whatsapp.png', label: 'WhatsApp', href: 'https://wa.me/16134156829' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/josuekenge/', d: 'M4.98 3.5a2.5 2.5 0 11-.02 5.01A2.5 2.5 0 014.98 3.5zM3 9h4v12H3V9zm6 0h3.8v1.64h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9z' },
+          { label: 'X', href: 'https://x.com/kengejosue', d: 'M18.24 2.25h3.3l-7.2 8.23L23 21.75h-6.63l-5.2-6.8-5.94 6.8H1.92l7.7-8.8L1.5 2.25h6.8l4.7 6.2 5.24-6.2zm-1.16 17.52h1.83L7.02 4.13H5.06l12.02 15.64z' },
+          { label: 'WhatsApp', href: 'https://wa.me/16134156829', d: 'M12.04 2C6.58 2 2.13 6.45 2.13 11.9c0 1.76.46 3.48 1.34 5l-1.42 5.2 5.32-1.4a9.87 9.87 0 004.66 1.19h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 1.8c2.16 0 4.19.84 5.72 2.37a8.06 8.06 0 012.37 5.73c0 4.46-3.63 8.09-8.1 8.09a8.1 8.1 0 01-4.12-1.13l-.3-.18-3.06.8.82-3-.2-.31a8.03 8.03 0 01-1.24-4.29c0-4.46 3.63-8.09 8.11-8.09zm-3.63 4.38c-.17 0-.45.06-.68.31-.24.25-.9.88-.9 2.15 0 1.27.92 2.5 1.05 2.67.13.17 1.8 2.86 4.46 3.9 2.2.85 2.65.68 3.13.64.48-.05 1.55-.63 1.77-1.24.22-.61.22-1.14.15-1.24-.07-.11-.24-.17-.5-.3-.26-.13-1.55-.76-1.79-.85-.24-.09-.42-.13-.6.13-.17.26-.68.85-.83 1.03-.15.17-.31.19-.57.06-.26-.13-1.1-.4-2.09-1.29-.77-.69-1.29-1.54-1.44-1.8-.15-.26-.02-.4.11-.53.12-.12.26-.31.4-.46.13-.15.17-.26.26-.44.09-.17.04-.32-.02-.45-.06-.13-.57-1.4-.79-1.9-.2-.5-.4-.43-.55-.44l-.47-.01z' },
         ].map(s => (
           <a key={s.label} href={s.href} target="_blank" rel="noopener" aria-label={s.label} title={s.label}
-            className="w-10 h-10 flex items-center justify-center rounded-xl transition-transform duration-300 hover:-translate-y-1">
-            <img src={s.icon} alt={s.label} className="w-full h-full object-contain"
-              style={{ filter: 'drop-shadow(0 6px 12px rgba(27,26,22,0.15))' }} />
+            className="group w-10 h-10 flex items-center justify-center rounded-full border border-lined bg-surface text-ink-500 hover:bg-ink hover:text-paper hover:border-ink transition-all duration-300 hover:-translate-y-0.5">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={s.d} /></svg>
           </a>
         ))}
       </div>
@@ -1147,11 +1319,14 @@ const FloatingContact = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
   return (
-    <a href="mailto:josuekenge4@gmail.com"
-      className={`fixed bottom-5 right-5 z-40 pill pill-solid shadow-lg transition-all duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-      <PixelMark size={16} color="#F4F1E9" />
-      Get in touch
-    </a>
+    // Desktop only — on mobile the "Get in touch" CTA lives in the nav dropdown instead.
+    <div className="hidden md:block">
+      <a href="mailto:josuekenge4@gmail.com"
+        className={`fixed bottom-5 right-5 z-40 pill pill-solid shadow-lg transition-all duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+        <PixelMark size={16} color="#F4F1E9" />
+        Get in touch
+      </a>
+    </div>
   );
 };
 

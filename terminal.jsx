@@ -19,26 +19,20 @@ const AGENT_TRACE = [
 ];
 
 const FUN_TRACE = [
-  '> $ josue --fun-stuff',
+  '> $ josue --fun',
   '',
-  '  class Josue(AIEngineer):',
-  '      """ when not shipping code """',
+  '  class Josue:',
+  '    # off the clock',
   '',
-  '      hobbies = {',
-  "          'basketball': Hooper(level='obsessed'),",
-  "          'anime':      Watcher(genre='shōnen'),",
-  "          'reading':    Reader(formats=[",
-  "              'light novels',",
-  "              'manhwa',",
-  "              'manga',",
-  '          ]),',
-  '      }',
+  '    hobbies = {',
+  "      'ball':  'weekends',",
+  "      'anime': 'shōnen',",
+  "      'read':  'novels',",
+  '    }',
   '',
-  '  > josue.hobbies.now_playing()',
-  '',
-  '  ✓ basketball → pickup runs · weekends',
-  '  ✓ anime      → Jujutsu Kaisen · Vinland Saga',
-  '  ✓ reading    → Solo Leveling · Tower of God',
+  '  ✓ hooping → pickup runs',
+  '  ✓ anime   → JJK',
+  '  ✓ reading → Solo Leveling',
 ];
 
 // Two palettes so the terminal can render dark (hero) or light (about),
@@ -74,6 +68,7 @@ const Terminal = ({
   trace,
   label = 'session · live',
   minHeight = '420px',
+  height,
   maxWidth = '720px',
   fontSize = 'clamp(11px, 2.6vw, 17px)',
   dark = false,
@@ -172,8 +167,9 @@ const Terminal = ({
           style={{
             color: pal.text,
             fontSize,
-            lineHeight: 1.65,
-            minHeight,
+            lineHeight: 1.6,
+            // Fixed height reserves space so the box never expands while typing.
+            ...(height ? { height, overflowY: 'hidden' } : { minHeight }),
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
           }}
