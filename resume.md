@@ -7,7 +7,7 @@
 
 ## Summary
 
-AI Engineer shipping production GenAI systems across enterprise and healthcare clients, from agentic workflows and RAG pipelines to full-stack platforms serving **25,000+ users**. Fluent across the stack (**Python, TypeScript, FastAPI, Next.js**) and the AI layer (**Claude, Azure OpenAI, Amazon Bedrock, RAG, spec-driven development**); experienced building client-facing AI products end-to-end, from architecture to deployment.
+AI Engineer shipping production GenAI systems across enterprise and healthcare clients, from agentic workflows and RAG pipelines to full-stack platforms serving **35,000+ users**. Fluent across the stack (**Python, TypeScript, FastAPI, Next.js**) and the AI layer (**Claude, Azure OpenAI, Amazon Bedrock, RAG, spec-driven development**); experienced building client-facing AI products end-to-end, from architecture to deployment.
 
 ---
 
@@ -23,7 +23,7 @@ Bachelor of Computer Science
 ### IBM — AI Engineer Intern, watsonx Workshop
 *Markham, ON · May 2026 – Present*
 
-- Engineering AI features on **watsonx Workshop**, IBM's internal sales enablement platform serving **25,000+ sellers globally**, powering AI-driven coaching that helps reps sell IBM's portfolio more effectively.
+- Engineering AI features on **watsonx Workshop**, IBM's internal sales enablement platform serving **35,000+ sellers globally**, powering AI-driven coaching that helps reps sell IBM's portfolio more effectively.
 - Building full-stack capabilities with **FastAPI** on the Python backend and **React / Next.js** on the frontend, shipping features directly into the daily workflow of IBM's global sales force.
 
 ### Jonas Software — AI Engineer Intern

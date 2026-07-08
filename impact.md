@@ -8,7 +8,7 @@ A record of shipped systems, measurable outcomes, and business value delivered. 
 
 | Metric | Value | Context |
 |---|---|---|
-| Users reached | **25,000+** | IBM sellers using watsonx Workshop |
+| Users reached | **35,000+** | IBM sellers using watsonx Workshop |
 | Companies tracked | **100+** | Operating cos on AIQSR platform |
 | AI initiatives managed | **957** | Across the Constellation Software portfolio |
 | Senior leaders served | **400+** | Computrition healthcare AI chatbot |

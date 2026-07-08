@@ -9,7 +9,7 @@ const { useEffect, useRef, useState } = React;
 // ────────────────────────────────────────────────────────────────
 
 const STACK_TICKER = [
-  'IBM WATSONX · 25K SELLERS',
+  'IBM WATSONX · 35K SELLERS',
   'WES CHATBOT · 20× FASTER',
   'AIQSR · 957 INITIATIVES',
   'M&A RAG · $120K SAVED',
@@ -20,7 +20,7 @@ const STACK_TICKER = [
 ];
 
 const HEADLINE_METRICS = [
-  { v: '25K+', l: 'sellers reached at IBM' },
+  { v: '35K+', l: 'sellers reached at IBM' },
   { v: '$303K+', l: 'client savings shipped' },
   { v: '957', l: 'AI initiatives tracked' },
   { v: '20×', l: 'query response speedup' },
@@ -54,7 +54,7 @@ const EXPERIENCE = [
     role: 'AI Engineer Intern, watsonx Workshop',
     loc: 'Markham, ON',
     when: 'May 2026 — Present',
-    context: 'watsonx Workshop is IBM\'s internal AI platform that helps 25,000+ sellers research accounts, build demos, and rehearse pitches. I build the AI agents and full-stack features they use every day.',
+    context: 'watsonx Workshop is IBM\'s internal AI platform that helps 35,000+ sellers research accounts, build demos, and rehearse pitches. I build the AI agents and full-stack features they use every day.',
     bullets: [
       'Engineering AI features across a FastAPI / Python backend and a React frontend, shipping into the daily workflow of IBM\'s global sales force.',
       'Built the Demo Creator agent end-to-end: an LLM tool that turns a 2-question, product-led intake (replacing a 6-question form) into tailored demo recommendations, auto-deriving sales stage, audience, and industry from the seller\'s linked opportunity so they only answer what can\'t be inferred.',
@@ -376,6 +376,7 @@ const Nav = () => {
     ['Projects', '#work'],
     ['Stack', '#skills'],
     ['About', '#about'],
+    ['Freelance', '#freelance'],
     ['Contact', '#contact'],
   ];
   const solid = scrolled || menuOpen;
@@ -386,8 +387,8 @@ const Nav = () => {
           <PixelMark size={26} color="#1B1A16" />
           <span className="font-display text-lg sm:text-xl tracking-tight text-ink truncate">Josue Kenge</span>
         </a>
-        <div className="hidden md:flex items-center gap-8 text-[15px] text-ink-500">
-          {links.slice(0, 5).map(([label, href]) => (
+        <div className="hidden md:flex items-center gap-7 text-[15px] text-ink-500">
+          {links.slice(0, 6).map(([label, href]) => (
             <a key={href} href={href} className="hover:text-ink transition-colors">{label}</a>
           ))}
         </div>
@@ -473,7 +474,7 @@ const Hero = () => {
           <p className="reveal reveal-delay-2 mt-8 max-w-[540px] text-lg sm:text-xl text-ink-500 leading-relaxed font-light">
             I'm Josue — an AI Engineer building GenAI systems for enterprise and healthcare.
             Agentic workflows, RAG pipelines, and full-stack platforms serving
-            <span className="text-ink font-normal"> 25,000+ users</span>. From architecture to deployment.
+            <span className="text-ink font-normal"> 35,000+ users</span>. From architecture to deployment.
           </p>
 
           <div className="reveal reveal-delay-3 mt-8 sm:mt-10 flex flex-wrap items-center gap-2 sm:gap-3">
@@ -1179,7 +1180,7 @@ const About = () => (
         <div className="reveal reveal-delay-2 mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-ink-500 text-base sm:text-lg font-light leading-relaxed max-w-[620px]">
           <p>
             I'm a Computer Science student at Carleton, currently engineering AI features on
-            <span className="text-ink font-normal"> IBM watsonx Workshop</span> for 25,000+ sellers globally.
+            <span className="text-ink font-normal"> IBM watsonx Workshop</span> for 35,000+ sellers globally.
             Before that I shipped 7 production AI systems at Jonas Software / CSI — chatbots, analytics
             platforms, and RAG pipelines that moved real numbers.
           </p>
@@ -1205,9 +1206,9 @@ const About = () => (
 
       {/* Identity: avatar on top, meta box under it */}
       <div className="reveal reveal-delay-2 flex flex-col gap-2.5 sm:gap-4 lg:gap-5" style={{ gridArea: 'idty' }}>
-        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden card w-full" style={{ aspectRatio: '4/5', background: '#E8E8EE' }}>
+        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden card w-full" style={{ aspectRatio: '4/5', background: '#0E0D0B' }}>
           <img src="assets/josue-headshot.png" alt="Josue Kenge"
-            className="absolute inset-0 w-full h-full object-contain" style={{ objectPosition: '50% 100%' }} />
+            className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: '50% 22%' }} />
           {/* bottom scrim so the tags stay legible over the photo */}
           <div className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
             style={{ background: 'linear-gradient(to top, rgba(14,13,11,0.86), rgba(14,13,11,0.32) 45%, transparent)' }} />
@@ -1225,6 +1226,9 @@ const About = () => (
               <div>2024</div>
             </div>
           </div>
+          {/* refined inset ring for a crafted frame */}
+          <div className="absolute inset-0 rounded-2xl lg:rounded-3xl pointer-events-none"
+            style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 40px rgba(0,0,0,0.10)' }} />
         </div>
         <div className="card rounded-xl lg:rounded-2xl p-3 sm:p-5 lg:p-6 space-y-2 sm:space-y-3 lg:space-y-3.5">
           {[
@@ -1239,6 +1243,33 @@ const About = () => (
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  </section>
+);
+
+// ────────────────────────────────────────────────────────────────
+// WORK WITH ME — freelance / contract offering
+// ────────────────────────────────────────────────────────────────
+
+const Build = ({ onStart }) => (
+  <section id="freelance" className="relative overflow-hidden">
+    <div className="max-w-[1360px] mx-auto px-5 sm:px-8 py-14 sm:py-20">
+      <div className="reveal card rounded-2xl lg:rounded-3xl p-7 sm:p-10 lg:p-12 flex flex-col lg:flex-row lg:items-center gap-7 lg:gap-12">
+        <div className="min-w-0">
+          <Eyebrow>Work with me</Eyebrow>
+          <h2 className="mt-4 font-display font-normal text-3xl sm:text-4xl tracking-tight leading-[1.05]">
+            Have something you want built?
+          </h2>
+          <p className="mt-4 max-w-[560px] text-ink-500 text-base sm:text-lg font-light leading-relaxed">
+            Alongside my full-time work, I take on a few freelance projects — production AI and
+            full-stack builds. Tell me the problem and the timeline.
+          </p>
+        </div>
+        <button onClick={onStart}
+          className="pill pill-solid justify-center text-[15px] py-3.5 px-7 flex-shrink-0 lg:self-center">
+          Start a project <span className="arw">→</span>
+        </button>
       </div>
     </div>
   </section>
@@ -1328,11 +1359,200 @@ const FloatingContact = () => {
 };
 
 // ────────────────────────────────────────────────────────────────
+// PROJECT INQUIRY MODAL — "Start a project" form → Web3Forms → email
+// ────────────────────────────────────────────────────────────────
+
+// ↓↓↓ Paste your free Web3Forms access key here.
+//     Get one in ~1 min at https://web3forms.com — enter your email
+//     (josuekenge4@gmail.com), they email you a key, paste it below.
+//     Submissions then arrive formatted in that inbox with a subject line.
+const WEB3FORMS_ACCESS_KEY = '9006bcee-99d5-46da-a095-92e8b092709d';
+
+const PROJECT_TYPES = ['Mobile app', 'Web app', 'AI feature / integration', 'Something else'];
+const BUDGETS = ['Under $1k', '$1k – $5k', '$5k – $10k', '$10k+', 'Not sure yet'];
+const TIMELINES = ['ASAP', '2–4 weeks', '1–2 months', 'Flexible / not sure'];
+
+const ProjectInquiryModal = ({ open, onClose }) => {
+  const EMPTY = { name: '', email: '', type: '', industry: '', budget: '', timeline: '', message: '', botcheck: '' };
+  const [form, setForm] = React.useState(EMPTY);
+  const [status, setStatus] = React.useState('idle'); // idle | sending | success | error
+  const [error, setError] = React.useState('');
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [open, onClose]);
+
+  React.useEffect(() => {
+    if (!open) { setStatus('idle'); setError(''); setForm(EMPTY); }
+  }, [open]);
+
+  if (!open) return null;
+
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setError('Please add your name, email, and a short note.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setError("That email doesn't look right — mind double-checking it?");
+      return;
+    }
+    if (form.botcheck) { setStatus('success'); return; } // honeypot tripped — silently drop
+    setError('');
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          botcheck: form.botcheck,
+          subject: `New project inquiry — ${form.name}`,
+          from_name: 'josue.fun · project form',
+          replyto: form.email,
+          Name: form.name,
+          Email: form.email,
+          'Project type': form.type || '—',
+          Industry: form.industry || '—',
+          Budget: form.budget || '—',
+          Timeline: form.timeline || '—',
+          Details: form.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+        setError(data.message || 'Something went wrong — please email me directly.');
+      }
+    } catch (err) {
+      setStatus('error');
+      setError('Network error — please email me directly at josuekenge4@gmail.com.');
+    }
+  };
+
+  const inputCls = 'w-full rounded-lg border border-lined bg-surface px-4 py-3 text-[15px] text-ink placeholder-ink-300 focus:outline-none focus:border-ink transition-colors';
+  const labelCls = 'block text-[11px] tracking-widest uppercase text-ink-400 mb-2';
+
+  return (
+    <div className="fixed inset-0 z-[200] overflow-y-auto"
+      style={{ background: 'rgba(27,26,22,0.5)', backdropFilter: 'blur(8px)' }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="min-h-screen-d flex items-start justify-center py-6 sm:py-12 px-3 sm:px-4">
+        <div className="relative w-full max-w-[600px] rounded-2xl sm:rounded-3xl overflow-hidden"
+          style={{ background: '#F4F1E9', border: '1px solid #E5E1D6', boxShadow: '0 50px 130px rgba(27,26,22,0.35)' }}>
+          <button onClick={onClose} aria-label="Close"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-10 h-10 rounded-full flex items-center justify-center bg-surface border border-lined text-ink-500 hover:bg-ink hover:text-paper hover:border-ink transition">✕</button>
+
+          {status === 'success' ? (
+            <div className="p-8 sm:p-12 text-center">
+              <div className="mx-auto w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(76,158,104,0.15)' }}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4C9E68" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+              </div>
+              <h2 className="mt-6 font-display font-normal text-3xl sm:text-4xl tracking-tight">Message sent.</h2>
+              <p className="mt-4 text-ink-500 font-light leading-relaxed max-w-[400px] mx-auto">
+                Thanks, {form.name.split(' ')[0]} — it's in my inbox. I'll get back to you at {form.email} soon.
+              </p>
+              <button onClick={onClose} className="mt-8 pill pill-ghost justify-center py-3 px-7">Close</button>
+            </div>
+          ) : (
+            <form onSubmit={submit} className="p-5 sm:p-9">
+              <div className="font-mono text-[9px] sm:text-[11px] tracking-widest uppercase text-ink-400">Start a project</div>
+              <h2 className="mt-2 sm:mt-3 font-display font-normal text-2xl sm:text-4xl tracking-tight leading-tight">
+                Tell me what you <span className="italic-accent text-ink-500">want built.</span>
+              </h2>
+              <p className="mt-2 text-ink-500 font-light text-[14px] sm:text-[15px] leading-relaxed">
+                A few quick details and I'll get back to you personally.
+              </p>
+
+              {/* honeypot — hidden anti-spam field; humans never see or fill it */}
+              <input type="text" name="botcheck" tabIndex="-1" autoComplete="off"
+                value={form.botcheck} onChange={set('botcheck')}
+                className="opacity-0 pointer-events-none absolute" style={{ left: '-9999px' }} aria-hidden="true" />
+
+              <div className="mt-6 space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls} htmlFor="pi-name">Name *</label>
+                    <input id="pi-name" className={inputCls} value={form.name} onChange={set('name')} placeholder="Jane Doe" />
+                  </div>
+                  <div>
+                    <label className={labelCls} htmlFor="pi-email">Email *</label>
+                    <input id="pi-email" type="email" className={inputCls} value={form.email} onChange={set('email')} placeholder="jane@company.com" />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls} htmlFor="pi-type">What are we building?</label>
+                    <select id="pi-type" className={inputCls} value={form.type} onChange={set('type')}>
+                      <option value="">Select…</option>
+                      {PROJECT_TYPES.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelCls} htmlFor="pi-industry">Industry</label>
+                    <input id="pi-industry" className={inputCls} value={form.industry} onChange={set('industry')} placeholder="e.g. Healthcare, Fintech" />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelCls} htmlFor="pi-budget">Budget</label>
+                    <select id="pi-budget" className={inputCls} value={form.budget} onChange={set('budget')}>
+                      <option value="">Select…</option>
+                      {BUDGETS.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelCls} htmlFor="pi-timeline">Timeline</label>
+                    <select id="pi-timeline" className={inputCls} value={form.timeline} onChange={set('timeline')}>
+                      <option value="">Select…</option>
+                      {TIMELINES.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className={labelCls} htmlFor="pi-msg">What do you have in mind? *</label>
+                  <textarea id="pi-msg" rows="4" className={inputCls + ' resize-none'} value={form.message} onChange={set('message')}
+                    placeholder="A sentence or two about the problem, the goal, and anything you've got so far…" />
+                </div>
+              </div>
+
+              {error && <p className="mt-4 text-[13px] text-red-600">{error}</p>}
+
+              <button type="submit" disabled={status === 'sending'}
+                className="mt-6 pill pill-solid w-full justify-center py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
+                {status === 'sending' ? 'Sending…' : <>Send inquiry <span className="arw">→</span></>}
+              </button>
+              <p className="mt-3 text-center text-[12px] text-ink-400">Or email me directly — josuekenge4@gmail.com</p>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ────────────────────────────────────────────────────────────────
 // APP
 // ────────────────────────────────────────────────────────────────
 
 const App = () => {
   const [openProject, setOpenProject] = React.useState(null);
+  const [inquiryOpen, setInquiryOpen] = React.useState(false);
   return (
     <>
       <Nav />
@@ -1345,9 +1565,11 @@ const App = () => {
       <Work onOpenProject={setOpenProject} />
       <Skills />
       <About />
+      <Build onStart={() => setInquiryOpen(true)} />
       <Contact />
       <Footer />
       <FloatingContact />
+      <ProjectInquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
       {window.CaseStudyModal && (
         <window.CaseStudyModal project={openProject} onClose={() => setOpenProject(null)} />
       )}

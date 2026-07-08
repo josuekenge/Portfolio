@@ -8,7 +8,7 @@ const AGENT_TRACE = [
   '  loading profile................. ✓',
   '  ├─ role:    AI Engineer · Ottawa',
   '  ├─ shipped: 7 production systems',
-  '  ├─ reach:   25,000+ users',
+  '  ├─ reach:   35,000+ users',
   '  └─ saved:   $303K+ in client value',
   '',
   '  > const next = await reachOut(you);',
