@@ -421,7 +421,7 @@ const Nav = () => {
               {label}<span className="text-ink-300">→</span>
             </a>
           ))}
-          <a href="mailto:josuekenge4@gmail.com" onClick={() => setMenuOpen(false)}
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josuekenge4@gmail.com" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}
             className="mt-4 pill pill-solid w-full justify-center">Get in touch <span className="arw">→</span></a>
         </div>
       </div>
@@ -481,7 +481,7 @@ const Hero = () => {
             <a href="#work" className="pill pill-solid justify-center text-[13px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
               View selected work <span className="arw">→</span>
             </a>
-            <a href="mailto:josuekenge4@gmail.com" className="pill pill-ghost justify-center text-[13px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josuekenge4@gmail.com" target="_blank" rel="noopener noreferrer" className="pill pill-ghost justify-center text-[13px] sm:text-[15px] py-2.5 px-4 sm:py-3.5 sm:px-6">
               Get in touch <span className="arw">→</span>
             </a>
           </div>
@@ -1329,7 +1329,7 @@ const Contact = () => (
       </h2>
 
       <div className="reveal reveal-delay-2 mt-8 sm:mt-10 flex justify-center">
-        <a href="mailto:josuekenge4@gmail.com" className="pill pill-solid text-base sm:text-lg py-4 px-7">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josuekenge4@gmail.com" target="_blank" rel="noopener noreferrer" className="pill pill-solid text-base sm:text-lg py-4 px-7">
           Get in touch <span className="arw">→</span>
         </a>
       </div>
@@ -1386,7 +1386,7 @@ const FloatingContact = () => {
   return (
     // Desktop only — on mobile the "Get in touch" CTA lives in the nav dropdown instead.
     <div className="hidden md:block">
-      <a href="mailto:josuekenge4@gmail.com"
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josuekenge4@gmail.com" target="_blank" rel="noopener noreferrer"
         className={`fixed bottom-5 right-5 z-40 pill pill-solid shadow-lg transition-all duration-500 ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
         <PixelMark size={16} color="#F4F1E9" />
         Get in touch
