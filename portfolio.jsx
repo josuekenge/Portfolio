@@ -20,10 +20,10 @@ const STACK_TICKER = [
 ];
 
 const HEADLINE_METRICS = [
-  { v: '35K+', l: 'sellers reached at IBM' },
-  { v: '$303K+', l: 'client savings shipped' },
-  { v: '957', l: 'AI initiatives tracked' },
-  { v: '20×', l: 'query response speedup' },
+  { v: '35K+', l: 'sellers reached at IBM', countBase: 35000, countJitter: 300 },
+  { v: '$303K+', l: 'client savings shipped', countBase: 303000, countJitter: 300, countPrefix: '$' },
+  { v: '957', l: 'AI initiatives tracked', countBase: 957 },
+  { v: '20×', l: 'query response speedup', countBase: 20, countSuffix: '×' },
 ];
 
 // What I do — "The Blueprint"-style capability grid.
@@ -543,13 +543,50 @@ const Ticker = () => {
 // METRICS
 // ────────────────────────────────────────────────────────────────
 
+// Animated count-up: rolls from 0 to (base + a random 0..jitter) when scrolled into view.
+// The jitter re-rolls each load so the number reads as an organic, live count.
+const CountUp = ({ base, jitter = 0, prefix = '', suffix = '', duration = 1800 }) => {
+  const ref = React.useRef(null);
+  const target = React.useRef(base + (jitter ? Math.floor(Math.random() * (jitter + 1)) : 0)).current;
+  const [val, setVal] = React.useState(0);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { setVal(target); return; }
+
+    let raf, started = false;
+    const run = () => {
+      const t0 = performance.now();
+      const tick = (now) => {
+        const t = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic — fast then settles
+        setVal(Math.round(target * eased));
+        if (t < 1) raf = requestAnimationFrame(tick);
+        else setVal(target);
+      };
+      raf = requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting && !started) { started = true; run(); } });
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => { io.disconnect(); if (raf) cancelAnimationFrame(raf); };
+  }, [target, duration]);
+
+  return <span ref={ref}>{prefix}{val.toLocaleString('en-US')}{suffix}</span>;
+};
+
 const Metrics = () => (
   <section className="max-w-[1360px] mx-auto px-5 sm:px-8 py-10 sm:py-28">
     <div className="reveal mb-6 sm:mb-12"><Eyebrow>Impact at a glance</Eyebrow></div>
     <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-line">
       {HEADLINE_METRICS.map((m, i) => (
         <div key={i} className={`reveal reveal-delay-${i + 1} py-4 sm:py-10 pr-4 sm:pr-6 border-b border-line ${i % 2 === 0 ? 'border-r sm:border-r' : ''} lg:border-r ${i === 3 ? 'lg:border-r-0' : ''}`}>
-          <div className="font-display font-normal text-3xl sm:text-6xl lg:text-7xl text-ink leading-none tracking-tight">{m.v}</div>
+          <div className="font-display font-normal text-3xl sm:text-6xl lg:text-7xl text-ink leading-none tracking-tight">
+            {m.countBase ? <CountUp base={m.countBase} jitter={m.countJitter} prefix={m.countPrefix} suffix={m.countSuffix} /> : m.v}
+          </div>
           <div className="mt-1.5 sm:mt-4 text-[11px] sm:text-[13px] tracking-wide text-ink-500 leading-snug">{m.l}</div>
         </div>
       ))}
