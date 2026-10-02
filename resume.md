@@ -25,6 +25,8 @@ Bachelor of Computer Science
 
 - Engineering AI features on **watsonx Workshop**, IBM's internal sales enablement platform serving **35,000+ sellers globally**, powering AI-driven coaching that helps reps sell IBM's portfolio more effectively.
 - Building full-stack capabilities with **FastAPI** on the Python backend and **React / Next.js** on the frontend, shipping features directly into the daily workflow of IBM's global sales force.
+- Engineered the **grounding layer** for Workshop's AI presentation generator: **4 rules** for what an agentic slide engine sees (session chat, uploaded slides, focus), **environment-safe session reads** across per-branch Postgres schemas, and a background run driver with a **35-minute budget** for 15–20 minute jobs.
+- Took the chat reaching the engine from **0 to 11,600 characters** (30 of 30 test runs carried none before), with **21 of 25** deck details traceable to the session; locked by **74 tests**, built with **two AI coding agents in parallel**, working **cross-functionally** with the partner team that owns the engine, and merged on the **planned release day**.
 
 ### Jonas Software — AI Engineer Intern
 *Remote · Jan 2026 – April 2026*

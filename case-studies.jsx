@@ -310,6 +310,47 @@ const DiagramMini = () => (
   </DFrame>
 );
 
+const DiagramDecks = () => (
+  <DFrame label="Agentic generation · Grounding layer">
+    <DRow>
+      <DNode tier="INPUT" name="Session Chat" sub="What the seller discussed" accent="#9bb4ff" wide />
+      <DNode tier="INPUT" name="Uploaded Deck" sub="Their own slides + notes" accent="#9bb4ff" wide />
+      <DNode tier="INPUT" name="Title + Focus" sub="What they asked for" accent="#9bb4ff" wide />
+    </DRow>
+    <DArrow />
+    <DRow>
+      <DNode tier="CONTEXT BUILDER" name="FastAPI · Session Reader" sub="Schema-qualified reads · one Postgres schema per environment" wide accent="#3b6dff" />
+    </DRow>
+    <DArrow />
+    <DRow>
+      <DNode tier="SOURCE ASSEMBLER" name="Grounding Rules" sub="Decides which documents and which outline the engine sees" wide accent="#1d3dc4" />
+    </DRow>
+    <DArrow dir="split" />
+    <DRow>
+      <DNode tier="SOURCES" name="Context · Slides · Outline" sub="Uploaded as documents · size-capped" accent="#6e8dff" wide />
+      <DNode tier="BRIEF" name="Short Goal" sub="Title · focus · how to treat the deck" accent="#7c5cff" wide />
+    </DRow>
+    <DArrow />
+    <DRow>
+      <DNode tier="RUN DRIVER" name="Background Poller" sub="8 s polls · up to 35 min · answers the engine's questions · cancellable" wide accent="#3b6dff" />
+    </DRow>
+    <DArrow />
+    <DRow>
+      <DNode tier="ENGINE" name="Agentic Slide Builder" sub="Partner team's service · chosen per environment" wide accent="#7c5cff" />
+    </DRow>
+    <DArrow />
+    <DRow>
+      <DNode tier="OUTPUT" name="Deck Grounded in the Session" sub=".pptx + PDF · optional narrated video" wide accent="#10b981" />
+    </DRow>
+    <div className="mt-8 rounded-xl border border-line p-3 text-center bg-surface">
+      <div className="font-mono text-[10px] tracking-[0.2em] uppercase mb-2" style={{ color: '#3A43D6' }}>▸ GROUNDING RULES</div>
+      <div className="font-mono text-[12px] text-ink-500">
+        Chat only → session context + generated outline · Deck only → slides + the deck's own outline · Deck + chat → deck sets the structure, session tailors it · Nothing → nothing is invented
+      </div>
+    </div>
+  </DFrame>
+);
+
 const DIAGRAMS = {
   '01': DiagramAIQSR,
   '02': DiagramWes,
@@ -318,6 +359,7 @@ const DIAGRAMS = {
   '05': DiagramZerpha,
   '06': DiagramUlife,
   '07': DiagramMini,
+  '08': DiagramDecks,
 };
 
 // ────────────────────────────────────────────────────────────────
@@ -498,6 +540,54 @@ const CASE_STUDIES = {
       { v: 'Live', l: 'consulting · ongoing' },
     ],
   },
+  '08': {
+    summary: 'watsonx Workshop can turn a seller\'s working session into a finished presentation through an agentic slide engine. I engineered the grounding layer: the part that decides what the engine actually sees — the chat, the seller\'s own slides, the focus — so the deck is about their deal and not a generic pitch. Built on a teammate\'s base integration with the engine\'s API, with the engine itself owned by a partner team, and merged to main on the planned release day.',
+    stack: [
+      ['Backend', 'Python · FastAPI · SQLAlchemy · PostgreSQL'],
+      ['Engine', 'Partner team\'s agentic slide builder · HTTP API · long-running runs'],
+      ['Grounding', 'Session context builder · source assembler · LLM outline step'],
+      ['Infra', 'OpenShift · one environment and one Postgres schema per branch · CI/CD'],
+      ['Dev Loop', 'Two Claude Code agent sessions in parallel · written handoffs'],
+      ['Testing', 'pytest · failing-first tests · real end-to-end runs'],
+      ['Teams', 'Workshop engineering · the engine\'s team · internal testers'],
+    ],
+    approach: [
+      'What it does: a seller clicks Generate and Workshop gathers their session, hands it to the engine as source documents plus a short goal, drives the run to completion in the background, and stores the finished .pptx and PDF, with an optional narrated video.',
+      'My part: the grounding layer and its release. I designed the rules for what gets sent, made session reads safe across environments, set how long Workshop waits for a run, and made the engine selectable per environment. I directed two AI coding agents in parallel, reviewed and approved every commit and push, and ran the real validation runs myself.',
+      'What does the engine see? Four cases, one rule each. Chat only: the session context plus an outline generated from it. Deck only: the slides and the deck\'s own outline. Deck and chat: the deck sets the structure and the session tailors it. Nothing: nothing is sent, and no outline is invented.',
+      'Why documents and not one big prompt? The engine takes source documents and a short goal, so the substance travels as size-capped documents and the goal stays a few lines: title, focus, and how to treat an uploaded deck.',
+      'Why never generate an outline from an empty session? Asked to outline nothing, an LLM writes a confident generic pitch and the engine follows it. An empty input now produces no outline, and says so in the logs.',
+      'How does it work in every environment? Each branch is deployed with its own Postgres schema. Raw SQL resolves bare table names through the default schema, so the session reader now names the environment\'s schema explicitly and rejects anything that is not a plain identifier.',
+      'How does a 15 to 20 minute job fit a web request? It doesn\'t. Generation runs as a background task that polls the engine every 8 seconds for up to 35 minutes, reports progress to the UI, answers the engine\'s own questions so no human is needed, and can be cancelled.',
+      'What happens when a piece fails? Each stage degrades on its own: an unreadable deck falls back to the session, a context failure still sends the deck, an outline failure is not fatal, and a timeout records which run it was and where it stopped. Every fallback is logged.',
+      'How do we know it works? Each rule has a test that failed before the change and passes after, and the logs record how much chat was read and what was sent. A real run on the test environment went from 0 to 11,600 characters of chat sent, and 21 of 25 specific details in the deck traced back to the conversation.',
+      'Who was involved? The engine is built by a separate team, so this ran in one shared channel with their engineers, our testers and my team lead. Each change shipped as its own small commit to the shared test environment so testers could retest while the next was in progress, and everything was reviewed and merged on release day.',
+    ],
+    findings: [
+      { v: '30 / 30', l: 'runs carried no chat before the change' },
+      { v: '6', l: 'real chat sessions read as empty' },
+      { v: '0', l: 'errors raised · it failed silently' },
+      { v: '~2 KB', l: 'outline invented from an empty session' },
+      { v: '95% vs 35%', l: 'faithful to the deck vs the session' },
+      { v: '2', l: 'runs dropped at 20 min, engine still working' },
+      { v: '5 on 2', l: 'runs queued on two engine workers' },
+      { v: '4', l: 'design gaps, all on the Workshop side' },
+    ],
+    outcomes: [
+      { v: '4', l: 'grounding rules, one per input case' },
+      { v: '0 → 11.6K', l: 'characters of chat reaching the engine' },
+      { v: '12 → 12', l: 'uploaded slides in, same slides out' },
+      { v: '21 / 25', l: 'deck details traced to the chat' },
+      { v: '17 min', l: 'real deck built end to end' },
+      { v: '35 min', l: 'run budget, up from 20' },
+      { v: '74', l: 'tests passing · new ones fail-first' },
+      { v: '1 day', l: 'design → merged, on release day' },
+    ],
+    quote: {
+      text: 'A generator is only as good as what you hand it. Most of the engineering here is deciding what the engine gets to see.',
+      attr: 'Design principle',
+    },
+  },
 };
 
 // ────────────────────────────────────────────────────────────────
@@ -608,6 +698,23 @@ const CaseStudyModal = ({ project, onClose }) => {
               </ul>
             </div>
           </div>
+
+          {/* Findings — optional, numbers from the investigation */}
+          {cs.findings && (
+            <div className="px-4 sm:px-8 md:px-12 pb-6 sm:pb-12">
+              <div className="eyebrow mb-3 sm:mb-5"><span className="sq" />Measured before the change</div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
+                {cs.findings.map((o, i) => (
+                  <div key={i} className="rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-line" style={{ background: '#F7F4EC' }}>
+                    <div className="font-display text-2xl sm:text-3xl text-ink leading-none">{o.v}</div>
+                    <div className="mt-1.5 sm:mt-2 text-[9px] sm:text-[10px] tracking-widest uppercase text-ink-400 leading-snug">
+                      {o.l}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Outcomes */}
           <div className="px-4 sm:px-8 md:px-12 pb-6 sm:pb-12">

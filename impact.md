@@ -141,3 +141,38 @@ Serving as **AI consultant, architect, and coach** for Minisoft (recently acquir
 - Same proven coaching model that succeeded at Computrition.
 
 > Brownfield payments · AWS AI-DLC · Post-acquisition onboarding into CSI AI standards · 60% time savings
+
+---
+
+### 8. Grounded Decks — Context Architecture for AI Presentations
+*IBM watsonx Workshop · 2026 · FastAPI, PostgreSQL, OpenShift, Claude Code*
+
+Engineered the **grounding layer** behind Workshop's AI presentation generator: the part that decides what an agentic slide engine actually sees, so a deck is about the seller's deal and not a generic pitch. Built on a teammate's base integration with the engine's API; the engine is owned by a partner team.
+
+**Architecture**
+- **Flow:** session (chat, uploaded deck, title + focus) → context builder → source assembler → sources + short goal → background run driver → engine → .pptx + PDF, optional narrated video.
+- **Grounding rules, one per input case:** chat only → session context + generated outline · deck only → slides + the deck's own outline · deck + chat → deck sets the structure, session tailors it · nothing → nothing is invented.
+- **Environment-safe reads:** each branch deploys with its own Postgres schema; the session reader names that schema explicitly instead of relying on the default, and rejects anything that is not a plain identifier.
+- **Long-running runs:** a background task polls every 8 seconds for up to **35 minutes**, reports progress, answers the engine's own questions, and can be cancelled.
+- **Failure handling:** each stage degrades on its own and every fallback is logged, including which run timed out and where.
+
+**My part**
+- Designed the grounding rules, the environment-safe reads, the run budget and per-environment engine selection.
+- Directed **two AI coding agents in parallel**, reviewed and approved every commit and push, and ran the real validation runs.
+
+**Cross-team, on a deadline**
+- Worked in one shared channel with the engine's engineers, our testers and my team lead.
+- The release was planned for the same day. Each change shipped as its own small commit to the shared test environment so testers could retest while the next was in progress; everything was reviewed and merged to main that day.
+
+**Measured before the change**
+- **30 of 30** runs on the test environment carried **0 characters** of chat, across **6** real chat sessions, with **0** errors raised.
+- An empty session produced an invented outline of about **2 KB** that the engine then followed.
+- A tester scored one deck **95%** faithful to the uploaded slides but only **35%** to the session.
+- **2** runs were dropped at 20 minutes while the engine was still working; **5** runs were queued on **2** engine workers.
+
+**After**
+- Chat sent to the engine went from **0 to 11,600 characters**; **21 of 25** specific details in the finished deck traced back to the conversation.
+- An uploaded **12-slide** deck came back as the same 12 slides in the same order.
+- A real deck built end to end in **17 minutes**; **74 tests passing**, new ones failing first.
+
+> 4 grounding rules · 0 → 11.6K chars of chat · 12 → 12 slides · 35-min run budget · design → merged in 1 day

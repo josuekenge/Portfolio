@@ -10,6 +10,7 @@ const { useEffect, useRef, useState } = React;
 
 const STACK_TICKER = [
   'IBM WATSONX · 35K SELLERS',
+  'AI DECKS · 0 → 11.6K CHARS GROUNDED',
   'WES CHATBOT · 20× FASTER',
   'AIQSR · 957 INITIATIVES',
   'M&A RAG · $120K SAVED',
@@ -61,6 +62,8 @@ const EXPERIENCE = [
       'Architected its multi-source search — concurrent, permission-scoped Seismic (per-user OAuth) plus IBM TechZone and Navattic interactive demos over MCP — keeping scenario and product separate so each source is queried the way it ranks best, then fusing results through several tuned LLM passes into a deduped, availability-gated top-3 with matched L100–L300 build scripts.',
       'Gave IBM\'s Slack bot long-term memory: a recall system that scores up to a dozen of a seller\'s prior threads (30-day window) with an LLM judge and, on a confident match, carries the earlier session\'s context into the new conversation.',
       'Shipped AI podcast & presentation generation from any session (script → ElevenLabs audio / branded PPTX), with a Slack notification bell that DMs the owner a deep link the moment content is ready and auto-delivers the file back into the thread where they asked.',
+      'Engineered the grounding layer for Workshop\'s AI presentation generator: 4 rules for what an agentic slide engine sees (session chat, the seller\'s own slides, focus), environment-safe session reads across per-branch Postgres schemas, and a background run driver with a 35-minute budget for 15 to 20 minute jobs.',
+      'Took the chat reaching that engine from 0 to 11,600 characters (30 of 30 test runs carried none before), with 21 of 25 deck details traceable to the seller\'s session and a 12-slide upload returned as the same 12 slides — locked by 74 tests, built with two AI coding agents in parallel alongside the partner team that owns the engine, and merged on the planned release day.',
     ],
   },
   {
@@ -218,6 +221,24 @@ const PROJECTS = [
       { v: 'CSI', l: 'onboarding' },
     ],
     grad: 'linear-gradient(150deg, #1f5136 0%, #163f2a 50%, #0c2a1c 100%)',
+  },
+  {
+    n: '08',
+    title: 'Grounded Decks',
+    sub: 'Context architecture for AI presentations',
+    tag: 'IBM · AGENTIC GENERATION',
+    link: 'https://www.ibm.com/watsonx',
+    year: '2026',
+    role: 'AI Engineer · IBM watsonx Workshop',
+    tech: ['FastAPI', 'PostgreSQL', 'OpenShift', 'Claude Code', 'pytest'],
+    blurb: 'The grounding layer behind Workshop\'s AI presentation generator: it decides what an agentic slide engine sees — chat, the seller\'s own slides, focus — so the deck is about their deal, not a generic pitch.',
+    metric: { v: '0 → 11.6K', l: 'chars of chat grounded' },
+    metrics: [
+      { v: '4', l: 'grounding rules' },
+      { v: '35 min', l: 'run budget' },
+      { v: '1 day', l: 'design → merged' },
+    ],
+    grad: 'linear-gradient(150deg, #0f3d5c 0%, #0b2f49 50%, #071e30 100%)',
   },
 ];
 
@@ -705,7 +726,7 @@ const RM_NODES = [
 ];
 
 const ContinuationCard = () => (
-  <div className="reveal flex sm:col-span-1 lg:col-span-2 flex-col justify-center sm:justify-between gap-5 sm:gap-0 py-2 sm:py-0">
+  <div className="reveal flex col-span-2 lg:col-span-1 flex-col justify-center sm:justify-between gap-5 sm:gap-0 py-2 sm:py-0">
     <div className="agentflow-eyebrow">the roadmap continues</div>
 
     <svg viewBox="0 0 720 360" style={{ width: '100%', height: 'auto', maxWidth: 760, margin: '6px auto' }} aria-hidden="true">
@@ -725,7 +746,7 @@ const ContinuationCard = () => (
 
     <div>
       <h3 className="font-display font-normal text-2xl sm:text-[30px] tracking-tight leading-[1.05]">
-        Seven shipped. <span className="italic-accent text-ink-500">The next one's a conversation.</span>
+        Eight shipped. <span className="italic-accent text-ink-500">The next one's a conversation.</span>
       </h3>
       <a href="#skills"
         className="group mt-5 inline-flex items-center gap-2 text-[13px] tracking-widest uppercase font-medium text-ink hover:text-accent transition-colors">
