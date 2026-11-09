@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Josue Kenge — AI Engineer</title>
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+<meta name="theme-color" content="#f4f1e9" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper:   '#F4F1E9',
+          surface: '#FCFBF7',
+          ink: {
+            DEFAULT: '#1B1A16',
+            900: '#1B1A16',
+            700: '#3C3A33',
+            500: '#726E63',
+            400: '#989487',
+            300: '#B4B0A3',
+          },
+          line:    '#E5E1D6',
+          lined:   '#D8D3C6',
+          accent:  '#3A43D6',
+          moss:    '#4C9E68',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'Georgia', 'serif'],
+          sans: ['"Poppins"', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+        screens: {
+          xs: '500px',
+        },
+      }
+    }
+  };
+</script>
+
+<style>
+  html, body { background: #F4F1E9; color: #1B1A16; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  .font-display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+  .italic-accent { font-style: italic; font-family: 'Fraunces', Georgia, serif; }
+
+  .min-h-screen-d { min-height: 100vh; min-height: 100svh; }
+
+  /* Custom scrollbar (desktop only) */
+  @media (hover: hover) and (pointer: fine) {
+    ::-webkit-scrollbar { width: 11px; height: 11px; }
+    ::-webkit-scrollbar-track { background: #F4F1E9; }
+    ::-webkit-scrollbar-thumb { background: #D8D3C6; border-radius: 999px; border: 3px solid #F4F1E9; }
+    ::-webkit-scrollbar-thumb:hover { background: #B4B0A3; }
+  }
+
+  ::selection { background: #1B1A16; color: #F4F1E9; }
+
+  /* ─────────── Faint blueprint grid ─────────── */
+  .grid-lines {
+    background-image:
+      linear-gradient(rgba(27,26,22,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(27,26,22,0.045) 1px, transparent 1px);
+    background-size: 78px 78px;
+  }
+  .grid-lines-sm {
+    background-image:
+      linear-gradient(rgba(27,26,22,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(27,26,22,0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* ─────────── Reveal on scroll ─────────── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .07s; }
+  .reveal-delay-2 { transition-delay: .14s; }
+  .reveal-delay-3 { transition-delay: .21s; }
+  .reveal-delay-4 { transition-delay: .28s; }
+
+  /* ─────────── Marquee ─────────── */
+  .marquee { display: flex; width: max-content; animation: marquee 55s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─────────── Evolution strip (code → machine → AI → agent) ─────────── */
+  .agentflow-eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #B4B0A3; }
+  .agentflow-row { position: relative; display: flex; justify-content: space-between; align-items: center; }
+  .agentflow-line {
+    position: absolute; top: 50%; left: 10px; right: 10px; height: 1px; transform: translateY(-50%);
+    background: linear-gradient(90deg, #E1DDD1 0%, #E1DDD1 44%, #A9A597 50%, #E1DDD1 56%, #E1DDD1 100%);
+    background-size: 260% 100%;
+    animation: agentSweep 5.4s linear infinite;
+  }
+  @keyframes agentSweep { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+  .agentflow-icon {
+    position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
+    line-height: 0; padding: 0 9px; background: #F4F1E9; color: #C4C0B3;
+    animation: agentNode 5.4s ease-in-out infinite; will-change: color, transform;
+  }
+  .agentflow-icon svg { display: block; }
+  .agentflow-bin { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: inherit; }
+  @keyframes agentNode {
+    0%, 100% { color: #C4C0B3; transform: translateY(0) scale(1); }
+    9%       { color: #4E4B42; transform: translateY(-0.5px) scale(1.06); }
+    24%      { color: #C4C0B3; transform: translateY(0) scale(1); }
+  }
+
+  /* ─────────── Continuation roadmap (work → stack) ─────────── */
+  .roadmap-path {
+    fill: none; stroke: #9E9A8D; stroke-width: 1.8; stroke-linecap: round;
+    stroke-dasharray: 2 6; animation: roadFlow 5s linear infinite;
+  }
+  @keyframes roadFlow { to { stroke-dashoffset: -80; } }
+  .roadmap-node {
+    fill: #F4F1E9; stroke: #8C8878; stroke-width: 2;
+    animation: roadNode 5s ease-in-out infinite;
+  }
+  @keyframes roadNode {
+    0%, 100% { stroke: #8C8878; fill: #F4F1E9; }
+    10%      { stroke: #2A2822; fill: #2A2822; }
+    26%      { stroke: #8C8878; fill: #F4F1E9; }
+  }
+  .roadmap-end { fill: #F4F1E9; stroke: #726E63; stroke-width: 2.2; animation: roadEnd 5s ease-in-out infinite; }
+  @keyframes roadEnd {
+    0%, 100% { stroke: #726E63; }
+    60%      { stroke: #3A43D6; fill: rgba(58,67,214,0.08); }
+  }
+  .roadmap-arrow { animation: roadArrow 5s ease-in-out infinite; }
+  @keyframes roadArrow {
+    0%, 55%, 100% { opacity: .55; }
+    72%           { opacity: 1; }
+  }
+  .roadmap-label { fill: #726E63; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; letter-spacing: 1.8px; }
+
+  /* ─────────── Pill buttons ─────────── */
+  .pill {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .85rem 1.5rem; border-radius: 999px;
+    font-size: .95rem; font-weight: 500; line-height: 1;
+    transition: transform .3s cubic-bezier(.22,.61,.36,1), background .3s, color .3s, border-color .3s, box-shadow .3s;
+    white-space: nowrap;
+  }
+  .pill-solid { background: #1B1A16; color: #F4F1E9; }
+  .pill-solid:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(27,26,22,0.22); }
+  .pill-ghost { background: transparent; color: #1B1A16; border: 1px solid #C9C4B6; }
+  .pill-ghost:hover { border-color: #1B1A16; transform: translateY(-2px); }
+  .pill .arw { transition: transform .3s; }
+  .pill:hover .arw { transform: translateX(3px); }
+
+  /* Circle arrow */
+  .circ {
+    width: 44px; height: 44px; border-radius: 999px;
+    border: 1px solid #D8D3C6; display: inline-flex; align-items: center; justify-content: center;
+    transition: background .3s, color .3s, border-color .3s, transform .3s;
+    flex-shrink: 0;
+  }
+  .group:hover .circ, .circ:hover { background: #1B1A16; color: #F4F1E9; border-color: #1B1A16; }
+  .group:hover .circ .arw { transform: translateX(2px); }
+
+  /* Bordered card */
+  .card {
+    background: #FCFBF7;
+    border: 1px solid #E5E1D6;
+    transition: border-color .35s, transform .35s, box-shadow .35s;
+  }
+  .card:hover { border-color: #C9C4B6; box-shadow: 0 18px 50px rgba(27,26,22,0.06); }
+
+  /* Icon square */
+  .icon-sq {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: #EFEBE0; display: inline-flex; align-items: center; justify-content: center;
+    color: #3C3A33;
+  }
+
+  /* Work row */
+  .work-row { transition: background .35s; }
+  .work-row:hover { background: #FBFAF5; }
+
+  /* About visual — mobile: text full width, then terminal | identity side by side */
+  .about-visual {
+    display: grid; gap: 0.7rem;
+    grid-template-columns: 1fr 43%;
+    grid-template-areas: "text text" "term idty";
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .about-visual {
+      gap: 2.5rem 4rem;
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-areas: "text idty" "term idty";
+    }
+  }
+
+  /* Gradient project tiles — text always light */
+  .proj-tile {
+    aspect-ratio: 1 / 1; border-radius: 22px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 24px 60px rgba(27,26,22,0.14);
+    transition: transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s;
+  }
+  .group:hover .proj-tile { transform: translateY(-6px); box-shadow: 0 34px 80px rgba(27,26,22,0.2); }
+  .proj-tile::before {
+    content:''; position:absolute; inset:0; opacity:.5; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  /* Seamless rotating light circle — fades to 0 at both ends so the loop never seams */
+  .proj-tile::after {
+    content:''; position:absolute; inset:-35%; z-index:0; pointer-events:none;
+    background: conic-gradient(from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,255,255,0.14) 55deg,
+      rgba(255,255,255,0) 130deg,
+      rgba(255,255,255,0) 360deg);
+    animation: projspin 11s linear infinite;
+    will-change: transform;
+  }
+  @keyframes projspin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .proj-tile::after { animation: none; } }
+
+  /* Section eyebrow square */
+  .eyebrow { display:inline-flex; align-items:center; gap:.6rem; font-size:.72rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#8C8878; }
+  .eyebrow .sq { width:7px; height:7px; background:#1B1A16; display:inline-block; }
+
+  /* Pixel decoration glyphs */
+  .pixel { position:absolute; pointer-events:none; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation: none !important; }
+    .agentflow-line, .agentflow-dot { animation: none !important; }
+    .roadmap-path, .roadmap-node, .roadmap-end, .roadmap-arrow { animation: none !important; }
+    .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-headline { font-size: clamp(36px, 10.8vw, 60px) !important; line-height: 1 !important; }
+    .section-title { font-size: clamp(36px, 10vw, 52px) !important; }
+    .contact-headline { font-size: clamp(46px, 15vw, 88px) !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<!-- Bump ?v= whenever you edit a script below, so browsers fetch the fresh file instead of a cached copy. -->
+<script src="image-slot.js?v=20260708"></script>
+<script type="text/babel" src="tweaks-panel.jsx?v=20260708"></script>
+<script type="text/babel" src="terminal.jsx?v=20260708"></script>
+<script type="text/babel" src="case-studies.jsx?v=20261002b"></script>
+<script type="text/babel" src="portfolio.jsx?v=20261002c"></script>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }, 200);
+  const mo = new MutationObserver(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+  });
+  mo.observe(document.body, { childList: true, subtree: true });
+</script>
+</body>
+</html>

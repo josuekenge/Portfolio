@@ -1,0 +1,10 @@
+# josuekenge.com is a Vite single-page app: build it, publish dist, and let the
+# client router handle deep links. Real files in dist still win over this rule.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
